@@ -5,5 +5,5 @@ import android.os.Handler;
 import android.widget.TextView;
 
 public interface MyRunnable extends Runnable {
-    public MyRunnable setParam(Handler handler, String... param);
+    MyRunnable setParam(Handler handler, String... param);
 }

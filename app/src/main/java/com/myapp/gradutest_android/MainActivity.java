@@ -14,9 +14,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.myapp.gradutest_android.domain.User;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +41,19 @@ public class MainActivity extends AppCompatActivity {
             Log.i("myLog","Handler执行");
             Bundle data = msg.getData();
             String val = data.getString("value");
+            int code=-1;
+            try {
+                JSONObject jsonObject=new JSONObject(val);
+                code=jsonObject.getInt("code");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             User user=toJson.convertToJson(User.class,val);
+            Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), code==0?"登录成功":"登录失败", Snackbar.LENGTH_LONG)
+                    .setAction("确定", v -> {
+                        //
+                    });
+            snackbar.show();
             TextView output = findViewById(R.id.output);
             output.setText(user.toString());
         }
@@ -49,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     public void log_in_onclick(View view){
         EditText user_name=findViewById(R.id.user_name_input);
         EditText user_pwd=findViewById(R.id.user_pwd_input);
-        String url="HTTP://10.0.2.2:8000/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
+        String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
         networkTask networkTask=new networkTask();
         new Thread(networkTask.setParam(handler,url)).start();
     }

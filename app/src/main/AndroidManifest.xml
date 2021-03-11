@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GraduTest_Android"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Sign_In_Activity"></activity>
+        <activity android:name=".Sign_In_Activity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
