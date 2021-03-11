@@ -2,15 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/MainScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Sign_In_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,19 +22,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                tools:ignore="NestedWeights"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                tools:ignore="NestedWeights">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_name_text"
-                        android:layout_width="match_parent"
+                        android:id="@+id/user_name_text_sign_in"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
                         android:text="用户名" />
                 </LinearLayout>
@@ -44,14 +44,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/user_name_input"
-                        android:layout_width="match_parent"
+                        android:id="@+id/user_name_input_sign_in"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:autofillHints="请输入用户名" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -65,30 +67,72 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/user_pwd_text"
-                        android:layout_width="match_parent"
+                        android:id="@+id/user_profile_text_sign_in"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:text="密码" />
+                        android:text="用户简介"
+                        tools:ignore="NestedWeights" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/user_pwd_input"
-                        android:layout_width="match_parent"
+                        android:id="@+id/user_profile_input_sign_in"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:ems="10"
+                        android:inputType="textPersonName"
+                        tools:ignore="NestedWeights" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/user_pwd_text_sign_in"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="用户密码"
+                        tools:ignore="NestedWeights" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/user_pwd_input_sign_in"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPassword"
-                        android:autofillHints="请输入密码" />
+                        tools:ignore="NestedWeights" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -96,45 +140,46 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="10"
+                android:layout_weight="5"
                 android:orientation="horizontal"
-                tools:ignore="NestedWeights"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                tools:ignore="NestedWeights">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/log_in_btn"
-                        android:layout_width="match_parent"
+                        android:id="@+id/sign_in_btn_sign_in"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:onClick="log_in_onclick"
-                        android:text="登录" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <Button
-                        android:id="@+id/sign_in_btn"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:onClick="sign_in_onclick"
                         android:text="注册" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/back_btn_sign_in"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:onClick="back_onclick"
+                        android:text="返回" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -144,12 +189,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/output"
+                    android:id="@+id/output_sign_in"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
             </LinearLayout>
-
         </LinearLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
