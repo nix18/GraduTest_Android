@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
+import com.myapp.gradutest_android.domain.User;
 import com.myapp.gradutest_android.utils.MyRunnable;
 import com.myapp.gradutest_android.utils.net.getJson;
+import com.myapp.gradutest_android.utils.net.toJson;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("HandlerLeak")
+    /*
+      消息处理
+     */
     Handler handler=new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -32,11 +37,15 @@ public class MainActivity extends AppCompatActivity {
             Log.i("myLog","Handler执行");
             Bundle data = msg.getData();
             String val = data.getString("value");
+            User user=toJson.convertToJson(User.class,val);
             TextView output = findViewById(R.id.output);
-            output.setText(val);
+            output.setText(user.toString());
         }
     };
 
+    /*
+    网络相关子线程
+     */
     MyRunnable networkTask=new MyRunnable() {
         private String url;
 
@@ -55,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /*
+    登录点击动作
+     */
     public void log_in_onclick(View view){
         EditText user_name=findViewById(R.id.user_name_input);
         EditText user_pwd=findViewById(R.id.user_pwd_input);
