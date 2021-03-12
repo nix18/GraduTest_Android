@@ -2,6 +2,10 @@ package com.myapp.gradutest_android;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.adapter.FragmentViewHolder;
+import androidx.viewpager2.widget.ViewPager2;
 
 
 import android.annotation.SuppressLint;
@@ -15,6 +19,9 @@ import android.view.View;
 import android.widget.*;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+import com.myapp.gradutest_android.adapter.MyFragmentAdapter;
 import com.myapp.gradutest_android.domain.User;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
@@ -23,12 +30,27 @@ import com.myapp.gradutest_android.utils.net.toJson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+    private List<String> evenList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tabLayout = findViewById(R.id.tabhost_main);
+        viewPager2 = findViewById(R.id.viewpager_main);
+        evenList.add("主页");
+        evenList.add("广场");
+        evenList.add("我的");
+        viewPager2.setAdapter(new MyFragmentAdapter(MainActivity.this,evenList));
+        TabLayoutMediator  tabLayoutMediator=  new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> tab.setText(evenList.get(position)));
+        tabLayoutMediator.attach();
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -58,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
     登录点击动作
      */
     public void log_in_onclick(View view){
-        EditText user_name=findViewById(R.id.user_name_input);
-        EditText user_pwd=findViewById(R.id.user_pwd_input);
+        EditText user_name=findViewById(R.id.user_name_input_my);
+        EditText user_pwd=findViewById(R.id.user_pwd_input_my);
         String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
         networkTask networkTask=new networkTask();
         new Thread(networkTask.setParam(handler,url)).start();
