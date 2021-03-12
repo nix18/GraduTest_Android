@@ -3,6 +3,9 @@ package com.myapp.gradutest_android.utils.net;
 import android.os.Bundle;
 import android.os.Message;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -39,5 +42,21 @@ public class getJson {
             e.printStackTrace();
         }
         return msg;
+    }
+
+    /**
+     * 传入Json字符串val 获取其中的code属性
+     * @param val Json字符串
+     * @return code属性
+     */
+    public static int getStatusCode(String val){
+        int code=-1;
+        try {
+            JSONObject jsonObject=new JSONObject(val);
+            code=jsonObject.getInt("code");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return code;
     }
 }

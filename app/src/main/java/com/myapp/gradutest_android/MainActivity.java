@@ -16,6 +16,7 @@ import android.widget.*;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.myapp.gradutest_android.domain.User;
+import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 
@@ -41,13 +42,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i("myLog","Handler执行");
             Bundle data = msg.getData();
             String val = data.getString("value");
-            int code=-1;
-            try {
-                JSONObject jsonObject=new JSONObject(val);
-                code=jsonObject.getInt("code");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            int code= getJson.getStatusCode(val);
             User user=toJson.convertToJson(User.class,val);
             Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), code==0?"登录成功":"登录失败", Snackbar.LENGTH_LONG)
                     .setAction("确定", v -> {
