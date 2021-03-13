@@ -1,33 +1,19 @@
 package com.myapp.gradutest_android;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.myapp.gradutest_android.domain.User;
-import com.myapp.gradutest_android.utils.net.getJson;
-import com.myapp.gradutest_android.utils.net.networkTask;
-import com.myapp.gradutest_android.utils.net.toJson;
-//暂时没用
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_My#newInstance} factory method to
+ * Use the {@link Fragment_Blank#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_My extends Fragment {
+public class Fragment_Blank extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +24,7 @@ public class Fragment_My extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_My() {
+    public Fragment_Blank() {
         // Required empty public constructor
     }
 
@@ -48,11 +34,11 @@ public class Fragment_My extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_My.
+     * @return A new instance of fragment Fragment_Blank.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_My newInstance(String param1, String param2) {
-        Fragment_My fragment = new Fragment_My();
+    public static Fragment_Blank newInstance(String param1, String param2) {
+        Fragment_Blank fragment = new Fragment_Blank();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,6 +59,6 @@ public class Fragment_My extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__my, container, false);
+        return inflater.inflate(R.layout.fragment__blank, container, false);
     }
 }

@@ -21,7 +21,7 @@ import android.widget.*;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
-import com.myapp.gradutest_android.adapter.MyFragmentAdapter;
+import com.myapp.gradutest_android.adapter.ScreenSlidePagerAdapter;
 import com.myapp.gradutest_android.domain.User;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
@@ -35,23 +35,37 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
-    private ViewPager2 viewPager2;
+    private ViewPager2 viewPager;
     private List<String> evenList=new ArrayList<>();
+    private FragmentStateAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tabhost_main);
-        viewPager2 = findViewById(R.id.viewpager_main);
+        viewPager = findViewById(R.id.viewpager_main);
+        pagerAdapter=new ScreenSlidePagerAdapter(this);
         evenList.add("主页");
         evenList.add("广场");
         evenList.add("我的");
-        viewPager2.setAdapter(new MyFragmentAdapter(MainActivity.this,evenList));
-        TabLayoutMediator  tabLayoutMediator=  new TabLayoutMediator(tabLayout, viewPager2, (tab, position) -> tab.setText(evenList.get(position)));
+        viewPager.setAdapter(pagerAdapter);
+        TabLayoutMediator  tabLayoutMediator=  new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText(evenList.get(position)));
         tabLayoutMediator.attach();
 
     }
+    @Override
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() == 0) {
+            // If the user is currently looking at the first step, allow the system to handle the
+            // Back button. This calls finish() on this activity and pops the back stack.
+            super.onBackPressed();
+        } else {
+            // Otherwise, select the previous step.
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+        }
+    }
+
 
     @SuppressLint("HandlerLeak")
     /*
@@ -71,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         //
                     });
             snackbar.show();
+            Log.i("myLog",user.getUser_name());
             TextView output = findViewById(R.id.output);
             output.setText(user.toString());
         }

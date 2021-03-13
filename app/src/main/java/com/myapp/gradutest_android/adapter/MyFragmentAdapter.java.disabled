@@ -30,7 +30,7 @@ public class MyFragmentAdapter extends BaseQuickAdapter<String, BaseViewHolder> 
     @Override
     protected void convert(@NotNull BaseViewHolder helper, String item) {
         if(Objects.equals(item, "我的")){
-            LinearLayout mainLinerLayout = (LinearLayout) helper.getView(R.id.background);
+            LinearLayout mainLinerLayout = (LinearLayout) helper.getView(R.layout.background);
             LayoutInflater inflater = LayoutInflater.from(mContext);
             View view = inflater.inflate(R.layout.fragment__my, null);
             mainLinerLayout.addView(view);
