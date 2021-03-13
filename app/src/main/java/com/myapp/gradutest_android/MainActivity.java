@@ -16,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tabhost_main);
         viewPager = findViewById(R.id.viewpager_main);
@@ -85,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                         //
                     });
             snackbar.show();
-            Log.i("myLog",user.getUser_name());
             TextView output = findViewById(R.id.output);
             output.setText(user.toString());
         }
@@ -97,9 +98,18 @@ public class MainActivity extends AppCompatActivity {
     public void log_in_onclick(View view){
         EditText user_name=findViewById(R.id.user_name_input_my);
         EditText user_pwd=findViewById(R.id.user_pwd_input_my);
-        String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
-        networkTask networkTask=new networkTask();
-        new Thread(networkTask.setParam(handler,url)).start();
+        RadioButton rule_checked_my=findViewById(R.id.rule_checked_my);
+        if(rule_checked_my.isChecked()){
+            String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
+            networkTask networkTask=new networkTask();
+            new Thread(networkTask.setParam(handler,url)).start();
+        }else {
+            Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), "请先阅读并同意用户守则", Snackbar.LENGTH_LONG)
+                    .setAction("确定", v -> {
+                        //
+                    });
+            snackbar.show();
+        }
     }
 
     public void sign_in_onclick(View view){

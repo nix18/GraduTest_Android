@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.myapp.gradutest_android.Fragment_Blank;
+import com.myapp.gradutest_android.Fragment_Error;
 import com.myapp.gradutest_android.Fragment_My;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,11 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         super(fa);
     }
 
+    /**
+     * 定义点击Tab时展示的Fragment
+     * @param position Tab位置
+     * @return 指定的Fragment
+     */
     @NotNull
     @Override
     public Fragment createFragment(int position) {
@@ -25,7 +31,7 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
                 return new Fragment_Blank();
             case 2:return new Fragment_My();
         }
-        return new Fragment_My();
+        return new Fragment_Error();
     }
 
     @Override
