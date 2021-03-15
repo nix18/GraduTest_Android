@@ -9,7 +9,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -54,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         TabLayoutMediator  tabLayoutMediator=  new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText(evenList.get(position)));
         tabLayoutMediator.attach();
-
     }
     @Override
     public void onBackPressed() {
@@ -69,53 +70,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @SuppressLint("HandlerLeak")
-    /*
-      消息处理
-     */
-    Handler handler=new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Log.i("myLog","Handler执行");
-            Bundle data = msg.getData();
-            String val = data.getString("value");
-            int code= getJson.getStatusCode(val);
-            User user=toJson.convertToJson(User.class,val);
-            Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), code==0?"登录成功":"登录失败", Snackbar.LENGTH_LONG)
-                    .setAction("确定", v -> {
-                        //
-                    });
-            snackbar.show();
-            TextView output = findViewById(R.id.output);
-            output.setText(user.toString());
-        }
-    };
-
-    /*
-    登录点击动作
-     */
-    public void log_in_onclick(View view){
-        EditText user_name=findViewById(R.id.user_name_input_my);
-        EditText user_pwd=findViewById(R.id.user_pwd_input_my);
-        RadioButton rule_checked_my=findViewById(R.id.rule_checked_my);
-        if(rule_checked_my.isChecked()){
-            String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
-            networkTask networkTask=new networkTask();
-            new Thread(networkTask.setParam(handler,url)).start();
-        }else {
-            Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), "请先阅读并同意用户守则", Snackbar.LENGTH_LONG)
-                    .setAction("确定", v -> {
-                        //
-                    });
-            snackbar.show();
-        }
-    }
-
-    public void sign_in_onclick(View view){
-        Intent intent=new Intent(MainActivity.this,Sign_In_Activity.class);
-        startActivity(intent);
-    }
 
     @Override
     protected void onStart() {

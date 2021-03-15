@@ -1,35 +1,22 @@
 package com.myapp.gradutest_android;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.myapp.gradutest_android.domain.User;
-import com.myapp.gradutest_android.utils.net.getJson;
-import com.myapp.gradutest_android.utils.net.networkTask;
-import com.myapp.gradutest_android.utils.net.toJson;
-//暂时没用
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Fragment_My#newInstance} factory method to
+ * Use the {@link Fragment_My_Info#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment_My extends Fragment {
+public class Fragment_My_Info extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +27,7 @@ public class Fragment_My extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Fragment_My() {
+    public Fragment_My_Info() {
         // Required empty public constructor
     }
 
@@ -50,11 +37,11 @@ public class Fragment_My extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_My.
+     * @return A new instance of fragment Fragment_My_Info.
      */
     // TODO: Rename and change types and number of parameters
-    public static Fragment_My newInstance(String param1, String param2) {
-        Fragment_My fragment = new Fragment_My();
+    public static Fragment_My_Info newInstance(String param1, String param2) {
+        Fragment_My_Info fragment = new Fragment_My_Info();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -74,7 +61,15 @@ public class Fragment_My extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment__my, container, false);
+        // 通过this.getActivity()获取主activity中的方法 通过view来改动布局
+        View view=inflater.inflate(R.layout.fragment__my__info, container, false);
+        TextView user_name=view.findViewById(R.id.user_name_container_my_info);
+        TextView user_profile=view.findViewById(R.id.user_profile_container_my_info);
+        SharedPreferences sp=this.getActivity().getSharedPreferences("loginToken", Context.MODE_PRIVATE);
+        String uName=sp.getString("user_name","defaultName");
+        String uProfile=sp.getString("user_profile","");
+        user_name.setText(uName);
+        user_profile.setText(uProfile);
+        return view;
     }
 }

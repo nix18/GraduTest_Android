@@ -7,6 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.myapp.gradutest_android.Fragment_Blank;
 import com.myapp.gradutest_android.Fragment_Error;
 import com.myapp.gradutest_android.Fragment_My;
+import com.myapp.gradutest_android.Fragment_My_Info;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +30,7 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
             case 0:
             case 1:
                 return new Fragment_Blank();
-            case 2:return new Fragment_My();
+            case 2:return new Fragment_My_Info();
         }
         return new Fragment_Error();
     }

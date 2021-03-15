@@ -24,7 +24,13 @@ public class networkTask implements MyRunnable{
     public void run() {
         Log.i("myLog","网络子线程执行");
         getJson getJson=new getJson();
-        Message msg=getJson.get(url,1);
-        handler.sendMessage(msg);
+        try {
+            Message msg=getJson.get(url,1);
+            handler.sendMessage(msg);
+        }catch (Exception e){
+            //使用msg置空来触发上层Exception
+            Message msg=new Message();
+            handler.sendMessage(msg);
+        }
     }
 }

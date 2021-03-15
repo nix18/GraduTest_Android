@@ -13,14 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GraduTest_Android"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Sign_In_Activity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Screen_Error_Activity"></activity>
+        <activity android:name=".Log_In_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Sign_In_Activity" />
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>
