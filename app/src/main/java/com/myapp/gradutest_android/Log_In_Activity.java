@@ -25,6 +25,9 @@ import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 
+import java.util.Objects;
+
+//程序入口
 public class Log_In_Activity extends AppCompatActivity {
 
 
@@ -33,6 +36,14 @@ public class Log_In_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_log__in);
+
+        //检查token是否有效
+        SharedPreferences sp=getSharedPreferences("loginToken",Context.MODE_PRIVATE);
+        String url=this.getString(R.string.host)+"/chkToken?uid="+sp.getInt("uid",0)+"&token="+sp.getString("user_token","");
+        networkTask networkTask=new networkTask();
+        new Thread(networkTask.setParam(chkTokenHandler,url)).start();
+
+        //装入登录Fragment
         FragmentTransaction transaction;
         Fragment_My fragment_my=new Fragment_My();
         transaction=getSupportFragmentManager().beginTransaction();//无须使用FragmentManager
@@ -42,15 +53,15 @@ public class Log_In_Activity extends AppCompatActivity {
 
     @SuppressLint("HandlerLeak")
     /*
-      消息处理
+      登录消息处理
      */
-    Handler handler=new Handler() {
+    Handler loginHandler=new Handler() {
         @SuppressLint("ApplySharedPref")
         @Override
         public void handleMessage(@NonNull Message msg) {
             try {
                 super.handleMessage(msg);
-                Log.i("myLog","Handler执行");
+                Log.i("myLog","loginHandler执行");
                 Bundle data = msg.getData();
                 String val = data.getString("value");
                 int code= getJson.getStatusCode(val);
@@ -84,6 +95,23 @@ public class Log_In_Activity extends AppCompatActivity {
         }
     };
 
+    @SuppressLint("HandlerLeak")
+    Handler chkTokenHandler=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","chkTokenHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            int code= getJson.getStatusCode(val);
+            if(code == 0){
+                Intent intent=new Intent(Log_In_Activity.this,MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }
+    };
+
     /*
     登录点击动作
      */
@@ -94,7 +122,7 @@ public class Log_In_Activity extends AppCompatActivity {
         if(rule_checked_my.isChecked()){
             String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
             networkTask networkTask=new networkTask();
-            new Thread(networkTask.setParam(handler,url)).start();
+            new Thread(networkTask.setParam(loginHandler,url)).start();
         }else {
             Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), "请先阅读并同意用户守则", Snackbar.LENGTH_LONG)
                     .setAction("确定", v -> {
