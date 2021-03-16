@@ -79,9 +79,10 @@ public class Fragment_My_Info extends Fragment {
 
         // 通过this.getActivity()获取主activity中的方法 通过view来改动布局
         View view=inflater.inflate(R.layout.fragment__my_info, container, false);
-        TextView user_name=view.findViewById(R.id.user_name_container_my_info);
-        TextView user_profile=view.findViewById(R.id.user_profile_container_my_info);
+        TextView user_name=view.findViewById(R.id.user_name_container_fm_my_info);
+        TextView user_profile=view.findViewById(R.id.user_profile_container_fm_my_info);
         Button log_out_btn=view.findViewById(R.id.log_out_btn_fm_my_info);
+        Button update_info_btn=view.findViewById(R.id.update_info_btn_fm_my_info);
         SharedPreferences sp=this.getActivity().getSharedPreferences("loginToken", Context.MODE_PRIVATE);
         String uName=sp.getString("user_name","defaultName");
         String uProfile=sp.getString("user_profile","");
@@ -96,6 +97,13 @@ public class Fragment_My_Info extends Fragment {
                 String url=thisActivity.getString(R.string.host)+"/logout?uid="+sp.getInt("uid",0)+"&token="+sp.getString("user_token","");
                 networkTask networkTask=new networkTask();
                 new Thread(networkTask.setParam(logOutHandler,url)).start();
+            }
+        });
+        update_info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(thisActivity,Update_Info_Activity.class);
+                startActivity(intent);
             }
         });
         return view;
