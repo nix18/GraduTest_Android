@@ -6,7 +6,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.myapp.gradutest_android.Fragment_Blank;
 import com.myapp.gradutest_android.Fragment_Error;
-import com.myapp.gradutest_android.Fragment_My;
 import com.myapp.gradutest_android.Fragment_My_Info;
 
 import org.jetbrains.annotations.NotNull;

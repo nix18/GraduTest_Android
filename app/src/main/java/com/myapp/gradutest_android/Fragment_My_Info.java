@@ -1,15 +1,27 @@
 package com.myapp.gradutest_android;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.myapp.gradutest_android.utils.net.getJson;
+import com.myapp.gradutest_android.utils.net.networkTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +38,8 @@ public class Fragment_My_Info extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private FragmentActivity thisActivity;
 
     public Fragment_My_Info() {
         // Required empty public constructor
@@ -52,6 +66,7 @@ public class Fragment_My_Info extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        thisActivity=this.getActivity();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,15 +76,59 @@ public class Fragment_My_Info extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // 通过this.getActivity()获取主activity中的方法 通过view来改动布局
-        View view=inflater.inflate(R.layout.fragment__my__info, container, false);
+        View view=inflater.inflate(R.layout.fragment__my_info, container, false);
         TextView user_name=view.findViewById(R.id.user_name_container_my_info);
         TextView user_profile=view.findViewById(R.id.user_profile_container_my_info);
+        Button log_out_btn=view.findViewById(R.id.log_out_btn_fm_my_info);
         SharedPreferences sp=this.getActivity().getSharedPreferences("loginToken", Context.MODE_PRIVATE);
         String uName=sp.getString("user_name","defaultName");
         String uProfile=sp.getString("user_profile","");
         user_name.setText(uName);
         user_profile.setText(uProfile);
+
+        //在fragment里设定点击动作须用setOnClickListener
+        log_out_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp=thisActivity.getSharedPreferences("loginToken",Context.MODE_PRIVATE);
+                String url=thisActivity.getString(R.string.host)+"/logout?uid="+sp.getInt("uid",0)+"&token="+sp.getString("user_token","");
+                networkTask networkTask=new networkTask();
+                new Thread(networkTask.setParam(logOutHandler,url)).start();
+            }
+        });
         return view;
     }
+
+
+    @SuppressLint("HandlerLeak")
+    Handler logOutHandler=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","logOutHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            int code= getJson.getStatusCode(val);
+            if(code == 0){
+
+                //清除SharedPreferences
+                SharedPreferences sp=thisActivity.getSharedPreferences("loginToken",Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.clear();
+                editor.commit();
+
+                //返回登录界面
+                Toast toast=Toast.makeText(thisActivity.getApplicationContext(), "登出成功", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent=new Intent(thisActivity,Log_In_Activity.class);
+                startActivity(intent);
+                thisActivity.finish();
+            }else {
+                Toast toast=Toast.makeText(thisActivity.getApplicationContext(), "登出失败", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+    };
 }

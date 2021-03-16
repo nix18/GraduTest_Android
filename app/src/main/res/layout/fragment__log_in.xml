@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:orientation="vertical"
-    tools:context=".Fragment_My">
+    tools:context=".Fragment_Log_In">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/user_name_text_my"
+                        android:id="@+id/user_name_text_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -48,7 +48,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/user_name_input_my"
+                        android:id="@+id/user_name_input_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:ems="10"
@@ -70,7 +70,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/user_pwd_text_my"
+                        android:id="@+id/user_pwd_text_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -84,7 +84,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/user_pwd_input_my"
+                        android:id="@+id/user_pwd_input_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:autofillHints="请输入密码"
@@ -119,7 +119,7 @@
                     android:orientation="vertical">
 
                     <RadioButton
-                        android:id="@+id/rule_checked_my"
+                        android:id="@+id/rule_checked_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:text="我已阅读并同意用户守则" />
@@ -149,7 +149,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/log_in_btn_my"
+                        android:id="@+id/log_in_btn_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -178,7 +178,7 @@
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/sign_in_btn_my"
+                        android:id="@+id/sign_in_btn_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

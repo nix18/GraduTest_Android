@@ -25,8 +25,6 @@ import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 
-import java.util.Objects;
-
 //程序入口
 public class Log_In_Activity extends AppCompatActivity {
 
@@ -45,9 +43,9 @@ public class Log_In_Activity extends AppCompatActivity {
 
         //装入登录Fragment
         FragmentTransaction transaction;
-        Fragment_My fragment_my=new Fragment_My();
+        Fragment_Log_In fragment_logIn =new Fragment_Log_In();
         transaction=getSupportFragmentManager().beginTransaction();//无须使用FragmentManager
-        transaction.add(R.id.login_container,fragment_my);
+        transaction.add(R.id.login_container, fragment_logIn);
         transaction.commit();
     }
 
@@ -116,9 +114,9 @@ public class Log_In_Activity extends AppCompatActivity {
     登录点击动作
      */
     public void log_in_onclick(View view){
-        EditText user_name=findViewById(R.id.user_name_input_my);
-        EditText user_pwd=findViewById(R.id.user_pwd_input_my);
-        RadioButton rule_checked_my=findViewById(R.id.rule_checked_my);
+        EditText user_name=findViewById(R.id.user_name_input_fm_log_in);
+        EditText user_pwd=findViewById(R.id.user_pwd_input_fm_log_in);
+        RadioButton rule_checked_my=findViewById(R.id.rule_checked_fm_log_in);
         if(rule_checked_my.isChecked()){
             String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
             networkTask networkTask=new networkTask();
