@@ -1,9 +1,7 @@
 package com.myapp.gradutest_android;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +20,7 @@ import android.widget.Toast;
 
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.tencent.mmkv.MMKV;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -83,9 +82,9 @@ public class Fragment_My_Info extends Fragment {
         TextView user_profile=view.findViewById(R.id.user_profile_container_fm_my_info);
         Button log_out_btn=view.findViewById(R.id.log_out_btn_fm_my_info);
         Button update_info_btn=view.findViewById(R.id.update_info_btn_fm_my_info);
-        SharedPreferences sp=this.getActivity().getSharedPreferences("loginToken", Context.MODE_PRIVATE);
-        String uName=sp.getString("user_name","defaultName");
-        String uProfile=sp.getString("user_profile","");
+        MMKV mmkv=MMKV.defaultMMKV();
+        String uName=mmkv.decodeString("user_name","defaultName");
+        String uProfile=mmkv.decodeString("user_profile","");
         user_name.setText(uName);
         user_profile.setText(uProfile);
 
@@ -93,8 +92,8 @@ public class Fragment_My_Info extends Fragment {
         log_out_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sp=thisActivity.getSharedPreferences("loginToken",Context.MODE_PRIVATE);
-                String url=thisActivity.getString(R.string.host)+"/logout?uid="+sp.getInt("uid",0)+"&token="+sp.getString("user_token","");
+                String url=thisActivity.getString(R.string.host)+"/logout?uid="+mmkv.decodeInt("uid",0)+
+                        "&token="+mmkv.decodeString("user_token","");
                 networkTask networkTask=new networkTask();
                 new Thread(networkTask.setParam(logOutHandler,url)).start();
             }
@@ -103,7 +102,7 @@ public class Fragment_My_Info extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(thisActivity,Update_Info_Activity.class);
-                startActivity(intent);
+                getActivity().startActivityForResult(intent,1);
             }
         });
         return view;
@@ -121,11 +120,9 @@ public class Fragment_My_Info extends Fragment {
             int code= getJson.getStatusCode(val);
             if(code == 0){
 
-                //清除SharedPreferences
-                SharedPreferences sp=thisActivity.getSharedPreferences("loginToken",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.clear();
-                editor.commit();
+                //清除MMKV
+                MMKV mmkv=MMKV.defaultMMKV();
+                mmkv.clearAll();
 
                 //返回登录界面
                 Toast toast=Toast.makeText(thisActivity.getApplicationContext(), "登出成功", Toast.LENGTH_SHORT);

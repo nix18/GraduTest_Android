@@ -24,6 +24,7 @@ import com.myapp.gradutest_android.domain.User;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
+import com.tencent.mmkv.MMKV;
 
 //程序入口
 public class Log_In_Activity extends AppCompatActivity {
@@ -35,9 +36,12 @@ public class Log_In_Activity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_log__in);
 
+        //初始化MMKV共享存储
+        MMKV.initialize(this);
+
         //检查token是否有效
-        SharedPreferences sp=getSharedPreferences("loginToken",Context.MODE_PRIVATE);
-        String url=this.getString(R.string.host)+"/chkToken?uid="+sp.getInt("uid",0)+"&token="+sp.getString("user_token","");
+        MMKV mmkv=MMKV.defaultMMKV();
+        String url=this.getString(R.string.host)+"/chkToken?uid="+mmkv.decodeInt("uid",0)+"&token="+mmkv.decodeString("user_token","");
         networkTask networkTask=new networkTask();
         new Thread(networkTask.setParam(chkTokenHandler,url)).start();
 
@@ -65,15 +69,13 @@ public class Log_In_Activity extends AppCompatActivity {
                 int code= getJson.getStatusCode(val);
                 User user= toJson.convertToJson(User.class,val);
 
-                //使用SharedPreferences保存Token
-                SharedPreferences sp=getSharedPreferences("loginToken", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putInt("uid",user.getUid());
-                editor.putString("user_name",user.getUser_name());
-                editor.putString("user_profile",user.getUser_profile());
-                editor.putString("user_token",user.getUser_token());
-                editor.commit();
-                Log.i("myLog",sp.getAll().toString());
+                //使用MMKV保存Token
+                MMKV mmkv=MMKV.defaultMMKV();
+                mmkv.encode("uid",user.getUid());
+                mmkv.encode("user_name",user.getUser_name());
+                mmkv.encode("user_profile",user.getUser_profile());
+                mmkv.encode("user_token",user.getUser_token());
+
 
                 //弹出提示
                 Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), code==0?"登录成功":"登录失败", Snackbar.LENGTH_LONG)
