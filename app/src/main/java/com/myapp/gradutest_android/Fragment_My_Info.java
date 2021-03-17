@@ -38,7 +38,9 @@ public class Fragment_My_Info extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
     private FragmentActivity thisActivity;
+    private View view;
 
     public Fragment_My_Info() {
         // Required empty public constructor
@@ -73,11 +75,24 @@ public class Fragment_My_Info extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        Log.i("myLog","onStart");
+        TextView user_name=view.findViewById(R.id.user_name_container_fm_my_info);
+        TextView user_profile=view.findViewById(R.id.user_profile_container_fm_my_info);
+        MMKV mmkv=MMKV.defaultMMKV();
+        String uName=mmkv.decodeString("user_name","defaultName");
+        String uProfile=mmkv.decodeString("user_profile","");
+        user_name.setText(uName);
+        user_profile.setText(uProfile);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // 通过this.getActivity()获取主activity中的方法 通过view来改动布局
-        View view=inflater.inflate(R.layout.fragment__my_info, container, false);
+        view=inflater.inflate(R.layout.fragment__my_info, container, false);
         TextView user_name=view.findViewById(R.id.user_name_container_fm_my_info);
         TextView user_profile=view.findViewById(R.id.user_profile_container_fm_my_info);
         Button log_out_btn=view.findViewById(R.id.log_out_btn_fm_my_info);
@@ -102,7 +117,7 @@ public class Fragment_My_Info extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(thisActivity,Update_Info_Activity.class);
-                getActivity().startActivityForResult(intent,1);
+                getActivity().startActivity(intent);
             }
         });
         return view;
