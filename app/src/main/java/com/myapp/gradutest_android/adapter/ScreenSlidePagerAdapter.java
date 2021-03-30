@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.myapp.gradutest_android.Fragment_Blank;
+import com.myapp.gradutest_android.Fragment_Square;
 import com.myapp.gradutest_android.Fragment_Error;
 import com.myapp.gradutest_android.Fragment_My_Info;
 
@@ -28,7 +28,7 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
         switch (position){
             case 0:
             case 1:
-                return new Fragment_Blank();
+                return new Fragment_Square();
             case 2:return new Fragment_My_Info();
         }
         return new Fragment_Error();

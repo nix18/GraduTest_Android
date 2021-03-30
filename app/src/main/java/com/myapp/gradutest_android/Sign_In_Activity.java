@@ -40,7 +40,7 @@ public class Sign_In_Activity extends AppCompatActivity {
             Log.i("myLog","Handler执行");
             Bundle data = msg.getData();
             String val = data.getString("value");
-            MyMessage message = toJson.convertToJson(MyMessage.class,val);
+            MyMessage message = toJson.jsonToObj(MyMessage.class,val);
             Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), message.getMsg(), Snackbar.LENGTH_LONG)
                     .setAction("确定", v -> {
                         //

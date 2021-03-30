@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.myapp.gradutest_android.domain.User;
@@ -67,7 +68,7 @@ public class Log_In_Activity extends AppCompatActivity {
                 Bundle data = msg.getData();
                 String val = data.getString("value");
                 int code= getJson.getStatusCode(val);
-                User user= toJson.convertToJson(User.class,val);
+                User user= toJson.jsonToObj(User.class,val);
 
                 //使用MMKV保存Token
                 MMKV mmkv=MMKV.defaultMMKV();
@@ -78,13 +79,8 @@ public class Log_In_Activity extends AppCompatActivity {
 
 
                 //弹出提示
-                Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), code==0?"登录成功":"登录失败", Snackbar.LENGTH_LONG)
-                        .setAction("确定", v -> {
-                            //
-                        });
-                snackbar.show();
-                TextView output = findViewById(R.id.output);
-                output.setText(user.toString());
+                Toast.makeText(getApplicationContext(), code==0?"登录成功":"登录失败",
+                        Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(Log_In_Activity.this,MainActivity.class);
                 startActivity(intent);
                 finish();

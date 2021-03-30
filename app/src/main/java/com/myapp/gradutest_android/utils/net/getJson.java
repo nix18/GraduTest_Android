@@ -20,6 +20,7 @@ public class getJson {
      * @return 返回Message型数据
      */
     public Message get(String url, int method){
+
         Message msg = null;
         try {
             URL myUrl=new URL(url);
