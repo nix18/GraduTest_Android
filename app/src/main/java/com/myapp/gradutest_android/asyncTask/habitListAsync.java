@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
+import com.tencent.mmkv.MMKV;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +49,8 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                     JSONObject jsonObject=new JSONObject(val);
                     String json=jsonObject.getString("result");
                     habits = toJson.jsonToObjs(GoodHabit.class,json);
+                    MMKV habit_mmkv=MMKV.mmkvWithID("habits");
+                    habit_mmkv.encode("habits",json);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -75,6 +80,19 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
         }
         for(GoodHabit habit:habits) {
             mAdapter.add("好习惯"+habit.toString(),i);
+            mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Toast.makeText(myActivity, "clicked " + position,
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onItemLongClick(View view, int position) {
+                    Toast.makeText(myActivity, "long clicked " + position,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
             i++;
         }
         ((SwipeRefreshLayout)myActivity.findViewById(R.id.swipe_refresh_fm_square)).setRefreshing(false);

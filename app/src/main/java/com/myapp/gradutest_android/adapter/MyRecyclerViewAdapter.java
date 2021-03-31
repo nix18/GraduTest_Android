@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<String> localDataSet;
+    private OnItemClickListener mOnItemClickListener;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -65,6 +66,21 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         viewHolder.getTextView().setText(localDataSet.get(position));
+        if (mOnItemClickListener != null) {
+            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickListener.onItemClick(viewHolder.itemView, position);
+                }
+            });
+            viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+               @Override
+               public boolean onLongClick(View view) {
+                   mOnItemClickListener.onItemLongClick(viewHolder.itemView, position);
+                   return true;
+               }
+           });
+        }
     }
 
     public void add(String text, int position) {
@@ -77,10 +93,19 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         notifyItemRemoved(position);
     }
 
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mOnItemClickListener = listener;
+    }
+
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return localDataSet.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view, int position);
     }
 }
 
