@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
@@ -45,7 +46,6 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                     JSONObject jsonObject=new JSONObject(val);
                     String json=jsonObject.getString("result");
                     habits = toJson.jsonToObjs(GoodHabit.class,json);
-                    Log.i("myLog","habits初始化完成 "+habits.size());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -77,6 +77,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             mAdapter.add("好习惯"+habit.toString(),i);
             i++;
         }
+        ((SwipeRefreshLayout)myActivity.findViewById(R.id.swipe_refresh_fm_square)).setRefreshing(false);
         super.onPostExecute(s);
     }
 
@@ -102,7 +103,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
         Thread t=new Thread(networkTask.setParam(getDataHandler,url));
         try {
             t.start();
-            t.join();
+            t.join(); // 防止取不到对象
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

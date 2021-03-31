@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
 import android.os.Message;
@@ -48,6 +49,8 @@ public class Fragment_Square extends Fragment {
 
     private MMKV mmkv;
 
+    private SwipeRefreshLayout swipeLayout;
+
     ArrayList<GoodHabit> habits;
     ArrayList<String> data;
 
@@ -69,28 +72,6 @@ public class Fragment_Square extends Fragment {
     }
 
 
-/*    @SuppressLint("HandlerLeak")
-    Handler getDataHandler=new Handler(){
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Log.i("myLog","getDataHandler执行");
-            Bundle data = msg.getData();
-            String val = data.getString("value");
-            int code= getJson.getStatusCode(val);
-            if(code == 0){
-                try {
-                    JSONObject jsonObject=new JSONObject(val);
-                    String json=jsonObject.getString("result");
-                    habits = toJson.jsonToObjs(GoodHabit.class,json);
-                    Log.i("myLog","habits初始化完成 "+habits.size());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };*/
-
     private void initData(View view){
         mLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         mAdapter = new MyRecyclerViewAdapter(data);
@@ -104,15 +85,6 @@ public class Fragment_Square extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-/*    private void getData(){
-        String url=thisActivity.getString(R.string.host)+"/habitplaza";
-        networkTask networkTask=new networkTask();
-        Thread t=new Thread(networkTask.setParam(getDataHandler,url));
-        t.start();
-        for(GoodHabit habit:habits) {
-            data.add("好习惯"+habit.getHabit_name());
-        }
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -121,6 +93,21 @@ public class Fragment_Square extends Fragment {
         view=inflater.inflate(R.layout.fragment__square, container, false);
         initData(view);
         initView(view);
+        swipeLayout = view.findViewById(R.id.swipe_refresh_fm_square);
+        swipeLayout.setColorScheme(android.R.color.holo_red_light,
+                android.R.color.holo_green_light, android.R.color.holo_blue_bright,
+                android.R.color.holo_orange_light);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                //延迟一秒钟再执行任务
+                new Handler().postDelayed(new Runnable() {
+                    public void run() {
+                        new habitListAsync(getActivity(),mAdapter,data).execute();
+                    }
+                }, 1000);
+            }
+        });
         return view;
     }
 
