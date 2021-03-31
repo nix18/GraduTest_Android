@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GraduTest_Android"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Update_Info_Activity"></activity>
+        <activity android:name=".Habit_Info_Activity"></activity>
+        <activity android:name=".Update_Info_Activity" />
         <activity android:name=".Screen_Error_Activity" />
         <activity android:name=".Log_In_Activity">
             <intent-filter>

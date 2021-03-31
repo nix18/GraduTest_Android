@@ -10,7 +10,9 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 
-
+/**
+ * 将Json转换为对象
+ */
 public class toJson {
     /**
      * 将Json中的数据装入对象，并返回此对象
@@ -21,7 +23,7 @@ public class toJson {
      */
     public static <T> T jsonToObj(Class<T> object,String json){
         T obj;
-        Gson gson=new Gson();
+        Gson gson=new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
         obj=gson.fromJson(json,object);
         return obj;
     }

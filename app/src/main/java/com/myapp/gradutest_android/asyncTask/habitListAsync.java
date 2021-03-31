@@ -2,6 +2,7 @@ package com.myapp.gradutest_android.asyncTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +12,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.myapp.gradutest_android.Habit_Info_Activity;
 import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.domain.GoodHabit;
@@ -81,10 +82,13 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
         for(GoodHabit habit:habits) {
             mAdapter.add("好习惯"+habit.toString(),i);
             mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+                Intent intent=new Intent(myActivity, Habit_Info_Activity.class);
                 @Override
                 public void onItemClick(View view, int position) {
                     Toast.makeText(myActivity, "clicked " + position,
                             Toast.LENGTH_SHORT).show();
+                    intent.putExtra("position",position);
+                    myActivity.startActivity(intent);
                 }
 
                 @Override
