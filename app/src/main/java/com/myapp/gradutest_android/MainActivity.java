@@ -3,6 +3,7 @@ package com.myapp.gradutest_android;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.adapter.FragmentViewHolder;
@@ -26,13 +27,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.myapp.gradutest_android.adapter.ScreenSlidePagerAdapter;
-import com.myapp.gradutest_android.domain.User;
-import com.myapp.gradutest_android.utils.net.getJson;
-import com.myapp.gradutest_android.utils.net.networkTask;
-import com.myapp.gradutest_android.utils.net.toJson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private List<String> evenList=new ArrayList<>();
     private FragmentStateAdapter pagerAdapter;
+    private NestedScrollView nestedScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tabLayout = findViewById(R.id.tabhost_main);
         viewPager = findViewById(R.id.viewpager_main);
+        nestedScrollView=findViewById(R.id.nestedScrollView_main);
+        nestedScrollView.setFillViewport(true);
         pagerAdapter=new ScreenSlidePagerAdapter(this);
         evenList.add("主页");
         evenList.add("广场");

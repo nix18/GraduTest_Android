@@ -23,6 +23,10 @@ import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
+import com.scwang.smart.refresh.footer.ClassicsFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.tencent.mmkv.MMKV;
 
 import org.json.JSONException;
@@ -49,7 +53,6 @@ public class Fragment_Square extends Fragment {
 
     private MMKV mmkv;
 
-    private SwipeRefreshLayout swipeLayout;
 
     ArrayList<GoodHabit> habits;
     ArrayList<String> data;
@@ -93,19 +96,19 @@ public class Fragment_Square extends Fragment {
         view=inflater.inflate(R.layout.fragment__square, container, false);
         initData(view);
         initView(view);
-        swipeLayout = view.findViewById(R.id.swipe_refresh_fm_square);
-        swipeLayout.setColorScheme(android.R.color.holo_red_light,
-                android.R.color.holo_green_light, android.R.color.holo_blue_bright,
-                android.R.color.holo_orange_light);
-        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mRecyclerView.setNestedScrollingEnabled(true);
+        RefreshLayout refreshLayout = (RefreshLayout)view.findViewById(R.id.refresh_layout_fm_square);
+        refreshLayout.setRefreshHeader(new ClassicsHeader(view.getContext()));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
+            public void onRefresh(RefreshLayout refreshlayout) {
                 //延迟一秒钟再执行任务
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
                         new habitListAsync(getActivity(),mAdapter,data).execute();
                     }
                 }, 1000);
+                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
         return view;

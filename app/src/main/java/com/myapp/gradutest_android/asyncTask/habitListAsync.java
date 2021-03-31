@@ -99,7 +99,6 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             });
             i++;
         }
-        ((SwipeRefreshLayout)myActivity.findViewById(R.id.swipe_refresh_fm_square)).setRefreshing(false);
         super.onPostExecute(s);
     }
 

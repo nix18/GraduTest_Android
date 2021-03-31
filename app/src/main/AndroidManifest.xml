@@ -11,9 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GraduTest_Android"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Habit_Info_Activity"></activity>
+        <activity android:name=".Test_Toolbar_Activity"/>
+        <activity android:name=".Habit_Info_Activity" />
         <activity android:name=".Update_Info_Activity" />
         <activity android:name=".Screen_Error_Activity" />
         <activity android:name=".Log_In_Activity">
