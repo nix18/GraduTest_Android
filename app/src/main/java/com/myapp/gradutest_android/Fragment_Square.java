@@ -1,18 +1,13 @@
 package com.myapp.gradutest_android;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +15,11 @@ import android.view.ViewGroup;
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.habitListAsync;
 import com.myapp.gradutest_android.domain.GoodHabit;
-import com.myapp.gradutest_android.utils.net.getJson;
-import com.myapp.gradutest_android.utils.net.networkTask;
-import com.myapp.gradutest_android.utils.net.toJson;
-import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.tencent.mmkv.MMKV;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
