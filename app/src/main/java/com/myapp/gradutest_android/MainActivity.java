@@ -9,6 +9,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -120,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.habit_add:
                         Toast.makeText(MainActivity.this, "添加好习惯", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this,Add_Habit_Activity.class);
+                        startActivity(intent);
+                        break;
                     case R.id.habit_by_me:
                         Toast.makeText(MainActivity.this, "我创建的好习惯", Toast.LENGTH_SHORT).show();
                         break;
