@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.myapp.gradutest_android.domain.GoodHabit;
@@ -19,6 +20,8 @@ public class Habit_Info_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__habit__info);
         TextView habit_info_text=findViewById(R.id.habitinfo_habit_info);
+        ImageView imageView = findViewById(R.id.img_habit_info);
+        imageView.setOnClickListener(v -> finish());
         MMKV habit_mmkv=MMKV.mmkvWithID("habits");
         Intent intent = getIntent();
         if (intent != null) {

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.myapp.gradutest_android.utils.net.getJson;
@@ -26,6 +27,7 @@ public class Add_Habit_Activity extends AppCompatActivity {
     private EditText habit_category;
     private Button back_btn;
     private Button submit_btn;
+    private ImageView imageView;
     private MMKV mmkv;
 
     @Override
@@ -34,6 +36,7 @@ public class Add_Habit_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_add__habit);
         initView();
         mmkv = MMKV.defaultMMKV();
+        imageView.setOnClickListener(v -> finish());
         back_btn.setOnClickListener(v -> finish());
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +70,7 @@ public class Add_Habit_Activity extends AppCompatActivity {
         habit_category = findViewById(R.id.input_habit_category_add_habit);
         back_btn = findViewById(R.id.back_btn_add_habit);
         submit_btn = findViewById(R.id.submit_btn_add_habit);
+        imageView = findViewById(R.id.img_add_habit);
     }
 
     @SuppressLint("HandlerLeak")

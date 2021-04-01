@@ -12,6 +12,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class Update_Info_Activity extends AppCompatActivity {
         TextView user_pwd=findViewById(R.id.user_pwd_input_update_info);
         Button back_btn=findViewById(R.id.back_btn_update_info);
         Button update_info_btn=findViewById(R.id.update_info_btn_update_info);
+        ImageView imageView = findViewById(R.id.img_update_info);
+        imageView.setOnClickListener(v -> finish());
         user_name.setText(mmkv.decodeString("user_name",""));
         user_profile.setHint(mmkv.decodeString("user_profile",""));
         back_btn.setOnClickListener(new View.OnClickListener() {

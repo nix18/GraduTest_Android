@@ -9,6 +9,37 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#7adfb8"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/img_add_habit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:src="@mipmap/ic_back" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:text="添加好习惯"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:src="@drawable/ic_launcher_foreground" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:orientation="vertical">
@@ -25,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="习惯名" />
 
             <EditText
@@ -51,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="习惯内容" />
 
             <EditText
@@ -76,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:gravity="center"
                 android:text="习惯分类" />
 
             <EditText
