@@ -97,7 +97,6 @@ public class Fragment_Square extends Fragment {
                         new habitListAsync(getActivity(),mAdapter,data).execute();
                     }
                 }, 1000);
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
             }
         });
         return view;

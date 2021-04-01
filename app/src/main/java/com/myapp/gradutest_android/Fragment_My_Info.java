@@ -1,6 +1,7 @@
 package com.myapp.gradutest_android;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.tencent.mmkv.MMKV;
@@ -57,6 +59,7 @@ public class Fragment_My_Info extends Fragment {
         String uProfile=mmkv.decodeString("user_profile","");
         user_name.setText(uName);
         user_profile.setText(uProfile);
+        new userCreditAsync(view).execute();
     }
 
     @Override

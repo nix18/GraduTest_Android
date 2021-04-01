@@ -21,6 +21,7 @@ import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.tencent.mmkv.MMKV;
 
 import org.json.JSONException;
@@ -35,6 +36,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
     private MyRecyclerViewAdapter mAdapter;
     ArrayList<GoodHabit> habits;
     ArrayList<String> myData = new ArrayList<>();
+    RefreshLayout refreshLayout;
 
     @SuppressLint("HandlerLeak")
     Handler getDataHandler=new Handler(){
@@ -99,6 +101,9 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             });
             i++;
         }
+        refreshLayout = myActivity.findViewById(R.id.refresh_layout_fm_square);
+        if(refreshLayout != null)
+            refreshLayout.finishRefresh(1000);
         super.onPostExecute(s);
     }
 
@@ -127,6 +132,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             t.join(); // 防止取不到对象
         } catch (InterruptedException e) {
             e.printStackTrace();
+            refreshLayout.finishRefresh(1000,false,false);
         }
         return null;
     }
