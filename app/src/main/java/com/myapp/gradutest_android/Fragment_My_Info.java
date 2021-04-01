@@ -20,8 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myapp.gradutest_android.asyncTask.userCreditAsync;
+import com.myapp.gradutest_android.domain.MyMessage;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.net.toJson;
 import com.tencent.mmkv.MMKV;
 
 /**
@@ -72,6 +74,7 @@ public class Fragment_My_Info extends Fragment {
         TextView user_profile=view.findViewById(R.id.user_profile_container_fm_my_info);
         Button log_out_btn=view.findViewById(R.id.log_out_btn_fm_my_info);
         Button update_info_btn=view.findViewById(R.id.update_info_btn_fm_my_info);
+        Button clock_in_btn=view.findViewById(R.id.clock_in_btn_fm_my_info);
         MMKV mmkv=MMKV.defaultMMKV();
         String uName=mmkv.decodeString("user_name","defaultName");
         String uProfile=mmkv.decodeString("user_profile","");
@@ -95,6 +98,16 @@ public class Fragment_My_Info extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+        clock_in_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url=thisActivity.getString(R.string.host)+"/qiandao?uid="+mmkv.decodeInt("uid",0)+
+                        "&token="+mmkv.decodeString("user_token","");
+                networkTask networkTask=new networkTask();
+                new Thread(networkTask.setParam(clockInHandler,url)).start();
+            }
+        });
+
         return view;
     }
 
@@ -124,6 +137,20 @@ public class Fragment_My_Info extends Fragment {
                 Toast toast=Toast.makeText(thisActivity.getApplicationContext(), "登出失败", Toast.LENGTH_SHORT);
                 toast.show();
             }
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler clockInHandler=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","clockInHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            MyMessage myMessage = toJson.jsonToObj(MyMessage.class,val);
+            Toast.makeText(thisActivity,myMessage.getMsg(),Toast.LENGTH_SHORT).show();
+            new userCreditAsync(view).execute();
         }
     };
 }
