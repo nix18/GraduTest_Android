@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.habitListAsync;
 import com.myapp.gradutest_android.domain.GoodHabit;
@@ -41,6 +43,10 @@ public class Fragment_Square extends Fragment {
     private Activity thisActivity;
 
     private MMKV mmkv;
+
+    private AppBarLayout appBarLayout;
+
+    private CollapsingToolbarLayout toolbarLayout;
 
 
     ArrayList<GoodHabit> habits;
@@ -106,5 +112,15 @@ public class Fragment_Square extends Fragment {
     public void onStart() {
         super.onStart();
         new habitListAsync(getActivity(),mAdapter,data).execute();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        appBarLayout = getActivity().findViewById(R.id.appbar_main);
+        toolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar_layout_main);
+        toolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
+        toolbarLayout.setTitle("习惯广场");
+        appBarLayout.setExpanded(false);
     }
 }

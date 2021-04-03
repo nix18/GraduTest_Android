@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> evenList=new ArrayList<>();
     private FragmentStateAdapter pagerAdapter;
     private NestedScrollView nestedScrollView;
+    private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
     //抽屉部分
@@ -114,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-        toolbar.setOverflowIcon(getDrawable(android.R.drawable.ic_menu_add));
+        toolbar.setOverflowIcon(getDrawable(R.mipmap.icon_add));
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -138,11 +141,5 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
-    }
-
-
-    @Override
-    protected void onStart() {
-        super.onStart();
     }
 }

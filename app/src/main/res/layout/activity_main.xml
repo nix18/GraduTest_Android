@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/appbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            app:contentScrim="@color/light_blue_400"
+            app:contentScrim="@color/white"
             app:expandedTitleMarginStart="38dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:statusBarScrim="@color/gray_400">
@@ -37,7 +37,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:menu="@menu/toolbar_menu"
-                app:navigationIcon="@android:drawable/ic_menu_sort_by_size"
+                app:navigationIcon="@mipmap/ic_nav"
                 app:popupTheme="@style/ToolbarPopupTheme"
                 app:subtitleTextColor="#3F51B5"
                 app:title="好习惯养成系统"

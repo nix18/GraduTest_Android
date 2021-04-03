@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Add_Habit_Activity"></activity>
+        <activity android:name=".My_Info_Activity"></activity>
+        <activity android:name=".Add_Habit_Activity" />
         <activity android:name=".Test_Toolbar_Activity" />
         <activity android:name=".Habit_Info_Activity" />
         <activity android:name=".Update_Info_Activity" />

@@ -1,6 +1,7 @@
 package com.myapp.gradutest_android.asyncTask;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import com.tencent.mmkv.MMKV;
 @SuppressLint("StaticFieldLeak")
 public class userCreditAsync extends AsyncTask<String,Integer,String> {
 
-    protected View myView;
+    protected Activity myActivity;
     protected TextView t;
     protected Credit credit;
 
@@ -45,15 +46,15 @@ public class userCreditAsync extends AsyncTask<String,Integer,String> {
         }
     };
 
-    public userCreditAsync(View myView) {
-        this.myView = myView;
+    public userCreditAsync(Activity activity) {
+        myActivity = activity;
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        t = myView.findViewById(R.id.user_credit_container_fm_my_info);
+        t = myActivity.findViewById(R.id.user_credit_container_my_info);
         t.setText(credit.getCreditSum().toString());
     }
 
@@ -62,7 +63,7 @@ public class userCreditAsync extends AsyncTask<String,Integer,String> {
     protected String doInBackground(String... strings) {
         MMKV mmkv = MMKV.defaultMMKV();
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http").encodedAuthority(myView.getResources().getString(R.string.host_core))
+        builder.scheme("http").encodedAuthority(myActivity.getResources().getString(R.string.host_core))
                 .appendPath("getCredit")
                 .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                 .appendQueryParameter("token", mmkv.decodeString("user_token",""));
