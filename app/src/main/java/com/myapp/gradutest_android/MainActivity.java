@@ -10,7 +10,6 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import android.view.Menu;
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    protected void findView(){
+    protected void initView(){
         drawerLayout = findViewById(R.id.drawer_layout_main_with_drawer);
         navigationView = findViewById(R.id.nav_view_main_with_drawer);
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar_layout_main);
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     protected void initNav(){
-        findView();
+        initView();
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.black));
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
         View headView = navigationView.getHeaderView(0);
@@ -108,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()){
                 case R.id.item_personal://个人
                     Toast.makeText(this,"个人页面",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this,My_Info_Activity.class);
+                    startActivity(intent);
                     drawerLayout.closeDrawer(navigationView);
                     break;
                 case R.id.item_setting://设置

@@ -23,10 +23,13 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.domain.MyMessage;
+import com.myapp.gradutest_android.listener.AppBarLayoutStateChangeListener;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.tencent.mmkv.MMKV;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,12 +89,33 @@ public class Fragment_My extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //维护当前Fragment值
+        MMKV mmkv_sys = MMKV.mmkvWithID("shared_sys");
+        mmkv_sys.encode("currFrag","My");
         MMKV mmkv = MMKV.defaultMMKV();
         appBarLayout = getActivity().findViewById(R.id.appbar_main);
         toolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar_layout_main);
         toolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
         toolbarLayout.setTitle(mmkv.decodeString("user_name"));
         appBarLayout.setExpanded(false);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayoutStateChangeListener() {
+            @Override
+            public void onStateChanged(AppBarLayout appBarLayout, AppBarLayoutStateChangeListener.State state) {
+                MMKV mmkv_in = MMKV.mmkvWithID("shared_sys");
+                String curr = mmkv_in.decodeString("currFrag");
+                switch (state){
+                    case EXPANDED:
+                    case INTERMEDIATE:
+                        if(Objects.equals(curr, "My"))
+                        toolbarLayout.setTitle(mmkv.decodeString("user_name")+"，你好");
+                        break;
+                    case COLLAPSED:
+                        if(Objects.equals(curr, "My"))
+                        toolbarLayout.setTitle(mmkv.decodeString("user_name"));
+                        break;
+                }
+            }
+        });
     }
 
 

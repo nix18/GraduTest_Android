@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.tencent.mmkv.MMKV;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +56,9 @@ public class Fragment_Main extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //维护当前Fragment值
+        MMKV mmkv_sys = MMKV.mmkvWithID("shared_sys");
+        mmkv_sys.encode("currFrag","Main");
         appBarLayout = getActivity().findViewById(R.id.appbar_main);
         toolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar_layout_main);
         toolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));

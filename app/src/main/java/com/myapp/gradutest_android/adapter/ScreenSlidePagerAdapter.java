@@ -8,6 +8,7 @@ import com.myapp.gradutest_android.Fragment_Main;
 import com.myapp.gradutest_android.Fragment_Square;
 import com.myapp.gradutest_android.Fragment_Error;
 import com.myapp.gradutest_android.Fragment_My;
+import com.tencent.mmkv.MMKV;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,9 +28,12 @@ public class ScreenSlidePagerAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position){
-            case 0: return new Fragment_Main();
-            case 1: return new Fragment_Square();
-            case 2: return new Fragment_My();
+            case 0:
+                return new Fragment_Main();
+            case 1:
+                return new Fragment_Square();
+            case 2:
+                return new Fragment_My();
         }
         return new Fragment_Error();
     }

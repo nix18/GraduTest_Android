@@ -117,6 +117,9 @@ public class Fragment_Square extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        //维护当前Fragment值
+        MMKV mmkv_sys = MMKV.mmkvWithID("shared_sys");
+        mmkv_sys.encode("currFrag","Square");
         appBarLayout = getActivity().findViewById(R.id.appbar_main);
         toolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar_layout_main);
         toolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
