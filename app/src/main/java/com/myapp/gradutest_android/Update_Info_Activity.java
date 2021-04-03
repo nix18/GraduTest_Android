@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
 
 public class Update_Info_Activity extends AppCompatActivity {
@@ -29,7 +30,9 @@ public class Update_Info_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         setContentView(R.layout.activity_update__info);
+        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         thisActivity=this;
         mmkv=MMKV.defaultMMKV();
         TextView user_name=findViewById(R.id.user_name_input_update_info);

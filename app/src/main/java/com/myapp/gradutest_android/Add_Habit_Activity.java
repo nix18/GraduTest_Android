@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
 
 public class Add_Habit_Activity extends AppCompatActivity {
@@ -33,7 +34,9 @@ public class Add_Habit_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         setContentView(R.layout.activity_add__habit);
+        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         initView();
         mmkv = MMKV.defaultMMKV();
         imageView.setOnClickListener(v -> finish());

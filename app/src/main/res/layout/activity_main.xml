@@ -19,7 +19,7 @@
             app:contentScrim="@color/white"
             app:expandedTitleMarginStart="38dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:statusBarScrim="@color/gray_400">
+            app:statusBarScrim="@color/white">
 
             <ImageView
                 android:layout_width="match_parent"

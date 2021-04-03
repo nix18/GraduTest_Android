@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#7adfb8"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <ImageView
@@ -28,7 +28,7 @@
             android:layout_weight="10"
             android:gravity="center"
             android:text="个人信息"
-            android:textColor="#ffffff"
+            android:textColor="@color/black"
             android:textSize="20dp" />
 
         <ImageView

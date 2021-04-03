@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.myapp.gradutest_android.domain.MyMessage;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
+import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 
 public class Sign_In_Activity extends AppCompatActivity {
 
@@ -26,7 +28,16 @@ public class Sign_In_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         setContentView(R.layout.activity_sign__in);
+        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
+        ImageView back_btn = findViewById(R.id.img_sign_in);
+        back_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @SuppressLint("HandlerLeak")

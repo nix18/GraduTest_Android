@@ -27,6 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.myapp.gradutest_android.adapter.ScreenSlidePagerAdapter;
+import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         setContentView(R.layout.activity_main_with_drawer);
+        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         tabLayout = findViewById(R.id.tabhost_main);
         viewPager = findViewById(R.id.viewpager_main);
         nestedScrollView=findViewById(R.id.nestedScrollView_main);
