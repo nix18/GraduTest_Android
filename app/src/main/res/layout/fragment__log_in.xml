@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,19 +28,9 @@
                 android:orientation="horizontal"
                 tools:ignore="NestedWeights">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/user_name_text_fm_log_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="用户名" />
-                </LinearLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -52,8 +43,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:ems="10"
+                        android:hint="请输入用户名"
                         android:inputType="textPersonName" />
                 </LinearLayout>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -63,19 +60,9 @@
                 android:baselineAligned="false"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/user_pwd_text_fm_log_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="密码" />
-                </LinearLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,8 +76,14 @@
                         android:layout_height="match_parent"
                         android:autofillHints="请输入密码"
                         android:ems="10"
+                        android:hint="请输入密码"
                         android:inputType="textPassword" />
                 </LinearLayout>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -103,95 +96,93 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
+                <RadioButton
+                    android:id="@+id/rule_checked_fm_log_in"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="我同意 好习惯养成系统 用户协议，并授权系统使用你的用户信息" />
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                tools:ignore="NestedWeights">
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/log_in_btn_fm_log_in"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"></LinearLayout>
+                    android:background="@color/gray_400"
+                    app:cardBackgroundColor="@color/deep_yellow"
+                    app:cardCornerRadius="10dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="6"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/rule_checked_fm_log_in"
+                    <TextView
+                        android:id="@+id/log_in_btn_text_fm_log_in"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="我已阅读并同意用户守则" />
-                </LinearLayout>
+                        android:gravity="center"
+                        android:text="登录"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
 
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="6dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                tools:ignore="NestedWeights">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Space
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="9" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                <TextView
+                    android:id="@+id/log_in_without_account_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:text="直接进入（离线模式）" />
 
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/log_in_btn_fm_log_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="log_in_onclick"
-                        android:text="登录" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical"></LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Space
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/sign_in_btn_fm_log_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:onClick="sign_in_onclick"
-                        android:text="注册" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical"></LinearLayout>
-
-                </LinearLayout>
+                    android:layout_weight="2" />
 
             </LinearLayout>
 

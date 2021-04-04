@@ -3,6 +3,7 @@ package com.myapp.gradutest_android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
@@ -31,6 +32,7 @@ import com.tencent.mmkv.MMKV;
 //程序入口
 public class Log_In_Activity extends AppCompatActivity {
 
+    private TextView sign_in;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,44 +57,16 @@ public class Log_In_Activity extends AppCompatActivity {
         transaction=getSupportFragmentManager().beginTransaction();//无须使用FragmentManager
         transaction.add(R.id.login_container, fragment_logIn);
         transaction.commit();
+        initView();
     }
 
-    @SuppressLint("HandlerLeak")
-    /*
-      登录消息处理
-     */
-    Handler loginHandler=new Handler() {
-        @SuppressLint("ApplySharedPref")
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            try {
-                super.handleMessage(msg);
-                Log.i("myLog","loginHandler执行");
-                Bundle data = msg.getData();
-                String val = data.getString("value");
-                int code= getJson.getStatusCode(val);
-                User user= toJson.jsonToObj(User.class,val);
-
-                //使用MMKV保存Token
-                MMKV mmkv=MMKV.defaultMMKV();
-                mmkv.encode("uid",user.getUid());
-                mmkv.encode("user_name",user.getUser_name());
-                mmkv.encode("user_profile",user.getUser_profile());
-                mmkv.encode("user_token",user.getUser_token());
-
-
-                //弹出提示
-                Toast.makeText(getApplicationContext(), code==0?"登录成功":"登录失败",
-                        Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(Log_In_Activity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-            }catch (Exception e){
-                Intent intent=new Intent(Log_In_Activity.this,Screen_Error_Activity.class);
-                startActivity(intent);
-            }
-        }
-    };
+    protected void initView(){
+        sign_in = findViewById(R.id.sign_in_btn_log_in);
+        sign_in.setOnClickListener(v -> {
+            Intent intent=new Intent(Log_In_Activity.this,Sign_In_Activity.class);
+            startActivity(intent);
+        });
+    }
 
     @SuppressLint("HandlerLeak")
     Handler chkTokenHandler=new Handler(){
@@ -110,29 +84,4 @@ public class Log_In_Activity extends AppCompatActivity {
             }
         }
     };
-
-    /*
-    登录点击动作
-     */
-    public void log_in_onclick(View view){
-        EditText user_name=findViewById(R.id.user_name_input_fm_log_in);
-        EditText user_pwd=findViewById(R.id.user_pwd_input_fm_log_in);
-        RadioButton rule_checked_my=findViewById(R.id.rule_checked_fm_log_in);
-        if(rule_checked_my.isChecked()){
-            String url=this.getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
-            networkTask networkTask=new networkTask();
-            new Thread(networkTask.setParam(loginHandler,url)).start();
-        }else {
-            Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), "请先阅读并同意用户守则", Snackbar.LENGTH_LONG)
-                    .setAction("确定", v -> {
-                        //
-                    });
-            snackbar.show();
-        }
-    }
-
-    public void sign_in_onclick(View view){
-        Intent intent=new Intent(this,Sign_In_Activity.class);
-        startActivity(intent);
-    }
 }

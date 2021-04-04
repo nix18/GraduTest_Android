@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">好习惯养成系统</string>
+    <string name="banner_log_in">欢迎登录</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">这是一个空页面</string>
     <string name="error_msg">哎呀，程序出错了</string>

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Sign_In_Activity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/img_sign_in"
@@ -27,7 +27,7 @@
             android:layout_marginTop="5dp"
             android:layout_weight="10"
             android:gravity="center"
-            android:text="个人信息"
+            android:text="注册"
             android:textColor="@color/black"
             android:textSize="20dp" />
 
@@ -42,7 +42,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,24 +54,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal"
                 android:baselineAligned="false"
+                android:orientation="horizontal"
                 tools:ignore="NestedWeights">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/user_name_text_sign_in"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="用户名" />
-                </LinearLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,34 +73,28 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:autofillHints="请输入用户名"
                         android:ems="10"
-                        android:inputType="textPersonName"
-                        android:autofillHints="请输入用户名" />
+                        android:hint="请输入用户名"
+                        android:inputType="textPersonName" />
                 </LinearLayout>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/user_profile_text_sign_in"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="用户简介"
-                        tools:ignore="NestedWeights" />
-                </LinearLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -125,9 +108,15 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:hint="请输入用户简介"
                         android:inputType="textPersonName"
                         tools:ignore="NestedWeights" />
                 </LinearLayout>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -136,21 +125,9 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/user_pwd_text_sign_in"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="用户密码"
-                        tools:ignore="NestedWeights" />
-                </LinearLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -164,9 +141,15 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:ems="10"
+                        android:hint="请输入密码（8-20位）"
                         android:inputType="textPassword"
                         tools:ignore="NestedWeights" />
                 </LinearLayout>
+
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -182,94 +165,65 @@
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"></LinearLayout>
+                <Space
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <RadioButton
+                    android:id="@+id/rule_checked_sign_in"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="12"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/rule_checked_sign_in"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="我已阅读并同意用户守则" />
-                </LinearLayout>
+                    android:text="我已阅读并同意用户协议" />
 
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="1.3"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 tools:ignore="NestedWeights">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                    <Space
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content" />
 
-                    </LinearLayout>
-
-                    <Button
+                    <androidx.cardview.widget.CardView
                         android:id="@+id/sign_in_btn_sign_in"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="sign_in_onclick"
-                        android:text="注册" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal"></LinearLayout>
+                        android:background="@color/gray_400"
+                        app:cardBackgroundColor="@color/deep_yellow"
+                        app:cardCornerRadius="10dp">
+
+                        <TextView
+                            android:id="@+id/sign_in_btn_text_sign_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="注册"
+                            android:textColor="@color/black"
+                            android:textSize="18sp" />
+                    </androidx.cardview.widget.CardView>
+
+                    <Space
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/back_btn_sign_in"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="back_onclick"
-                        android:text="返回" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"></LinearLayout>
-
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -287,4 +241,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
