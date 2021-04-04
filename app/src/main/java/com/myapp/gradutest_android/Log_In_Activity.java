@@ -23,8 +23,10 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.myapp.gradutest_android.domain.User;
+import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.net.offLineMode;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
@@ -47,9 +49,11 @@ public class Log_In_Activity extends AppCompatActivity {
 
         //检查token是否有效
         MMKV mmkv=MMKV.defaultMMKV();
-        String url=this.getString(R.string.host)+"/chkToken?uid="+mmkv.decodeInt("uid",0)+"&token="+mmkv.decodeString("user_token","");
-        networkTask networkTask=new networkTask();
-        new Thread(networkTask.setParam(chkTokenHandler,url)).start();
+        if(mmkv.decodeInt("uid",0) != -1) {
+            String url = this.getString(R.string.host) + "/chkToken?uid=" + mmkv.decodeInt("uid", 0) + "&token=" + mmkv.decodeString("user_token", "");
+            networkTask networkTask = new networkTask();
+            new Thread(networkTask.setParam(chkTokenHandler, url)).start();
+        }
 
         //装入登录Fragment
         FragmentTransaction transaction;
@@ -72,15 +76,22 @@ public class Log_In_Activity extends AppCompatActivity {
     Handler chkTokenHandler=new Handler(){
         @Override
         public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Log.i("myLog","chkTokenHandler执行");
-            Bundle data = msg.getData();
-            String val = data.getString("value");
-            int code= getJson.getStatusCode(val);
-            if(code == 0){
+            try {
+                super.handleMessage(msg);
+                Log.i("myLog", "chkTokenHandler执行");
+                Bundle data = msg.getData();
+                String val = data.getString("value");
+                int code = getJson.getStatusCode(val);
+                if (code == 0) {
+                    Intent intent = new Intent(Log_In_Activity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }catch (Exception e){
+                offLineMode.setOffLineMode(true);
+                miniToast.Toast(getApplicationContext(),"无法连接网络，自动进入离线模式");
                 Intent intent=new Intent(Log_In_Activity.this,MainActivity.class);
                 startActivity(intent);
-                finish();
             }
         }
     };
