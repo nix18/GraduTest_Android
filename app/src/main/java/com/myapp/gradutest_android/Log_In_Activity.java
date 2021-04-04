@@ -53,6 +53,10 @@ public class Log_In_Activity extends AppCompatActivity {
             String url = this.getString(R.string.host) + "/chkToken?uid=" + mmkv.decodeInt("uid", 0) + "&token=" + mmkv.decodeString("user_token", "");
             networkTask networkTask = new networkTask();
             new Thread(networkTask.setParam(chkTokenHandler, url)).start();
+        }else {
+            offLineMode.setOffLineMode(true);
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         }
 
         //装入登录Fragment

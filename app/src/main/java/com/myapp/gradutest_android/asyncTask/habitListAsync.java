@@ -46,7 +46,13 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             Log.i("myLog","getDataHandler执行");
             Bundle data = msg.getData();
             String val = data.getString("value");
-            int code= getJson.getStatusCode(val);
+            int code = -1;
+            try {
+                code = getJson.getStatusCode(val);
+            }catch (Exception e){
+                if(refreshLayout != null)
+                    refreshLayout.finishRefresh(1000,false,false);
+            }
             if(code == 0){
                 try {
                     JSONObject jsonObject=new JSONObject(val);
@@ -74,36 +80,41 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
 
     @Override
     protected void onPostExecute(String s) {
-        int i=0;
-        int count=mAdapter.getItemCount();
-        if(count!=0){
-            for(int j=0;j<count;j++) {
-                mAdapter.remove(0);
+        if(habits != null && habits.size() != 0) {
+            int i = 0;
+            int count = mAdapter.getItemCount();
+            if (count != 0) {
+                for (int j = 0; j < count; j++) {
+                    mAdapter.remove(0);
+                }
             }
-        }
-        for(GoodHabit habit:habits) {
-            mAdapter.add("好习惯"+habit.toString(),i);
-            mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
-                Intent intent=new Intent(myActivity, Habit_Info_Activity.class);
-                @Override
-                public void onItemClick(View view, int position) {
-                    Toast.makeText(myActivity, "clicked " + position,
-                            Toast.LENGTH_SHORT).show();
-                    intent.putExtra("position",position);
-                    myActivity.startActivity(intent);
-                }
+            for (GoodHabit habit : habits) {
+                mAdapter.add("好习惯" + habit.toString(), i);
+                mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+                    Intent intent = new Intent(myActivity, Habit_Info_Activity.class);
 
-                @Override
-                public void onItemLongClick(View view, int position) {
-                    Toast.makeText(myActivity, "long clicked " + position,
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-            i++;
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(myActivity, "clicked " + position,
+                                Toast.LENGTH_SHORT).show();
+                        intent.putExtra("position", position);
+                        myActivity.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        Toast.makeText(myActivity, "long clicked " + position,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+                i++;
+            }
+            if(refreshLayout != null)
+                refreshLayout.finishRefresh(1000);
+        }else {
+            if(refreshLayout != null)
+                refreshLayout.finishRefresh(1000,false,false);
         }
-        refreshLayout = myActivity.findViewById(R.id.refresh_layout_fm_square);
-        if(refreshLayout != null)
-            refreshLayout.finishRefresh(1000);
         super.onPostExecute(s);
     }
 
@@ -124,6 +135,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
 
     @Override
     protected String doInBackground(String... strings) {
+        refreshLayout = myActivity.findViewById(R.id.refresh_layout_fm_square);
         String url=myActivity.getString(R.string.host)+"/habitplaza";
         networkTask networkTask=new networkTask();
         Thread t=new Thread(networkTask.setParam(getDataHandler,url));
@@ -132,7 +144,8 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             t.join(); // 防止取不到对象
         } catch (InterruptedException e) {
             e.printStackTrace();
-            refreshLayout.finishRefresh(1000,false,false);
+            if(refreshLayout != null)
+                refreshLayout.finishRefresh(1000,false,false);
         }
         return null;
     }
