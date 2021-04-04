@@ -16,17 +16,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.myapp.gradutest_android.asyncTask.userCreditAsync;
-import com.myapp.gradutest_android.domain.MyMessage;
 import com.myapp.gradutest_android.listener.AppBarLayoutStateChangeListener;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
-import com.myapp.gradutest_android.utils.net.toJson;
+import com.myapp.gradutest_android.utils.net.offLineMode;
 import com.tencent.mmkv.MMKV;
 
 import java.util.Objects;
@@ -54,6 +52,10 @@ public class Fragment_My extends Fragment {
 
     private Button settings_btn;
 
+    private Button log_out_btn;
+
+    private Toolbar toolbar;
+
     public Fragment_My() {
         // Required empty public constructor
     }
@@ -74,12 +76,36 @@ public class Fragment_My extends Fragment {
 
         // 通过this.getActivity()获取主activity中的方法 通过view来改动布局
         view=inflater.inflate(R.layout.fragment__my, container, false);
+        MMKV mmkv=MMKV.defaultMMKV();
         setBtnIcon();
         my_info_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),My_Info_Activity.class);
                 startActivity(intent);
+            }
+        });
+        if(offLineMode.getOffLineMode())
+            my_info_btn.setClickable(false);
+        log_out_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mmkv.decodeInt("uid") != -1) {
+                    String url = getString(R.string.host) + "/logout?uid=" + mmkv.decodeInt("uid", 0) +
+                            "&token=" + mmkv.decodeString("user_token", "");
+                    networkTask networkTask = new networkTask();
+                    new Thread(networkTask.setParam(logOutHandler, url)).start();
+                }else {
+                    //设置离线模式为否
+                    offLineMode.setOffLineMode(false);
+
+                    //返回登录界面
+                    Toast toast=Toast.makeText(getContext(), "登出成功", Toast.LENGTH_SHORT);
+                    toast.show();
+                    Intent intent=new Intent(getActivity(),Log_In_Activity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                }
             }
         });
         return view;
@@ -95,6 +121,8 @@ public class Fragment_My extends Fragment {
         MMKV mmkv = MMKV.defaultMMKV();
         appBarLayout = getActivity().findViewById(R.id.appbar_main);
         toolbarLayout = getActivity().findViewById(R.id.collapsing_toolbar_layout_main);
+
+        //设置顶部文字动态变化
         toolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.black));
         toolbarLayout.setTitle(mmkv.decodeString("user_name"));
         appBarLayout.setExpanded(false);
@@ -121,10 +149,11 @@ public class Fragment_My extends Fragment {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setBtnIcon(){
-        my_info_btn = view.findViewById(R.id.my_info_btn_my_info);
-        my_credit_btn = view.findViewById(R.id.my_credit_btn_my_info);
-        my_data_analyze_btn = view.findViewById(R.id.my_data_analyze_btn_my_info);
-        settings_btn = view.findViewById(R.id.settings_my_info);
+        my_info_btn = view.findViewById(R.id.my_info_btn_fm_my);
+        my_credit_btn = view.findViewById(R.id.my_credit_btn_fm_my);
+        my_data_analyze_btn = view.findViewById(R.id.my_data_analyze_btn_fm_my);
+        settings_btn = view.findViewById(R.id.settings_btn_fm_my);
+        log_out_btn = view.findViewById(R.id.log_out_btn_fm_my);
         Drawable drawable_info = getResources().getDrawable(R.drawable._106);
         drawable_info.setBounds(60,0,140,80);
         Drawable drawable_credit = getResources().getDrawable(R.drawable._132);
@@ -133,11 +162,42 @@ public class Fragment_My extends Fragment {
         drawable_my_data_analyze.setBounds(60,0,140,80);
         Drawable drawable_settings = getResources().getDrawable(R.drawable._64);
         drawable_settings.setBounds(60,0,140,80);
+        Drawable drawable_log_out = getResources().getDrawable(R.drawable._33);
+        drawable_log_out.setBounds(60,0,140,80);
         Drawable drawable_next = getResources().getDrawable(R.drawable._19);
         drawable_next.setBounds(-60,0,20,80);
         my_info_btn.setCompoundDrawables(drawable_info,null,drawable_next,null);
         my_credit_btn.setCompoundDrawables(drawable_credit,null,drawable_next,null);
         my_data_analyze_btn.setCompoundDrawables(drawable_my_data_analyze,null,drawable_next,null);
         settings_btn.setCompoundDrawables(drawable_settings,null,drawable_next,null);
+        log_out_btn.setCompoundDrawables(drawable_log_out,null,drawable_next,null);
     }
+
+    @SuppressLint("HandlerLeak")
+    Handler logOutHandler=new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","logOutHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            int code= getJson.getStatusCode(val);
+            if(code == 0){
+
+                //清除MMKV
+                MMKV mmkv = MMKV.defaultMMKV();
+                mmkv.clearAll();
+
+                //返回登录界面
+                Toast toast=Toast.makeText(getContext(), "登出成功", Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent=new Intent(getActivity(),Log_In_Activity.class);
+                startActivity(intent);
+                getActivity().finish();
+            }else {
+                Toast toast=Toast.makeText(getContext(), "登出失败", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        }
+    };
 }

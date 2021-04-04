@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toolbar;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -27,18 +28,8 @@ public class Fragment_Main extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_Blank.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Fragment_Main newInstance(String param1, String param2) {
-        Fragment_Main fragment = new Fragment_Main();
-        return fragment;
+        return new Fragment_Main();
     }
 
     @Override

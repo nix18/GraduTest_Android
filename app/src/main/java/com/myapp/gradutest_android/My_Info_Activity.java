@@ -19,6 +19,7 @@ import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.domain.MyMessage;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.net.offLineMode;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
@@ -83,6 +84,13 @@ public class My_Info_Activity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         new userCreditAsync(My_Info_Activity.this).execute();
+
+        //更新用户信息
+        MMKV mmkv=MMKV.defaultMMKV();
+        String uName=mmkv.decodeString("user_name","defaultName");
+        String uProfile=mmkv.decodeString("user_profile","");
+        user_name.setText(uName);
+        user_profile.setText(uProfile);
     }
 
     protected void initView(){

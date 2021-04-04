@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/my_info_btn_my_info"
+            android:id="@+id/my_info_btn_fm_my"
             style="@style/button_white_style"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
@@ -29,7 +29,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/my_credit_btn_my_info"
+            android:id="@+id/my_credit_btn_fm_my"
             style="@style/button_white_style"
             android:layout_width="wrap_content"
             android:layout_height="60dp"
@@ -44,7 +44,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/my_data_analyze_btn_my_info"
+            android:id="@+id/my_data_analyze_btn_fm_my"
             style="@style/button_white_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,12 +59,27 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/settings_my_info"
+            android:id="@+id/settings_btn_fm_my"
             style="@style/button_white_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="设置" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/log_out_btn_fm_my"
+            style="@style/button_white_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="登出" />
     </LinearLayout>
 
     <LinearLayout

@@ -19,11 +19,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.myapp.gradutest_android.domain.User;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.net.offLineMode;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.tencent.mmkv.MMKV;
 
@@ -88,6 +88,11 @@ public class Fragment_Log_In extends Fragment {
             }else {
                 miniToast.Toast(getContext(),"请先阅读并同意用户协议");
             }
+        });
+        log_in_without_account.setOnClickListener(v -> {
+            offLineMode.setOffLineMode(true);
+            Intent intent = new Intent(getActivity(),MainActivity.class);
+            startActivity(intent);
         });
     }
 

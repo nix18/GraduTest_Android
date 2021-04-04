@@ -27,6 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.myapp.gradutest_android.adapter.ScreenSlidePagerAdapter;
+import com.myapp.gradutest_android.utils.net.offLineMode;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 
 import java.util.ArrayList;
@@ -109,10 +110,12 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             switch (item.getItemId()){
                 case R.id.item_personal://个人
-                    Toast.makeText(this,"个人页面",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(MainActivity.this,My_Info_Activity.class);
+                    if(!offLineMode.getOffLineMode()){
+                    Toast.makeText(this, "个人页面", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, My_Info_Activity.class);
                     startActivity(intent);
                     drawerLayout.closeDrawer(navigationView);
+                }
                     break;
                 case R.id.item_setting://设置
                     Toast.makeText(this,"设置页面",Toast.LENGTH_SHORT).show();
@@ -127,12 +130,16 @@ public class MainActivity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.habit_add:
+                        if(!offLineMode.getOffLineMode()){
                         Toast.makeText(MainActivity.this, "添加好习惯", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this,Add_Habit_Activity.class);
+                        Intent intent = new Intent(MainActivity.this, Add_Habit_Activity.class);
                         startActivity(intent);
+                    }
                         break;
                     case R.id.habit_by_me:
+                        if(!offLineMode.getOffLineMode()){
                         Toast.makeText(MainActivity.this, "我创建的好习惯", Toast.LENGTH_SHORT).show();
+                    }
                         break;
                 }
                 return true;
