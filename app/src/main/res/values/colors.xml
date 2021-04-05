@@ -14,4 +14,7 @@
     <color name="navy_blue">#000080</color>
     <color name="light_green">#7ADFB8</color>
     <color name="deep_yellow">#FAC425</color>
+    <color name="orange">#F8A81E</color>
+    <color name="light_orange">#FBDEB2</color>
+    <color name="transparent">#00000000</color>
 </resources>

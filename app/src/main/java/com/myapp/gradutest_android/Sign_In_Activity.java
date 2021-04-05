@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,7 +43,7 @@ public class Sign_In_Activity extends AppCompatActivity {
     }
 
     public void initView(){
-        back_btn = findViewById(R.id.img_sign_in);
+        back_btn = findViewById(R.id.img_back_sign_in);
         sign_in_btn = findViewById(R.id.sign_in_btn_sign_in);
         user_name=findViewById(R.id.user_name_input_sign_in);
         user_profile=findViewById(R.id.user_profile_input_sign_in);

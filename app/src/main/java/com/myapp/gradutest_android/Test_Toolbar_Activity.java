@@ -34,7 +34,7 @@ public class Test_Toolbar_Activity extends AppCompatActivity {
          * 所以要想动态修改抽屉里头部（head_view.xml）的控件，必须通过headView
          */
         View headView = navigationView.getHeaderView(0);//get hedaView
-        headImg = headView.findViewById(R.id.userheadimg_head_view);//不通过headView找不到
+        headImg = headView.findViewById(R.id.user_img_head_view);//不通过headView找不到
         headImg.setImageResource(R.mipmap.ic_launcher_round);
         //设置昵称
         nickName = headView.findViewById(R.id.nickName);

@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -73,7 +72,7 @@ public class Add_Habit_Activity extends AppCompatActivity {
         habit_category = findViewById(R.id.input_habit_category_add_habit);
         back_btn = findViewById(R.id.back_btn_add_habit);
         submit_btn = findViewById(R.id.submit_btn_add_habit);
-        imageView = findViewById(R.id.img_add_habit);
+        imageView = findViewById(R.id.img_back_add_habit);
     }
 
     @SuppressLint("HandlerLeak")

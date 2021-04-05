@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -40,7 +38,7 @@ public class Update_Info_Activity extends AppCompatActivity {
         TextView user_pwd=findViewById(R.id.user_pwd_input_update_info);
         Button back_btn=findViewById(R.id.back_btn_update_info);
         Button update_info_btn=findViewById(R.id.update_info_btn_update_info);
-        ImageView imageView = findViewById(R.id.img_update_info);
+        ImageView imageView = findViewById(R.id.img_back_update_info);
         imageView.setOnClickListener(v -> finish());
         user_name.setText(mmkv.decodeString("user_name",""));
         user_profile.setHint(mmkv.decodeString("user_profile",""));

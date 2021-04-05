@@ -54,7 +54,7 @@ public class userCreditAsync extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        t = myActivity.findViewById(R.id.user_credit_container_my_info);
+        t = myActivity.findViewById(R.id.credit_sum_my_credit);
         t.setText(credit.getCreditSum().toString());
     }
 

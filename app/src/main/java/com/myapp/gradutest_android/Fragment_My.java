@@ -85,8 +85,17 @@ public class Fragment_My extends Fragment {
                 startActivity(intent);
             }
         });
-        if(offLineMode.getOffLineMode())
+        my_credit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),My_Credit_Activity.class);
+                startActivity(intent);
+            }
+        });
+        if(offLineMode.getOffLineMode()) {
             my_info_btn.setClickable(false);
+            my_credit_btn.setClickable(false);
+        }
         log_out_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

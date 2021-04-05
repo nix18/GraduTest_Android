@@ -2,6 +2,7 @@ package com.myapp.gradutest_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -21,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.navigation.NavigationView;
@@ -30,6 +34,7 @@ import com.myapp.gradutest_android.adapter.ScreenSlidePagerAdapter;
 import com.myapp.gradutest_android.utils.net.offLineMode;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
     //抽屉部分
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private ImageView img;//点击该头像 弹出抽屉
-    private ImageView headImg;//抽屉里的头像
-    private TextView nickName;//用户名
+    private ImageView headImg;
     private Toolbar toolbar;
 
     @Override
@@ -97,8 +100,8 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.black));
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
         View headView = navigationView.getHeaderView(0);
-        headImg = headView.findViewById(R.id.userheadimg_head_view);//不通过headView找不到
-        headImg.setImageResource(R.mipmap.ic_launcher_round);
+        headImg = headView.findViewById(R.id.user_img_head_view);//不通过headView找不到
+        Glide.with(this).load(R.mipmap.ic_launcher_round).transform(new CircleCrop()).into(headImg);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> {
             if(drawerLayout.isDrawerOpen(navigationView)){
@@ -124,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+        navigationView.setItemIconTintList(null);
         toolbar.setOverflowIcon(getDrawable(R.mipmap.icon_add));
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -152,5 +156,22 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu,menu);
         return true;
+    }
+
+    //重写使下拉栏显示图标
+    @Override
+    public boolean onMenuOpened(int featureId, Menu menu) {
+        if (menu != null) {
+            if (menu.getClass().getSimpleName().equalsIgnoreCase("MenuBuilder")) {
+                try {
+                    Method method = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    method.setAccessible(true);
+                    method.invoke(menu, true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return super.onMenuOpened(featureId, menu);
     }
 }

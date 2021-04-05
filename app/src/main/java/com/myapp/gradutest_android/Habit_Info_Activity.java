@@ -24,7 +24,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
         setContentView(R.layout.activity__habit__info);
         statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         TextView habit_info_text=findViewById(R.id.habitinfo_habit_info);
-        ImageView imageView = findViewById(R.id.img_habit_info);
+        ImageView imageView = findViewById(R.id.img_back_habit_info);
         imageView.setOnClickListener(v -> finish());
         MMKV habit_mmkv=MMKV.mmkvWithID("habits");
         Intent intent = getIntent();
