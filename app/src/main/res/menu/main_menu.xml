@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/item_personal"
-        android:icon="@drawable/_120"
+        android:icon="@drawable/___72"
 
         android:title="    个人" />
     <item
         android:id="@+id/item_setting"
-        android:icon="@drawable/_64"
+        android:icon="@drawable/___16"
         android:title="    设置" />
 </menu>

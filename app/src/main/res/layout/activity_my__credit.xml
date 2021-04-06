@@ -70,13 +70,13 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:alpha="0.3"
                     android:scaleX="0.8"
                     android:scaleY="0.8"
                     android:translationX="190dp"
-                    app:srcCompat="@drawable/_132_2" />
+                    app:srcCompat="@drawable/___84_2" />
 
                 <TextView
                     android:id="@+id/text_credit_sum_my_credit"
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:scaleX="0.4"
                     android:scaleY="0.4"
-                    app:srcCompat="@drawable/_226" />
+                    app:srcCompat="@drawable/___178" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -194,7 +194,7 @@
                     android:layout_height="wrap_content"
                     android:scaleX="0.4"
                     android:scaleY="0.4"
-                    app:srcCompat="@drawable/_142" />
+                    app:srcCompat="@drawable/____40" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -222,7 +222,7 @@
                     android:layout_height="wrap_content"
                     android:scaleX="0.4"
                     android:scaleY="0.4"
-                    app:srcCompat="@drawable/_75" />
+                    app:srcCompat="@drawable/___27" />
             </androidx.cardview.widget.CardView>
 
             <Space
