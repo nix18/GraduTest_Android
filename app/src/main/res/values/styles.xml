@@ -12,4 +12,7 @@
         <item name="android:minHeight">0dp</item>
         <item name="android:height">60dp</item>
     </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar"/>
+
 </resources>

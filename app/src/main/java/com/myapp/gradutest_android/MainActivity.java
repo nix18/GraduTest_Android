@@ -122,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.item_setting://设置
                     Toast.makeText(this,"设置页面",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this,Settings_Activity.class);
+                    startActivity(intent);
                     drawerLayout.closeDrawer(navigationView);
                     break;
             }

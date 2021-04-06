@@ -96,6 +96,13 @@ public class Fragment_My extends Fragment {
             my_info_btn.setClickable(false);
             my_credit_btn.setClickable(false);
         }
+        settings_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(thisActivity,Settings_Activity.class);
+                startActivity(intent);
+            }
+        });
         log_out_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

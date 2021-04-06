@@ -3,6 +3,7 @@ package com.myapp.gradutest_android;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentTransaction;
 
