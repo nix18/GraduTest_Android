@@ -90,25 +90,35 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             }
             for (GoodHabit habit : habits) {
                 mAdapter.add("好习惯" + habit.toString(), i);
-                mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
-                    Intent intent = new Intent(myActivity, Habit_Info_Activity.class);
+                i++;
+            }
 
-                    @Override
-                    public void onItemClick(View view, int position) {
+            //多加入一行以防止遮挡
+            mAdapter.add("",i);
+
+            int finalI = i;
+            mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+                Intent intent = new Intent(myActivity, Habit_Info_Activity.class);
+
+                @Override
+                public void onItemClick(View view, int position) {
+                    if(position < finalI){
                         Toast.makeText(myActivity, "clicked " + position,
                                 Toast.LENGTH_SHORT).show();
                         intent.putExtra("position", position);
                         myActivity.startActivity(intent);
                     }
+                }
 
-                    @Override
-                    public void onItemLongClick(View view, int position) {
+                @Override
+                public void onItemLongClick(View view, int position) {
+                    if(position < finalI){
                         Toast.makeText(myActivity, "long clicked " + position,
                                 Toast.LENGTH_SHORT).show();
                     }
-                });
-                i++;
-            }
+                }
+            });
+
             if(refreshLayout != null)
                 refreshLayout.finishRefresh(1000);
         }else {
@@ -138,7 +148,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
         refreshLayout = myActivity.findViewById(R.id.refresh_layout_fm_square);
         String url=myActivity.getString(R.string.host)+"/habitplaza";
         networkTask networkTask=new networkTask();
-        Thread t=new Thread(networkTask.setParam(getDataHandler,url));
+        Thread t=new Thread(networkTask.setParam(getDataHandler,url,0));
         try {
             t.start();
             t.join(); // 防止取不到对象

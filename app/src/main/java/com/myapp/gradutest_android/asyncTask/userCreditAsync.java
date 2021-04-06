@@ -69,7 +69,7 @@ public class userCreditAsync extends AsyncTask<String,Integer,String> {
                 .appendQueryParameter("token", mmkv.decodeString("user_token",""));
         String url = builder.build().toString();
         networkTask networkTask=new networkTask();
-        Thread t = new Thread(networkTask.setParam(updateCreditHandler,url));
+        Thread t = new Thread(networkTask.setParam(updateCreditHandler,url,1));
         try {
             t.start();
             t.join();

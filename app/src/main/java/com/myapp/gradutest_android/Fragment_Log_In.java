@@ -84,7 +84,7 @@ public class Fragment_Log_In extends Fragment {
                 String url= Objects.requireNonNull(getActivity()).getString(R.string.host)+"/login?uname="+user_name.getText()+"&upwd="+user_pwd.getText();
                 Log.i("myTag","开始登录");
                 networkTask networkTask=new networkTask();
-                new Thread(networkTask.setParam(loginHandler,url)).start();
+                new Thread(networkTask.setParam(loginHandler,url,1)).start();
             }else {
                 miniToast.Toast(getContext(),"请先阅读并同意用户协议");
             }

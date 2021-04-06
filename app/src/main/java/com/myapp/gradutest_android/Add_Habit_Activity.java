@@ -60,7 +60,7 @@ public class Add_Habit_Activity extends AppCompatActivity {
                             .appendQueryParameter("hcategory",String.valueOf(habit_category.getText()));
                     String url = builder.build().toString();
                     networkTask networkTask=new networkTask();
-                    new Thread(networkTask.setParam(addHabitHandler,url)).start();
+                    new Thread(networkTask.setParam(addHabitHandler,url,1)).start();
                 }
             }
         });

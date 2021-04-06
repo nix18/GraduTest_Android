@@ -45,7 +45,7 @@ public class My_Credit_Activity extends AppCompatActivity {
                 String url=getString(R.string.host)+"/qiandao?uid="+mmkv.decodeInt("uid",0)+
                         "&token="+mmkv.decodeString("user_token","");
                 networkTask networkTask=new networkTask();
-                new Thread(networkTask.setParam(clockInHandler,url)).start();
+                new Thread(networkTask.setParam(clockInHandler,url,1)).start();
             }
         });
         back_btn.setOnClickListener(new View.OnClickListener() {

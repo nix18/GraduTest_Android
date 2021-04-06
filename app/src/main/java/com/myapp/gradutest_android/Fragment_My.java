@@ -110,7 +110,7 @@ public class Fragment_My extends Fragment {
                     String url = getString(R.string.host) + "/logout?uid=" + mmkv.decodeInt("uid", 0) +
                             "&token=" + mmkv.decodeString("user_token", "");
                     networkTask networkTask = new networkTask();
-                    new Thread(networkTask.setParam(logOutHandler, url)).start();
+                    new Thread(networkTask.setParam(logOutHandler, url,1)).start();
                 }else {
                     //设置离线模式为否
                     offLineMode.setOffLineMode(false);

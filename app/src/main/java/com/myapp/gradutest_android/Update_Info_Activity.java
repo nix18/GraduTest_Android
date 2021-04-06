@@ -56,7 +56,7 @@ public class Update_Info_Activity extends AppCompatActivity {
                         "&uprofile="+user_profile.getText()+"&upwd="+user_pwd.getText();
                 user_profile_new= user_profile.getText().toString();
                 networkTask networkTask=new networkTask();
-                new Thread(networkTask.setParam(updateInfoHandler,url)).start();
+                new Thread(networkTask.setParam(updateInfoHandler,url,1)).start();
             }
         });
     }

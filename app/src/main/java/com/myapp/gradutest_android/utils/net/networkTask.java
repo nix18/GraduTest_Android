@@ -12,11 +12,13 @@ import com.myapp.gradutest_android.utils.MyRunnable;
 public class networkTask implements MyRunnable{
     private String url;
     private Handler handler;
+    private Integer method;
 
     @Override
-    public MyRunnable setParam(Handler handler,String... param) {
+    public MyRunnable setParam(Handler handler,String url,Integer method) {
         this.handler=handler;
-        this.url=param[0];
+        this.url=url;
+        this.method= method;
         return this;
     }
 
@@ -25,7 +27,7 @@ public class networkTask implements MyRunnable{
         Log.i("myLog","网络子线程执行");
         getJson getJson=new getJson();
         try {
-            Message msg=getJson.get(url,1);
+            Message msg=getJson.get(url,method);
             handler.sendMessage(msg);
         }catch (Exception e){
             //使用msg置空来触发上层Exception

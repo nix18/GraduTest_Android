@@ -18,8 +18,10 @@ import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.habitListAsync;
 import com.myapp.gradutest_android.domain.GoodHabit;
 import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 import com.tencent.mmkv.MMKV;
 
 
@@ -93,8 +95,9 @@ public class Fragment_Square extends Fragment {
         initData(view);
         initView(view);
         mRecyclerView.setNestedScrollingEnabled(true);
-        RefreshLayout refreshLayout = (RefreshLayout)view.findViewById(R.id.refresh_layout_fm_square);
+        SmartRefreshLayout refreshLayout = (SmartRefreshLayout) view.findViewById(R.id.refresh_layout_fm_square);
         refreshLayout.setRefreshHeader(new ClassicsHeader(view.getContext()));
+        refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {

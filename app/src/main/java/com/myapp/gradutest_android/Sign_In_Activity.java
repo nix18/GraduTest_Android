@@ -66,7 +66,7 @@ public class Sign_In_Activity extends AppCompatActivity {
             else if(rule_checked.isChecked()){
                 String url=Sign_In_Activity.this.getString(R.string.host)+"/register?uname="+user_name.getText()+"&uprofile="+user_profile.getText()+"&upwd="+user_pwd.getText();
                 networkTask networkTask=new networkTask();
-                new Thread(networkTask.setParam(handler,url)).start();
+                new Thread(networkTask.setParam(signInHandler,url,1)).start();
             }else {
                 miniToast.Toast(this,"请先阅读并同意用户协议");
             }
@@ -77,7 +77,7 @@ public class Sign_In_Activity extends AppCompatActivity {
     /*
       消息处理
      */
-    Handler handler=new Handler() {
+    Handler signInHandler =new Handler() {
     @Override
     public void handleMessage(@NonNull Message msg) {
         super.handleMessage(msg);
