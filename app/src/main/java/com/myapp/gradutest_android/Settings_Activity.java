@@ -1,11 +1,10 @@
 package com.myapp.gradutest_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
@@ -21,9 +20,8 @@ public class Settings_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        statusBarUtils.patchFullScreen(this);
         setContentView(R.layout.activity_settings);
-        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         initView();
         back_btn.setOnClickListener(v -> finish());
         check_for_update_btn.setOnClickListener(v -> miniToast.Toast(this,"当前已经是最新版本了"));

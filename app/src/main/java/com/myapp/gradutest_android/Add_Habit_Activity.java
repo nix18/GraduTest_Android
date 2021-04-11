@@ -1,8 +1,5 @@
 package com.myapp.gradutest_android;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
@@ -34,9 +34,8 @@ public class Add_Habit_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        statusBarUtils.patchFullScreen(this);
         setContentView(R.layout.activity_add__habit);
-        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         initView();
         mmkv = MMKV.defaultMMKV();
         back_btn.setOnClickListener(v -> finish());

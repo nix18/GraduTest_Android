@@ -3,8 +3,11 @@ package com.myapp.gradutest_android.utils.statusbar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Build;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.myapp.gradutest_android.R;
 
 public class statusBarUtils {
 
@@ -32,5 +35,10 @@ public class statusBarUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void patchFullScreen(Activity activity){
+        activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        statusBarUtils.setWindowStatusBarColor(activity, R.color.white);
     }
 }

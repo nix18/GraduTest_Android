@@ -1,9 +1,5 @@
 package com.myapp.gradutest_android;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +9,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.domain.MyMessage;
@@ -35,9 +35,8 @@ public class My_Credit_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        statusBarUtils.patchFullScreen(this);
         setContentView(R.layout.activity_my__credit);
-        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         initView();
         MMKV mmkv=MMKV.defaultMMKV();
         clock_in_btn.setOnClickListener(new View.OnClickListener() {

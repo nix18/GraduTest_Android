@@ -1,18 +1,18 @@
 package com.myapp.gradutest_android;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.habitListAsync;
-import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.utils.msg.miniToast;
+import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
 
 import java.util.ArrayList;
@@ -36,6 +36,7 @@ public class My_Habits_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        statusBarUtils.patchFullScreen(this);
         setContentView(R.layout.activity_my__habits);
         MMKV mmkv = MMKV.defaultMMKV();
         //打入空数据

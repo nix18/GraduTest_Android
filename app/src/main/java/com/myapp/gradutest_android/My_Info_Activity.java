@@ -1,27 +1,15 @@
 package com.myapp.gradutest_android;
 
-import androidx.annotation.NonNull;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.myapp.gradutest_android.asyncTask.userCreditAsync;
-import com.myapp.gradutest_android.domain.MyMessage;
 import com.myapp.gradutest_android.utils.msg.miniToast;
-import com.myapp.gradutest_android.utils.net.getJson;
-import com.myapp.gradutest_android.utils.net.networkTask;
-import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
 
@@ -36,9 +24,8 @@ public class My_Info_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        statusBarUtils.patchFullScreen(this);
         setContentView(R.layout.activity_my__info);
-        statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         initView();
         MMKV mmkv=MMKV.defaultMMKV();
         String uName=mmkv.decodeString("user_name","defaultName");
