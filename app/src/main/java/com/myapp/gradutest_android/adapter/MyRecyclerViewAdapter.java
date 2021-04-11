@@ -1,6 +1,6 @@
 package com.myapp.gradutest_android.adapter;
 
-import android.util.Log;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapp.gradutest_android.R;
+import com.myapp.gradutest_android.domain.GoodHabit;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private ArrayList<String> localDataSet;
+    private ArrayList<GoodHabit> localDataSet;
     private OnItemClickListener mOnItemClickListener;
 
     /**
@@ -25,16 +26,20 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
+        private final TextView hid;
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-
             textView = (TextView) view.findViewById(R.id.text_textview_fm_square);
+            hid = (TextView) view.findViewById(R.id.text_hid_fm_square);
         }
 
         public TextView getTextView() {
             return textView;
+        }
+
+        public TextView getHid(){
+            return hid;
         }
     }
 
@@ -44,7 +49,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView.
      */
-    public MyRecyclerViewAdapter(ArrayList<String> dataSet) {
+    public MyRecyclerViewAdapter(ArrayList<GoodHabit> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -60,12 +65,16 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.getTextView().setText(localDataSet.get(position));
+        if(localDataSet.get(position).getHid()!=null) {
+            viewHolder.getTextView().setText(localDataSet.get(position).toString());
+            viewHolder.getHid().setText(localDataSet.get(position).getHid().toString());
+        }
         if (mOnItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,8 +92,8 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         }
     }
 
-    public void add(String text, int position) {
-        localDataSet.add(position,text);
+    public void add(GoodHabit goodHabit, int position) {
+        localDataSet.add(position,goodHabit);
         notifyItemInserted(position);
     }
 

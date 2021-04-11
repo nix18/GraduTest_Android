@@ -9,10 +9,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.myapp.gradutest_android.Habit_Info_Activity;
 import com.myapp.gradutest_android.R;
@@ -89,12 +89,10 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                 }
             }
             for (GoodHabit habit : habits) {
-                mAdapter.add("好习惯" + habit.toString(), i);
+                mAdapter.add(habit, i);
                 i++;
             }
 
-            //多加入一行以防止遮挡
-            mAdapter.add("",i);
 
             int finalI = i;
             mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
@@ -105,7 +103,8 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                     if(position < finalI){
                         Toast.makeText(myActivity, "clicked " + position,
                                 Toast.LENGTH_SHORT).show();
-                        intent.putExtra("position", position);
+                        TextView hid = view.findViewById(R.id.text_hid_fm_square);
+                        intent.putExtra("hid", Integer.parseInt(hid.getText().toString()));
                         myActivity.startActivity(intent);
                     }
                 }

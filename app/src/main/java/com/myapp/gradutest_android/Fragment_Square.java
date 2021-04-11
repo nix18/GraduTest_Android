@@ -2,15 +2,14 @@ package com.myapp.gradutest_android;
 
 import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -21,9 +20,7 @@ import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
-import com.scwang.smart.refresh.layout.listener.ScrollBoundaryDecider;
 import com.tencent.mmkv.MMKV;
-
 
 import java.util.ArrayList;
 
@@ -48,7 +45,7 @@ public class Fragment_Square extends Fragment {
 
     private CollapsingToolbarLayout toolbarLayout;
 
-    private ArrayList<String> data;
+    private ArrayList<GoodHabit> data;
 
     private String url;
 
@@ -63,7 +60,7 @@ public class Fragment_Square extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         thisActivity=getActivity();
-        data = new ArrayList<String>();
+        data = new ArrayList<GoodHabit>();
         url = thisActivity.getString(R.string.host)+"/habitplaza";
     }
 
@@ -105,13 +102,13 @@ public class Fragment_Square extends Fragment {
                 }, 1000);
             }
         });
+        new habitListAsync(getActivity(),mAdapter,url).execute();
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        new habitListAsync(getActivity(),mAdapter,url).execute();
     }
 
     @Override

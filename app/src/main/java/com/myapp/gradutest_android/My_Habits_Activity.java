@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.habitListAsync;
+import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
@@ -29,7 +30,7 @@ public class My_Habits_Activity extends AppCompatActivity {
 
     private ImageView more_info_btn;
 
-    private ArrayList<String> data;
+    private ArrayList<GoodHabit> data;
 
     private String url;
 
@@ -40,7 +41,7 @@ public class My_Habits_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_my__habits);
         MMKV mmkv = MMKV.defaultMMKV();
         //打入空数据
-        data = new ArrayList<String>();
+        data = new ArrayList<GoodHabit>();
         initData();
         initView();
         back_btn.setOnClickListener(v -> finish());

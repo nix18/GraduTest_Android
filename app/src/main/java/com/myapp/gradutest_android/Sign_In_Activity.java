@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 public class Sign_In_Activity extends AppCompatActivity {
 
     private ImageView back_btn;
+    private ImageView more_info_btn;
     private CardView sign_in_btn;
     private EditText user_name;
     private EditText user_profile;
@@ -42,12 +44,19 @@ public class Sign_In_Activity extends AppCompatActivity {
 
     public void initView(){
         back_btn = findViewById(R.id.img_back_sign_in);
+        more_info_btn = findViewById(R.id.img_more_info_sign_in);
         sign_in_btn = findViewById(R.id.sign_in_btn_sign_in);
         user_name=findViewById(R.id.user_name_input_sign_in);
         user_profile=findViewById(R.id.user_profile_input_sign_in);
         user_pwd=findViewById(R.id.user_pwd_input_sign_in);
         rule_checked=findViewById(R.id.rule_checked_sign_in);
         back_btn.setOnClickListener(v -> finish());
+        more_info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                miniToast.getDialog(Sign_In_Activity.this,"更多信息","请按照规则输入注册信息").show();
+            }
+        });
         sign_in_btn.setOnClickListener(v -> {
             if(user_name.getText().length() == 0){
                 user_name.requestFocus();

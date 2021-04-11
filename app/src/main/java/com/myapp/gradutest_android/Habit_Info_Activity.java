@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.myapp.gradutest_android.domain.GoodHabit;
+import com.myapp.gradutest_android.utils.habit.habitUtils;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
@@ -39,10 +40,10 @@ public class Habit_Info_Activity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null) {
             try {
-                int position = intent.getIntExtra("position",0);
+                int hid = intent.getIntExtra("hid",0);
                 String json=habit_mmkv.decodeString("habits");
                 ArrayList<GoodHabit> habits= toJson.jsonToObjs(GoodHabit.class,json);
-                habit_info_text.setText(habits.get(position).toString());
+                habit_info_text.setText(habitUtils.selHabitByHid(habits,hid).toString());
             }catch (NullPointerException e){
                 e.printStackTrace();
             }

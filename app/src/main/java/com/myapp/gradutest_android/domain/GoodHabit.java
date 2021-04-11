@@ -14,6 +14,8 @@ public class GoodHabit {
     protected Integer habit_heat;
     protected Date habit_create_time;
 
+    public GoodHabit(){}
+
     public GoodHabit(Integer hid, Integer create_uid, String habit_name, String habit_content, String habit_category, Integer habit_heat, Date habit_create_time) {
         this.hid = hid;
         this.create_uid = create_uid;
