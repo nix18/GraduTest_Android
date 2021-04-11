@@ -42,7 +42,6 @@ public class Log_In_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        setContentView(R.layout.activity_log__in);
         statusBarUtils.setWindowStatusBarColor(this,R.color.white);
 
         //初始化MMKV共享存储
@@ -60,6 +59,7 @@ public class Log_In_Activity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        setContentView(R.layout.activity_log__in);
         //装入登录Fragment
         FragmentTransaction transaction;
         Fragment_Log_In fragment_logIn =new Fragment_Log_In();

@@ -110,22 +110,25 @@ public class Fragment_Log_In extends Fragment {
                 Bundle data = msg.getData();
                 String val = data.getString("value");
                 int code= getJson.getStatusCode(val);
-                User user= toJson.jsonToObj(User.class,val);
-
-                //使用MMKV保存Token
-                MMKV mmkv=MMKV.defaultMMKV();
-                mmkv.encode("uid",user.getUid());
-                mmkv.encode("user_name",user.getUser_name());
-                mmkv.encode("user_profile",user.getUser_profile());
-                mmkv.encode("user_token",user.getUser_token());
-
 
                 //弹出提示
                 Toast.makeText(getContext(), code==0?"登录成功":"登录失败",
                         Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(getActivity(),MainActivity.class);
-                startActivity(intent);
-                Objects.requireNonNull(getActivity()).finish();
+
+                //使用MMKV保存Token
+                MMKV mmkv=MMKV.defaultMMKV();
+                if(code == 0){
+                    //保存登录信息
+                    User user= toJson.jsonToObj(User.class,val);
+                    mmkv.encode("uid", user.getUid());
+                    mmkv.encode("user_name", user.getUser_name());
+                    mmkv.encode("user_profile", user.getUser_profile());
+                    mmkv.encode("user_token", user.getUser_token());
+                    //打开主界面
+                    Intent intent=new Intent(getActivity(),MainActivity.class);
+                    startActivity(intent);
+                    Objects.requireNonNull(getActivity()).finish();
+                }
             }catch (Exception e){
                 Intent intent=new Intent(getActivity(),Screen_Error_Activity.class);
                 startActivity(intent);
