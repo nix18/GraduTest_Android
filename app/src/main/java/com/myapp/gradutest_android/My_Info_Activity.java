@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.domain.MyMessage;
+import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
@@ -30,6 +31,7 @@ public class My_Info_Activity extends AppCompatActivity {
     private TextView user_profile;
     private CardView update_info_btn;
     private ImageView back_btn;
+    private ImageView more_info_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,12 @@ public class My_Info_Activity extends AppCompatActivity {
                 finish();
             }
         });
+        more_info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                miniToast.getDialog(My_Info_Activity.this,"更多信息","这里是用户的所有信息").show();
+            }
+        });
     }
 
     @Override
@@ -76,6 +84,7 @@ public class My_Info_Activity extends AppCompatActivity {
         user_profile=findViewById(R.id.user_profile_container_my_info);
         update_info_btn=findViewById(R.id.update_info_btn_my_info);
         back_btn = findViewById(R.id.img_back_my_info);
+        more_info_btn = findViewById(R.id.img_more_info_my_info);
     }
 
 }

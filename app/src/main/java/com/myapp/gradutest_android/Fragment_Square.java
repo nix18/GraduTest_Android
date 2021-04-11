@@ -44,18 +44,15 @@ public class Fragment_Square extends Fragment {
 
     private Activity thisActivity;
 
-    private MMKV mmkv;
-
     private AppBarLayout appBarLayout;
 
     private CollapsingToolbarLayout toolbarLayout;
 
+    private ArrayList<String> data;
 
-    ArrayList<GoodHabit> habits;
-    ArrayList<String> data;
+    private String url;
 
     public Fragment_Square() {
-        // Required empty public constructor
     }
 
     public static Fragment_Square newInstance() {
@@ -66,9 +63,8 @@ public class Fragment_Square extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         thisActivity=getActivity();
-        mmkv=MMKV.defaultMMKV();
         data = new ArrayList<String>();
-        habits=new ArrayList<GoodHabit>();
+        url = thisActivity.getString(R.string.host)+"/habitplaza";
     }
 
 
@@ -104,7 +100,7 @@ public class Fragment_Square extends Fragment {
                 //延迟一秒钟再执行任务
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        new habitListAsync(getActivity(),mAdapter,data).execute();
+                        new habitListAsync(getActivity(),mAdapter,url).execute();
                     }
                 }, 1000);
             }
@@ -115,7 +111,7 @@ public class Fragment_Square extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        new habitListAsync(getActivity(),mAdapter,data).execute();
+        new habitListAsync(getActivity(),mAdapter,url).execute();
     }
 
     @Override

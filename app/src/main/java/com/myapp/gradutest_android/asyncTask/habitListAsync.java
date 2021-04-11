@@ -33,10 +33,10 @@ import java.util.ArrayList;
 public class habitListAsync extends AsyncTask<String,Integer,String> {
 
     protected Activity myActivity;
-    private MyRecyclerViewAdapter mAdapter;
-    ArrayList<GoodHabit> habits;
-    ArrayList<String> myData = new ArrayList<>();
-    RefreshLayout refreshLayout;
+    protected MyRecyclerViewAdapter mAdapter;
+    protected ArrayList<GoodHabit> habits;
+    protected String myUrl;
+    protected RefreshLayout refreshLayout;
 
     @SuppressLint("HandlerLeak")
     Handler getDataHandler=new Handler(){
@@ -67,10 +67,10 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
         }
     };
 
-    public habitListAsync(Activity activity,MyRecyclerViewAdapter myRecyclerViewAdapter,ArrayList<String> data) {
+    public habitListAsync(Activity activity,MyRecyclerViewAdapter myRecyclerViewAdapter,String url) {
         myActivity=activity;
         mAdapter=myRecyclerViewAdapter;
-        myData=data;
+        myUrl=url;
     }
 
     @Override
@@ -146,9 +146,8 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
     @Override
     protected String doInBackground(String... strings) {
         refreshLayout = myActivity.findViewById(R.id.refresh_layout_fm_square);
-        String url=myActivity.getString(R.string.host)+"/habitplaza";
         networkTask networkTask=new networkTask();
-        Thread t=new Thread(networkTask.setParam(getDataHandler,url,0));
+        Thread t=new Thread(networkTask.setParam(getDataHandler,myUrl,0));
         try {
             t.start();
             t.join(); // 防止取不到对象

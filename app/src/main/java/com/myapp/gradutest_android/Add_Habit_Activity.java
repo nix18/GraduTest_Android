@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
@@ -25,9 +26,9 @@ public class Add_Habit_Activity extends AppCompatActivity {
     private EditText habit_name;
     private EditText habit_content;
     private EditText habit_category;
-    private Button back_btn;
     private Button submit_btn;
-    private ImageView imageView;
+    private ImageView back_btn;
+    private ImageView more_info_btn;
     private MMKV mmkv;
 
     @Override
@@ -38,8 +39,13 @@ public class Add_Habit_Activity extends AppCompatActivity {
         statusBarUtils.setWindowStatusBarColor(this,R.color.white);
         initView();
         mmkv = MMKV.defaultMMKV();
-        imageView.setOnClickListener(v -> finish());
         back_btn.setOnClickListener(v -> finish());
+        more_info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                miniToast.getDialog(Add_Habit_Activity.this,"更多信息","请填写合法的好习惯内容").show();
+            }
+        });
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +76,9 @@ public class Add_Habit_Activity extends AppCompatActivity {
         habit_name = findViewById(R.id.input_habit_name_add_habit);
         habit_content = findViewById(R.id.input_habit_content_add_habit);
         habit_category = findViewById(R.id.input_habit_category_add_habit);
-        back_btn = findViewById(R.id.back_btn_add_habit);
         submit_btn = findViewById(R.id.submit_btn_add_habit);
-        imageView = findViewById(R.id.img_back_add_habit);
+        back_btn = findViewById(R.id.img_back_add_habit);
+        more_info_btn = findViewById(R.id.img_more_info_add_habit);
     }
 
     @SuppressLint("HandlerLeak")

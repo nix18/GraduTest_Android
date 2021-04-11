@@ -145,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.habit_by_me:
                         if(!offLineMode.getOffLineMode()){
                         Toast.makeText(MainActivity.this, "我创建的好习惯", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, My_Habits_Activity.class);
+                        startActivity(intent);
                     }
                         break;
                 }

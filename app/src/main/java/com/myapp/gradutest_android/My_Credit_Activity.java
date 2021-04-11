@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.domain.MyMessage;
+import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
@@ -52,6 +53,12 @@ public class My_Credit_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        more_info_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                miniToast.getDialog(My_Credit_Activity.this,"更多信息","金币获取途径：\n 1、每日签到 \n 2、好习惯打卡\n").show();
             }
         });
     }

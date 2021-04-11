@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Settings_Activity"></activity>
+        <activity android:name=".My_Habits_Activity"></activity>
+        <activity android:name=".Settings_Activity" />
         <activity android:name=".My_Credit_Activity" />
         <activity android:name=".My_Info_Activity" />
         <activity android:name=".Add_Habit_Activity" />
