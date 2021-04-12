@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
+import com.myapp.gradutest_android.adapter.SquareRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.habitListAsync;
 import com.myapp.gradutest_android.domain.GoodHabit;
 import com.scwang.smart.refresh.header.ClassicsHeader;
@@ -35,7 +35,7 @@ public class Fragment_Square extends Fragment {
 
     private RecyclerView mRecyclerView;
 
-    private MyRecyclerViewAdapter mAdapter;
+    private SquareRecyclerViewAdapter mAdapter;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -66,9 +66,10 @@ public class Fragment_Square extends Fragment {
 
 
     private void initData(View view){
-        mLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+        /*mLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);*/
+        mLayoutManager =  new GridLayoutManager(getContext(),3);
         //打入空数据初始化，异步初始化数据
-        mAdapter = new MyRecyclerViewAdapter(data);
+        mAdapter = new SquareRecyclerViewAdapter(data);
     }
 
     private void initView(View view) {

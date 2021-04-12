@@ -31,7 +31,7 @@ public class My_Credit_Activity extends AppCompatActivity {
     private CardView clock_in_btn;
     private CardView credit_exchange_btn;
     private CardView credit_lottery_btn;
-
+// TODO 0413 积分详情 积分抽奖（仿照京东小魔方）尝试购买习惯 习惯写入日历提醒
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

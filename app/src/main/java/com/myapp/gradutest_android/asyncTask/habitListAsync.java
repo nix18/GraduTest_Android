@@ -67,9 +67,9 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
         }
     };
 
-    public habitListAsync(Activity activity,MyRecyclerViewAdapter myRecyclerViewAdapter,String url) {
+    public habitListAsync(Activity activity, MyRecyclerViewAdapter myRecyclerViewAdapter, String url) {
         myActivity=activity;
-        mAdapter=myRecyclerViewAdapter;
+        mAdapter= myRecyclerViewAdapter;
         myUrl=url;
     }
 

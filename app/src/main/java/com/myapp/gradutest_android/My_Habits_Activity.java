@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
+import com.myapp.gradutest_android.adapter.MyHabitsRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.habitListAsync;
 import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.utils.msg.miniToast;
@@ -22,7 +22,7 @@ public class My_Habits_Activity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
 
-    private MyRecyclerViewAdapter mAdapter;
+    private MyHabitsRecyclerViewAdapter mAdapter;
 
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -65,7 +65,7 @@ public class My_Habits_Activity extends AppCompatActivity {
     private void initData(){
         mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         //打入空数据初始化，异步初始化数据
-        mAdapter = new MyRecyclerViewAdapter(data);
+        mAdapter = new MyHabitsRecyclerViewAdapter(data);
     }
 
     private void initView() {
