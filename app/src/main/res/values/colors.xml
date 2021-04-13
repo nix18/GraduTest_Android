@@ -18,5 +18,6 @@
     <color name="deep_yellow">#FAC425</color>
     <color name="orange">#F8A81E</color>
     <color name="light_orange">#FBDEB2</color>
+    <color name="trans_light_orange">#88FBDEB2</color>
     <color name="transparent">#00000000</color>
 </resources>
