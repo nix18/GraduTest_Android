@@ -1,6 +1,7 @@
 package com.myapp.gradutest_android;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,6 +47,13 @@ public class My_Credit_Activity extends AppCompatActivity {
                         "&token="+mmkv.decodeString("user_token","");
                 networkTask networkTask=new networkTask();
                 new Thread(networkTask.setParam(clockInHandler,url,1)).start();
+            }
+        });
+        credit_list_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(My_Credit_Activity.this,My_Credit_Detail_Activity.class);
+                startActivity(intent);
             }
         });
         back_btn.setOnClickListener(new View.OnClickListener() {

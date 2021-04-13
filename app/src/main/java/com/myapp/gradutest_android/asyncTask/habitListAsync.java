@@ -63,6 +63,9 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }else {
+                if(refreshLayout != null)
+                    refreshLayout.finishRefresh(1000,false,false);
             }
         }
     };

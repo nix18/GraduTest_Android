@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class SquareRecyclerViewAdapter extends RecyclerView.Adapter<SquareRecyclerViewAdapter.ViewHolder> implements MyRecyclerViewAdapter {
+public class SquareRecyclerViewAdapter extends RecyclerView.Adapter<SquareRecyclerViewAdapter.ViewHolder> implements MyRecyclerViewAdapter<GoodHabit> {
 
     private ArrayList<GoodHabit> localDataSet;
     private MyRecyclerViewAdapter.OnItemClickListener mOnItemClickListener;

@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRecyclerViewAdapter.ViewHolder> implements MyRecyclerViewAdapter {
+public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRecyclerViewAdapter.ViewHolder> implements MyRecyclerViewAdapter<GoodHabit> {
 
     private ArrayList<GoodHabit> localDataSet;
     private MyRecyclerViewAdapter.OnItemClickListener mOnItemClickListener;

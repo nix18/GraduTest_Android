@@ -2,12 +2,10 @@ package com.myapp.gradutest_android.adapter;
 
 import android.view.View;
 
-import com.myapp.gradutest_android.domain.GoodHabit;
 
-
-//通过此接口统一调用RecyclerViewAdapter的方法
-public interface MyRecyclerViewAdapter {
-    public void add(GoodHabit goodHabit, int position);
+//通过此接口统一调用RecyclerViewAdapter的方法，使用泛型统一调用
+public interface MyRecyclerViewAdapter<T> {
+    public void add(T t, int position);
     public void remove(int position);
     public int getItemCount();
     public void setOnItemClickListener(OnItemClickListener listener);
