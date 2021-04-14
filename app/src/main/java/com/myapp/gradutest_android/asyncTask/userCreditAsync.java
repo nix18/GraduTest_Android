@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,8 +15,8 @@ import androidx.annotation.NonNull;
 import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.domain.Credit;
 import com.myapp.gradutest_android.utils.net.getJson;
-import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.net.toJson;
 import com.tencent.mmkv.MMKV;
 
 
@@ -55,6 +54,9 @@ public class userCreditAsync extends AsyncTask<String,Integer,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         t = myActivity.findViewById(R.id.credit_sum_my_credit);
+        if(t == null){
+            t = myActivity.findViewById(R.id.credit_sum_credit_lottery);
+        }
         t.setText(credit.getCreditSum().toString());
     }
 

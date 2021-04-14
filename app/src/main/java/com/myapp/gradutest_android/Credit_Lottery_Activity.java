@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.str.strUtils;
@@ -57,6 +58,12 @@ public class Credit_Lottery_Activity extends AppCompatActivity {
                 String url = builder.build().toString();
                 networkTask networkTask=new networkTask();
                 new Thread(networkTask.setParam(lotteryHandler,url,1)).start();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                new userCreditAsync(Credit_Lottery_Activity.this).execute();
             }
         });
         lottery_ten_btn.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +78,15 @@ public class Credit_Lottery_Activity extends AppCompatActivity {
                 String url = builder.build().toString();
                 networkTask networkTask=new networkTask();
                 new Thread(networkTask.setParam(lotteryHandler,url,1)).start();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                new userCreditAsync(Credit_Lottery_Activity.this).execute();
             }
         });
+        new userCreditAsync(Credit_Lottery_Activity.this).execute();
     }
 
     public void initView(){
