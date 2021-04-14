@@ -41,7 +41,22 @@ public class Credit_Lottery_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 miniToast.getDialog(Credit_Lottery_Activity.this,"更多信息","\n一次抽奖：" +
                         "\n使用10积分进行抽奖\n十次抽奖：\n使用100积分进行抽奖（不足时以使用数目为准）\n\n抽奖概率公示：\n每十次抽奖必出一次一等奖" +
-                        "\n每九十次抽奖必出一次特等奖\n").show();
+                        "\n每九十次抽奖必出一次特等奖\n\n积分抽奖记录暂时仅支持在积分收支详情中查看\n").show();
+            }
+        });
+        lottery_one_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MMKV mmkv = MMKV.defaultMMKV();
+                Uri.Builder builder = new Uri.Builder();
+                builder.scheme("http").encodedAuthority(getString(R.string.host_core))
+                        .appendPath("creditLottery")
+                        .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                        .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                        .appendQueryParameter("count","1");
+                String url = builder.build().toString();
+                networkTask networkTask=new networkTask();
+                new Thread(networkTask.setParam(lotteryHandler,url,1)).start();
             }
         });
         lottery_ten_btn.setOnClickListener(new View.OnClickListener() {
