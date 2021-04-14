@@ -16,6 +16,7 @@ import androidx.cardview.widget.CardView;
 import com.myapp.gradutest_android.asyncTask.userCreditAsync;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.networkTask;
+import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.myapp.gradutest_android.utils.str.strUtils;
 import com.tencent.mmkv.MMKV;
 
@@ -34,6 +35,7 @@ public class Credit_Lottery_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        statusBarUtils.patchFullScreen(this);
         setContentView(R.layout.activity_credit__lottery);
         initView();
         back_btn.setOnClickListener(v -> finish());
@@ -59,10 +61,10 @@ public class Credit_Lottery_Activity extends AppCompatActivity {
                 networkTask networkTask=new networkTask();
                 new Thread(networkTask.setParam(lotteryHandler,url,1)).start();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }//等待抽奖完成，防止获取积分总数错误
                 new userCreditAsync(Credit_Lottery_Activity.this).execute();
             }
         });
@@ -79,7 +81,7 @@ public class Credit_Lottery_Activity extends AppCompatActivity {
                 networkTask networkTask=new networkTask();
                 new Thread(networkTask.setParam(lotteryHandler,url,1)).start();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

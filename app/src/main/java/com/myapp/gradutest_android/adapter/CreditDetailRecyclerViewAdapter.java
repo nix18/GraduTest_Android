@@ -84,7 +84,7 @@ public class CreditDetailRecyclerViewAdapter extends RecyclerView.Adapter<Credit
             if(localDataSet.get(position).getCredit_num() >= 0){
                 String credit_change_text = "+"+localDataSet.get(position).getCredit_num().toString();
                 viewHolder.getCredit_change().setText(credit_change_text);
-                viewHolder.getCredit_change().setTextColor(Color.parseColor("#DC143C"));
+                viewHolder.getCredit_change().setTextColor(Color.RED);
             }else {
                 viewHolder.getCredit_change().setText(localDataSet.get(position).getCredit_num().toString());
                 viewHolder.getCredit_change().setTextColor(Color.parseColor("#32CD32"));

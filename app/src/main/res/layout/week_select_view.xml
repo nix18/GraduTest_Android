@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:background="@drawable/bg_button_view"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/start_text_week_select_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="每周打卡"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:theme="@style/Theme.MaterialComponents.Light">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周一" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周二" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周三" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周四" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周五" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周六" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周末" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>
