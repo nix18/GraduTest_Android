@@ -125,6 +125,7 @@
                 android:layout_weight="1" />
 
             <com.myapp.gradutest_android.WeekSelectView
+                android:id="@+id/week_sel_btn_habit_info"
                 style="@style/button_white_style"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

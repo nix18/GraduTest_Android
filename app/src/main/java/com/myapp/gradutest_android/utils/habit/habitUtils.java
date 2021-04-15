@@ -1,8 +1,10 @@
 package com.myapp.gradutest_android.utils.habit;
 
+import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.domain.GoodHabit;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class habitUtils {
     /**
@@ -25,5 +27,38 @@ public class habitUtils {
                 low = mid+1;
         }
         return null;
+    }
+
+    public static String getWeekStr(List<Integer> checked_ids){
+        String checked_days = "";
+        if(checked_ids.size() > 0) {
+            for (Integer checked_id : checked_ids) {
+                switch (checked_id) {
+                    case R.id.mon_btn_week_sel:
+                        checked_days = checked_days.concat("MO,");
+                        break;
+                    case R.id.tues_btn_week_sel:
+                        checked_days = checked_days.concat("TU,");
+                        break;
+                    case R.id.wed_btn_week_sel:
+                        checked_days = checked_days.concat("WE,");
+                        break;
+                    case R.id.thur_btn_week_sel:
+                        checked_days = checked_days.concat("TH,");
+                        break;
+                    case R.id.fri_btn_week_sel:
+                        checked_days = checked_days.concat("FR,");
+                        break;
+                    case R.id.sat_btn_week_sel:
+                        checked_days = checked_days.concat("SA,");
+                        break;
+                    case R.id.sun_btn_week_sel:
+                        checked_days = checked_days.concat("SU,");
+                        break;
+                }
+            }
+            checked_days = checked_days.substring(0, checked_days.length() - 1);
+        }
+        return checked_days;
     }
 }

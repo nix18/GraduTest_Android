@@ -43,7 +43,7 @@
             app:singleLine="false">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/mon_btn"
+                android:id="@+id/mon_btn_week_sel"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                 app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/tues_btn"
+                android:id="@+id/tues_btn_week_sel"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/wed_btn"
+                android:id="@+id/wed_btn_week_sel"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -82,7 +82,7 @@
                 app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/thur_btn"
+                android:id="@+id/thur_btn_week_sel"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                 app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/fri_btn"
+                android:id="@+id/fri_btn_week_sel"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,7 +108,7 @@
                 app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/sat_btn"
+                android:id="@+id/sat_btn_week_sel"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
                 app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/sun_btn"
+                android:id="@+id/sun_btn_week_sel"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
