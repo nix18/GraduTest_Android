@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:background="@drawable/bg_button_view"
@@ -34,51 +35,104 @@
             android:layout_height="wrap_content" />
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/week_sel_group_week_select_view"
+            style="@style/Widget.MaterialComponents.ChipGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:theme="@style/Theme.MaterialComponents.Light">
+            android:theme="@style/WeekSelectView"
+            app:singleLine="false">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip10"
+                android:id="@+id/mon_btn"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="周一" />
+                android:text="周一"
+                android:textSize="12dp"
+                app:chipEndPadding="3dp"
+                app:chipStartPadding="4dp"
+                app:rippleColor="@color/light_orange"
+                app:textEndPadding="8dp"
+                app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip9"
+                android:id="@+id/tues_btn"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="周二" />
+                android:text="周二"
+                android:textSize="12dp"
+                app:chipEndPadding="3dp"
+                app:chipStartPadding="4dp"
+                app:rippleColor="@color/light_orange"
+                app:textEndPadding="8dp"
+                app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip8"
+                android:id="@+id/wed_btn"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="周三" />
+                android:text="周三"
+                android:textSize="12dp"
+                app:chipEndPadding="3dp"
+                app:chipStartPadding="4dp"
+                app:rippleColor="@color/light_orange"
+                app:textEndPadding="8dp"
+                app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip7"
+                android:id="@+id/thur_btn"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="周四" />
+                android:text="周四"
+                android:textSize="12dp"
+                app:chipEndPadding="3dp"
+                app:chipStartPadding="4dp"
+                app:rippleColor="@color/light_orange"
+                app:textEndPadding="8dp"
+                app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip6"
+                android:id="@+id/fri_btn"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="周五" />
+                android:text="周五"
+                android:textSize="12dp"
+                app:chipEndPadding="3dp"
+                app:chipStartPadding="4dp"
+                app:rippleColor="@color/light_orange"
+                app:textEndPadding="8dp"
+                app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip5"
+                android:id="@+id/sat_btn"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="周六" />
+                android:text="周六"
+                android:textSize="12dp"
+                app:chipEndPadding="3dp"
+                app:chipStartPadding="4dp"
+                app:rippleColor="@color/light_orange"
+                app:textEndPadding="8dp"
+                app:textStartPadding="8dp" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/chip4"
+                android:id="@+id/sun_btn"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="周末" />
+                android:text="周日"
+                android:textSize="12dp"
+                app:chipEndPadding="3dp"
+                app:chipStartPadding="4dp"
+                app:rippleColor="@color/light_orange"
+                app:textEndPadding="8dp"
+                app:textStartPadding="8dp" />
+
         </com.google.android.material.chip.ChipGroup>
 
         <Space

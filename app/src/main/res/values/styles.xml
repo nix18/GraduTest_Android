@@ -16,6 +16,11 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar" />
 
+    <style name="WeekSelectView" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/orange</item>
+        <item name="colorPrimaryVariant">@color/orange</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
     <style name="Widget.Theme.AppCompat.Light.NoActionBar.MyView" parent="">
         <item name="android:background">@color/gray_400</item>
         <item name="exampleColor">@color/light_blue_400</item>
