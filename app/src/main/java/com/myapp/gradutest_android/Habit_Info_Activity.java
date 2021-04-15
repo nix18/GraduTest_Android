@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Habit_Info_Activity extends AppCompatActivity {
@@ -46,6 +47,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
     private GoodHabit thisHabit;
     private RunningHabit runningHabit;
     private JSONObject user_config = new JSONObject();
+    private Date end_day;
     private String checked_days = "";
 
     @Override
@@ -94,10 +96,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     @Override
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         end_time_btn.end_text.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
-                        if(runningHabit.getRunning_start_time() != null){
-                            int target_days = chkDays(date,runningHabit.getRunning_start_time());
-                            if(target_days > 0) runningHabit.setTarget_days(target_days);
-                        }
+                        end_day = date;
                     }
                 })
                         .setSubmitColor(getColor(R.color.orange))
@@ -185,6 +184,25 @@ public class Habit_Info_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 List<Integer> checked_ids = week_sel_btn.week_group.getCheckedChipIds();
                 checked_days = habitUtils.getWeekStr(checked_ids);
+                if(checked_ids.size() == 7) {
+                    if (runningHabit.getRunning_start_time() != null) {
+                        int target_days = chkDays(end_day, runningHabit.getRunning_start_time());
+                        if (target_days > 0) runningHabit.setTarget_days(target_days);
+                    }
+                }else {
+                    int target_days = 0;
+                    Calendar c_start = new GregorianCalendar();
+                    Calendar c_end = new GregorianCalendar();
+                    c_start.setTime(runningHabit.getRunning_start_time());
+                    c_end.setTime(end_day);
+                    while (c_start.before(c_end)){
+                        if (c_start.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+                            target_days++;
+                        }
+                        c_start.add(Calendar.DAY_OF_YEAR, 1);
+                    }
+                }
+
                 miniToast.getDialog(Habit_Info_Activity.this, "更多信息", "这里是习惯的详细信息\n" + checked_days).show();
             }
         });
