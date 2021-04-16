@@ -12,6 +12,7 @@ import android.provider.CalendarContract;
 
 import com.myapp.gradutest_android.utils.msg.miniToast;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -42,15 +43,26 @@ public class habitReminderUtils {
      * @param eventDes      事件描述
      * @param eventLocation 事件地点
      */
-    public habitReminderUtils eventBuilder(long startTime, long endTime, String eventTitle, String eventDes,
+    public habitReminderUtils eventBuilder(long startTime, long endTime, Date remind_time, String eventTitle, String eventDes,
                                      String eventLocation, String week_sel) {
         event = new ContentValues();
         Date end = new Date(endTime);
+        SimpleDateFormat sdf_full = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat sdf_1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf_2 = new SimpleDateFormat(" HH:mm");
+        Date start = new Date();
+        try {
+            start = sdf_full.parse(sdf_1.format(startTime)+sdf_2.format(remind_time));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         String end_day = new SimpleDateFormat("yyyyMMdd").format(end);
+        String remind_hour = new SimpleDateFormat("HH").format(remind_time);
+        String remind_min = new SimpleDateFormat("mm").format(remind_time);
         // 事件开始时间
-        event.put(CalendarContract.Events.DTSTART, startTime);
+        event.put(CalendarContract.Events.DTSTART, start.getTime());
         // 事件结束时间
-        event.put(CalendarContract.Events.DTEND, endTime);
+        event.put(CalendarContract.Events.DTEND, start.getTime());
         // 事件标题
         event.put(CalendarContract.Events.TITLE, eventTitle);
         // 事件描述(对应手机系统日历备注栏)
@@ -68,7 +80,8 @@ public class habitReminderUtils {
         // 设置事件忙
         event.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
         // 设置事件重复规则
-        event.put(CalendarContract.Events.RRULE, "FREQ=WEEKLY;INTERVAL=1;UNTIL="+end_day+"T000000Z;BYDAY="+week_sel);
+        event.put(CalendarContract.Events.RRULE, "FREQ=WEEKLY;INTERVAL=1;UNTIL="+end_day+
+                "T000000Z;BYHOUR="+remind_hour+";BYMINUTE="+remind_min+";BYDAY="+week_sel);
         return this;
     }
 

@@ -56,6 +56,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
     private JSONObject user_config = new JSONObject();
     private Date start_day;
     private Date end_day;
+    private Date remind_time;
     private Date start_day_temp;
     private String checked_days = "";
 
@@ -71,6 +72,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
         start_day = Calendar.getInstance().getTime();
         end_day = start_day;
         start_day_temp = start_day;
+        remind_time = start_day;
 
         //初始化RunningHabit
         initRunningHabit();
@@ -141,6 +143,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     @Override
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         remind_time_btn.end_text.setText(new SimpleDateFormat("a hh:mm").format(date));
+                        remind_time = date;
                         try {
                             user_config.put("remind_time",new SimpleDateFormat("HH:mm").format(date));
                         } catch (JSONException e) {
@@ -235,8 +238,10 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     String url = builder.build().toString();
                     networkTask networkTask = new networkTask();
                     new Thread(networkTask.setParam(buyHabitHandler,url,1)).start();
-                    habitUtils.setHabitReminder(thisActivity,start_day,end_day,thisHabit.getHabit_name(),
-                            thisHabit.getHabit_content(),"好习惯养成系统",checked_days);
+                    if(thisHabit!=null) {
+                        habitUtils.setHabitReminder(thisActivity, start_day, end_day, remind_time, thisHabit.getHabit_name(),
+                                thisHabit.getHabit_content(), "好习惯养成系统", checked_days);
+                    }
                 }else {
                     miniToast.getDialog(thisActivity,"错误","习惯配置错误").show();
                 }
@@ -279,7 +284,16 @@ public class Habit_Info_Activity extends AppCompatActivity {
                 }
 
                 ArrayList<GoodHabit> habits= toJson.jsonToObjs(GoodHabit.class,json);
-                thisHabit = habitUtils.selHabitByHid(habits,hid);
+                switch (originActivity){
+                    case 0:
+                        //hid乱序无法二分法
+                        thisHabit = habitUtils.selHabitByHidOrdered(habits,hid);
+                        break;
+                    case 1:
+                    case 2:
+                        thisHabit = habitUtils.selHabitByHid(habits,hid);
+                        break;
+                }
                 Log.i("myTag",thisHabit.toString());
             }catch (NullPointerException e){
                 e.printStackTrace();

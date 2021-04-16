@@ -21,7 +21,7 @@ import java.util.List;
 
 public class habitUtils {
     /**
-     * 通过Hid查找好习惯
+     * 二分法通过Hid查找好习惯（有序）
      * @param habits 好习惯列表
      * @param hid 要找的好习惯Hid
      * @return 查找到的好习惯，找不到返回null
@@ -38,6 +38,20 @@ public class habitUtils {
                 high = mid-1;
             if (habits.get(mid).getHid() < hid)
                 low = mid+1;
+        }
+        return null;
+    }
+
+    /**
+     * 顺序法通过Hid查找好习惯（无序）
+     * @param habits 好习惯列表
+     * @param hid 要找的好习惯Hid
+     * @return 查找到的好习惯，找不到返回null
+     */
+    public static GoodHabit selHabitByHidOrdered(ArrayList<GoodHabit> habits, int hid){
+        for (GoodHabit habit:habits){
+            if(habit.getHid() == hid)
+                return habit;
         }
         return null;
     }
@@ -134,16 +148,20 @@ public class habitUtils {
         return target_days;
     }
 
-    public static void setHabitReminder(Activity activity, Date start_time, Date end_time, String title, String des, String loc, String week_sel){
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED){
-            Log.i("myLog","获取授权");
-            ActivityCompat.requestPermissions(activity,new String[]{Manifest.permission.READ_CALENDAR,Manifest.permission.WRITE_CALENDAR},1);
-        }else {
-            Log.i("myLog", "添加日程");
-            habitReminderUtils habitReminderUtils = new habitReminderUtils(activity).eventBuilder(
-                    start_time.getTime(), end_time.getTime(), title, des, loc,
-                    week_sel);
-            habitReminderUtils.addEvent();
+    public static void setHabitReminder(Activity activity, Date start_time, Date end_time, Date remind_time, String title, String des, String loc, String week_sel){
+        try {
+            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+                Log.i("myLog", "获取授权");
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, 1);
+            } else {
+                Log.i("myLog", "添加日程");
+                habitReminderUtils habitReminderUtils = new habitReminderUtils(activity).eventBuilder(
+                        start_time.getTime(), end_time.getTime(), remind_time, title, des, loc,
+                        week_sel);
+                habitReminderUtils.addEvent();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 }

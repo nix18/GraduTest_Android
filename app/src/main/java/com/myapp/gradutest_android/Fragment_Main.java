@@ -19,6 +19,7 @@ import com.myapp.gradutest_android.utils.habit.habitReminderUtils;
 import com.tencent.mmkv.MMKV;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,7 +66,7 @@ public class Fragment_Main extends Fragment {
                     Calendar time1 = Calendar.getInstance();
                     time1.set(2021,5,25);
                     habitReminderUtils habitReminderUtils = new habitReminderUtils(getContext()).eventBuilder(
-                            time.getTimeInMillis(),time1.getTimeInMillis(),"测试","测试描述","好习惯",
+                            time.getTimeInMillis(),time1.getTimeInMillis(),new Date(),"测试","测试描述","好习惯",
                     "MO,SU");
                     habitReminderUtils.addEvent();
                 }
