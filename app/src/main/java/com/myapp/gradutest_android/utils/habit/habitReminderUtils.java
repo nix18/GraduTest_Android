@@ -12,7 +12,9 @@ import android.provider.CalendarContract;
 
 import com.myapp.gradutest_android.utils.msg.miniToast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 public class habitReminderUtils {
@@ -41,8 +43,10 @@ public class habitReminderUtils {
      * @param eventLocation 事件地点
      */
     public habitReminderUtils eventBuilder(long startTime, long endTime, String eventTitle, String eventDes,
-                                     String eventLocation) {
+                                     String eventLocation, String week_sel) {
         event = new ContentValues();
+        Date end = new Date(endTime);
+        String end_day = new SimpleDateFormat("yyyyMMdd").format(end);
         // 事件开始时间
         event.put(CalendarContract.Events.DTSTART, startTime);
         // 事件结束时间
@@ -64,8 +68,7 @@ public class habitReminderUtils {
         // 设置事件忙
         event.put(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
         // 设置事件重复规则
-        event.put(CalendarContract.Events.RRULE, "FREQ=WEEKLY;INTERVAL=1;UNTIL=20210525T000000Z;WKST=SU;BYDAY=MO,WE,FR");
-
+        event.put(CalendarContract.Events.RRULE, "FREQ=WEEKLY;INTERVAL=1;UNTIL="+end_day+"T000000Z;BYDAY="+week_sel);
         return this;
     }
 

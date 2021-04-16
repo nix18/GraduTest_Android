@@ -62,9 +62,11 @@ public class Fragment_Main extends Fragment {
                     Log.i("myLog","添加日程");
                     Calendar time = Calendar.getInstance();
                     time.set(2021,4,15);
+                    Calendar time1 = Calendar.getInstance();
+                    time1.set(2021,5,25);
                     habitReminderUtils habitReminderUtils = new habitReminderUtils(getContext()).eventBuilder(
-                            time.getTimeInMillis(),time.getTimeInMillis(),"测试","测试描述","好习惯"
-                    );
+                            time.getTimeInMillis(),time1.getTimeInMillis(),"测试","测试描述","好习惯",
+                    "MO,SU");
                     habitReminderUtils.addEvent();
                 }
             }

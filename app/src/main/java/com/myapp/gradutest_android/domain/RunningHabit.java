@@ -15,20 +15,19 @@ public class RunningHabit {
     protected Integer persist_days;
     protected Integer target_days;
     protected Date last_qd_time;
-    protected Date running_start_time;
 
     public RunningHabit() {
     }
 
-    public RunningHabit(Integer rhid, Integer hid, Integer uid, String user_config, Integer bonus, Integer persist_days, Integer target_days, Date last_qd_time, Date running_start_time) {
+    public RunningHabit(Integer rhid, Integer hid, Integer uid, String user_config, Integer capital, Integer bonus, Integer persist_days, Integer target_days, Date last_qd_time) {
         this.rhid = rhid;
         this.hid = hid;
         this.uid = uid;
         this.user_config = user_config;
+        this.capital = capital;
         this.bonus = bonus;
         this.persist_days = persist_days;
         this.target_days = target_days;
         this.last_qd_time = last_qd_time;
-        this.running_start_time = running_start_time;
     }
 }

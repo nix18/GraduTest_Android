@@ -96,6 +96,11 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         start_time_btn.end_text.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
                         start_day = date;
+                        try {
+                            user_config.put("start_time",date);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 })
                         .setSubmitColor(getColor(R.color.orange))
@@ -114,6 +119,11 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         end_time_btn.end_text.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
                         end_day = date;
+                        try {
+                            user_config.put("end_time",date);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 })
                         .setSubmitColor(getColor(R.color.orange))
@@ -225,6 +235,8 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     String url = builder.build().toString();
                     networkTask networkTask = new networkTask();
                     new Thread(networkTask.setParam(buyHabitHandler,url,1)).start();
+                    habitUtils.setHabitReminder(thisActivity,start_day,end_day,thisHabit.getHabit_name(),
+                            thisHabit.getHabit_content(),"好习惯养成系统",checked_days);
                 }else {
                     miniToast.getDialog(thisActivity,"错误","习惯配置错误").show();
                 }
@@ -283,8 +295,9 @@ public class Habit_Info_Activity extends AppCompatActivity {
             Intent intent = new Intent(thisActivity,MainActivity.class);
             startActivity(intent);
         }
-        runningHabit.setRunning_start_time(start_day);
         try {
+            user_config.put("start_time",start_day);
+            user_config.put("end_time",end_day);
             user_config.put("remind_time",new SimpleDateFormat("HH:mm").format(start_day));
             user_config.put("remind_days_str","MO,TU,WE,TH,FR,SA,SU");
         } catch (JSONException e) {

@@ -4,18 +4,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.myapp.gradutest_android.utils.MyRunnable;
+import com.myapp.gradutest_android.utils.NetRunnable;
 
 /*
 网络相关子线程
  */
-public class networkTask implements MyRunnable{
+public class networkTask implements NetRunnable {
     private String url;
     private Handler handler;
     private Integer method;
 
     @Override
-    public MyRunnable setParam(Handler handler,String url,Integer method) {
+    public NetRunnable setParam(Handler handler, String url, Integer method) {
         this.handler=handler;
         this.url=url;
         this.method= method;
