@@ -98,12 +98,12 @@ public class Fragment_Square extends Fragment {
                 //延迟一秒钟再执行任务
                 new Handler().postDelayed(new Runnable() {
                     public void run() {
-                        new habitListAsync(getActivity(),mAdapter,url).execute();
+                        new habitListAsync(getActivity(),mAdapter,url,0).execute();
                     }
                 }, 1000);
             }
         });
-        new habitListAsync(getActivity(),mAdapter,url).execute();
+        new habitListAsync(getActivity(),mAdapter,url,0).execute();
         return view;
     }
 

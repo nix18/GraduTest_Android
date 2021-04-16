@@ -1,12 +1,18 @@
 package com.myapp.gradutest_android;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -19,6 +25,8 @@ import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.domain.RunningHabit;
 import com.myapp.gradutest_android.utils.habit.habitUtils;
 import com.myapp.gradutest_android.utils.msg.miniToast;
+import com.myapp.gradutest_android.utils.net.getJson;
+import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
@@ -30,15 +38,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class Habit_Info_Activity extends AppCompatActivity {
 
-    private TextView habit_info_text;
+    private Activity thisActivity;
     private TextView habit_name_text;
     private ImageView back_btn;
-    private ImageView more_info_btn;
+    private TextView buy_habit_btn;
     private ButtonView start_time_btn;
     private ButtonView end_time_btn;
     private ButtonView remind_time_btn;
@@ -47,7 +54,9 @@ public class Habit_Info_Activity extends AppCompatActivity {
     private GoodHabit thisHabit;
     private RunningHabit runningHabit;
     private JSONObject user_config = new JSONObject();
+    private Date start_day;
     private Date end_day;
+    private Date start_day_temp;
     private String checked_days = "";
 
     @Override
@@ -57,9 +66,17 @@ public class Habit_Info_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_habit__info);
         initView();
         initData();
+        thisActivity = this;
         runningHabit = new RunningHabit();
-        String now = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
-        String nowTime = new SimpleDateFormat("a hh:mm").format(Calendar.getInstance().getTime());
+        start_day = Calendar.getInstance().getTime();
+        end_day = start_day;
+        start_day_temp = start_day;
+
+        //初始化RunningHabit
+        initRunningHabit();
+
+        String now = new SimpleDateFormat("yyyy-MM-dd").format(start_day);
+        String nowTime = new SimpleDateFormat("a hh:mm").format(start_day);
 
         //初始化页面显示
         habit_name_text.setText(thisHabit.getHabit_name());
@@ -78,7 +95,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     @Override
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         start_time_btn.end_text.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
-                        runningHabit.setRunning_start_time(date);
+                        start_day = date;
                     }
                 })
                         .setSubmitColor(getColor(R.color.orange))
@@ -130,8 +147,8 @@ public class Habit_Info_Activity extends AppCompatActivity {
             }
         });
 
-        //初始化投入积分
-        //生成积分梯度
+        //初始化投入积分选项
+        //生成积分梯度用于提醒
         ArrayList<Integer> credit_sel = new ArrayList<>();
         int i = 1;
         while (i < 50){
@@ -178,71 +195,142 @@ public class Habit_Info_Activity extends AppCompatActivity {
                 pvNoLinkOptions.show();
             }
         });
+
         back_btn.setOnClickListener(v -> finish());
-        more_info_btn.setOnClickListener(new View.OnClickListener() {
+
+        buy_habit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MMKV mmkv = MMKV.defaultMMKV();
                 List<Integer> checked_ids = week_sel_btn.week_group.getCheckedChipIds();
                 checked_days = habitUtils.getWeekStr(checked_ids);
-                if(checked_ids.size() == 7) {
-                    if (runningHabit.getRunning_start_time() != null) {
-                        int target_days = chkDays(end_day, runningHabit.getRunning_start_time());
-                        if (target_days > 0) runningHabit.setTarget_days(target_days);
-                    }
-                }else {
-                    int target_days = 0;
-                    Calendar c_start = new GregorianCalendar();
-                    Calendar c_end = new GregorianCalendar();
-                    c_start.setTime(runningHabit.getRunning_start_time());
-                    c_end.setTime(end_day);
-                    while (c_start.before(c_end)){
-                        if (c_start.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-                            target_days++;
-                        }
-                        c_start.add(Calendar.DAY_OF_YEAR, 1);
-                    }
+                try {
+                    user_config.put("remind_days_str",checked_days);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-                miniToast.getDialog(Habit_Info_Activity.this, "更多信息", "这里是习惯的详细信息\n" + checked_days).show();
+                runningHabit.setUser_config(user_config.toString());
+                runningHabit.setTarget_days(habitUtils.getTargetDays(getApplicationContext(),start_day,end_day,checked_ids));
+                Log.i("myLog","进入检查");
+                if(chkRunningHabit()){
+                    Uri.Builder builder = new Uri.Builder();
+                    builder.scheme("http").encodedAuthority(getString(R.string.host_core))
+                            .appendPath("buyhabit")
+                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                            .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                            .appendQueryParameter("hid", runningHabit.getHid().toString())
+                            .appendQueryParameter("user_config", runningHabit.getUser_config())
+                            .appendQueryParameter("target_days", runningHabit.getTarget_days().toString())
+                            .appendQueryParameter("capital", runningHabit.getCapital().toString());
+                    String url = builder.build().toString();
+                    networkTask networkTask = new networkTask();
+                    new Thread(networkTask.setParam(buyHabitHandler,url,1)).start();
+                }else {
+                    miniToast.getDialog(thisActivity,"错误","习惯配置错误").show();
+                }
             }
         });
     }
 
     public void initView(){
-        habit_info_text = findViewById(R.id.habitinfo_habit_info);
         habit_name_text = findViewById(R.id.habit_name_habit_info);
         back_btn = findViewById(R.id.img_back_habit_info);
-        more_info_btn = findViewById(R.id.img_more_info_habit_info);
+        buy_habit_btn = findViewById(R.id.buy_habit_habit_info);
         start_time_btn = findViewById(R.id.start_time_habit_info);
         end_time_btn = findViewById(R.id.end_time_habit_info);
         remind_time_btn = findViewById(R.id.remind_time_habit_info);
         week_sel_btn = findViewById(R.id.week_sel_btn_habit_info);
         credit_in_btn = findViewById(R.id.credit_in_btn_habit_info);
+        habit_name_text.setFocusable(false);
     }
 
     public void initData(){
         MMKV habit_mmkv=MMKV.mmkvWithID("habits");
         Intent intent = getIntent();
+        String json = "";
         if (intent != null) {
             try {
                 int hid = intent.getIntExtra("hid",0);
-                String json=habit_mmkv.decodeString("habits");
+                int originActivity = intent.getIntExtra("origin",0);
+
+                //判断来源以便复用
+                switch (originActivity){
+                    case 0:
+                        json = habit_mmkv.decodeString("habits");
+                        break;
+                    case 1:
+                        json = habit_mmkv.decodeString("habits_my");
+                        break;
+                    case 2:
+                        json = habit_mmkv.decodeString("habits_my_running");
+                        break;
+                }
+
                 ArrayList<GoodHabit> habits= toJson.jsonToObjs(GoodHabit.class,json);
                 thisHabit = habitUtils.selHabitByHid(habits,hid);
-                habit_info_text.setText(thisHabit.toString());
+                Log.i("myTag",thisHabit.toString());
             }catch (NullPointerException e){
                 e.printStackTrace();
             }
         }
     }
 
-    public int chkDays(Date date1, Date date2){
-        int target_days =(int) (date1.getTime() - date2.getTime());
-        if(target_days == 0){
-            miniToast.Toast(getApplicationContext(),"相差时间过短，无法添加");
-        }else if(target_days < 0) {
-            return Math.abs(target_days);
+    public void initRunningHabit(){
+        try {
+            runningHabit.setHid(thisHabit.getHid());
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            Intent intent = new Intent(thisActivity,MainActivity.class);
+            startActivity(intent);
         }
-        return target_days;
+        runningHabit.setRunning_start_time(start_day);
+        try {
+            user_config.put("remind_time",new SimpleDateFormat("HH:mm").format(start_day));
+            user_config.put("remind_days_str","MO,TU,WE,TH,FR,SA,SU");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        runningHabit.setUser_config(user_config.toString());
+        runningHabit.setTarget_days(0);
+        runningHabit.setCapital(50);
+
+        //设置week_group全选
+        week_sel_btn.week_group.check(R.id.mon_btn_week_sel);
+        week_sel_btn.week_group.check(R.id.tues_btn_week_sel);
+        week_sel_btn.week_group.check(R.id.wed_btn_week_sel);
+        week_sel_btn.week_group.check(R.id.thur_btn_week_sel);
+        week_sel_btn.week_group.check(R.id.fri_btn_week_sel);
+        week_sel_btn.week_group.check(R.id.sat_btn_week_sel);
+        week_sel_btn.week_group.check(R.id.sun_btn_week_sel);
     }
+
+    //检查数据合法性
+    public boolean chkRunningHabit(){
+        if(runningHabit.getTarget_days() >= 1){
+            if(runningHabit.getCapital() >= 10){
+                if(start_day.getTime() < end_day.getTime()){
+                    return start_day_temp.getTime() <= start_day.getTime();
+                }
+            }
+        }
+        return false;
+    }
+
+    @SuppressLint("HandlerLeak")
+    Handler buyHabitHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog", "buyHabitHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            int code = getJson.getStatusCode(val);
+            if (code == 0) {
+                miniToast.Toast(thisActivity,"购买好习惯成功");
+                finish();
+            }else {
+                miniToast.getDialog(thisActivity,"错误", "服务器错误").show();
+            }
+        }
+    };
 }

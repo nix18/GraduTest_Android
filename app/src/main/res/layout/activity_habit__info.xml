@@ -31,13 +31,14 @@
             android:textColor="@color/black"
             android:textSize="20dp" />
 
-        <ImageView
-            android:id="@+id/img_more_info_habit_info"
+        <TextView
+            android:id="@+id/buy_habit_habit_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:layout_weight="2"
-            app:srcCompat="@mipmap/ic_more_info" />
+            android:gravity="center"
+            android:text="购买"
+            android:textColor="@color/deep_yellow" />
 
     </LinearLayout>
 

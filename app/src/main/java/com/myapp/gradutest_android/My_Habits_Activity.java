@@ -59,7 +59,7 @@ public class My_Habits_Activity extends AppCompatActivity {
                 .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                 .appendQueryParameter("token", mmkv.decodeString("user_token",""));
         url = builder.build().toString();
-        new habitListAsync(this,mAdapter,url).execute();
+        new habitListAsync(this,mAdapter,url,1).execute();
     }
 
     private void initData(){
