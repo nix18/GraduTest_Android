@@ -1,13 +1,8 @@
 package com.myapp.gradutest_android.utils.habit;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.util.Log;
-
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.domain.GoodHabit;
@@ -148,20 +143,17 @@ public class habitUtils {
         return target_days;
     }
 
-    public static void setHabitReminder(Activity activity, Date start_time, Date end_time, Date remind_time, String title, String des, String loc, String week_sel){
+    public static long setHabitReminder(Activity activity, Date start_time, Date end_time, Date remind_time, String title, String des, String loc, String week_sel){
+        long eventId = 0;
         try {
-            if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
-                Log.i("myLog", "获取授权");
-                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, 1);
-            } else {
-                Log.i("myLog", "添加日程");
-                habitReminderUtils habitReminderUtils = new habitReminderUtils(activity).eventBuilder(
-                        start_time.getTime(), end_time.getTime(), remind_time, title, des, loc,
-                        week_sel);
-                habitReminderUtils.addEvent();
-            }
+            Log.i("myLog", "添加日程");
+            habitReminderUtils habitReminderUtils = new habitReminderUtils(activity).eventBuilder(
+                    start_time.getTime(), end_time.getTime(), remind_time, title, des, loc,
+                    week_sel);
+            eventId = habitReminderUtils.addEvent();
         }catch (Exception e){
             e.printStackTrace();
         }
+        return eventId;
     }
 }

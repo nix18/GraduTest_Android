@@ -1,7 +1,9 @@
 package com.myapp.gradutest_android;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.myapp.gradutest_android.utils.msg.miniToast;
@@ -33,6 +37,8 @@ public class Log_In_Activity extends AppCompatActivity {
 
         //初始化MMKV共享存储
         MMKV.initialize(this);
+
+        requestPermission();
 
         //检查token是否有效
         MMKV mmkv=MMKV.defaultMMKV();
@@ -87,4 +93,12 @@ public class Log_In_Activity extends AppCompatActivity {
             }
         }
     };
+
+    public void requestPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) {
+            Log.i("myLog", "获取授权");
+            miniToast.Toast(this,"请授权必要权限，否则软件可能无法使用");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR}, 1);
+        }
+    }
 }

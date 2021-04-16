@@ -238,10 +238,12 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     String url = builder.build().toString();
                     networkTask networkTask = new networkTask();
                     new Thread(networkTask.setParam(buyHabitHandler,url,1)).start();
-                    if(thisHabit!=null) {
-                        habitUtils.setHabitReminder(thisActivity, start_day, end_day, remind_time, thisHabit.getHabit_name(),
-                                thisHabit.getHabit_content(), "好习惯养成系统", checked_days);
+                    long eventId = habitUtils.setHabitReminder(thisActivity, start_day, end_day, remind_time, thisHabit.getHabit_name(),
+                            thisHabit.getHabit_content(), "好习惯养成系统", checked_days);
+                    if(eventId != 0){
+                        miniToast.Toast(thisActivity,"日程添加成功");
                     }
+                    //TODO 保存eventId用于删除
                 }else {
                     miniToast.getDialog(thisActivity,"错误","习惯配置错误").show();
                 }

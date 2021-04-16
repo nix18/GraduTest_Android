@@ -142,9 +142,10 @@ public class habitReminderUtils {
 
     /**
      *  添加日历事件
+     *  返回eventId
      * */
     @SuppressLint("MissingPermission")
-    public void addEvent(){
+    public long addEvent(){
 
         // 创建contentResolver
         contentResolver = thisContext.getContentResolver();
@@ -183,5 +184,6 @@ public class habitReminderUtils {
         if (insertReminderUri == null){
             miniToast.Toast(thisContext,"添加reminder失败");
         }
+        return eventId;
     }
 }
