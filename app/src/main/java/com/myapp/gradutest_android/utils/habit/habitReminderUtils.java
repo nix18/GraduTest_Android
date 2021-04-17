@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.provider.CalendarContract;
+import android.util.Log;
 
 import com.myapp.gradutest_android.utils.msg.miniToast;
 
@@ -185,5 +186,17 @@ public class habitReminderUtils {
             miniToast.Toast(thisContext,"添加reminder失败");
         }
         return eventId;
+    }
+
+    public static void deleteEventById(Context context, long eventId) {
+        if (eventId <= 0) {
+            return;
+        }
+        ContentResolver cr = context.getContentResolver();
+        ContentValues values = new ContentValues();
+        Uri deleteUri = null;
+        deleteUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
+        int rows = context.getContentResolver().delete(deleteUri, null, null);
+        Log.i("TAG", "Rows deleted: " + rows);
     }
 }

@@ -23,6 +23,8 @@ import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.domain.RunningHabit;
+import com.myapp.gradutest_android.domain.UserConfig;
+import com.myapp.gradutest_android.utils.habit.habitReminderUtils;
 import com.myapp.gradutest_android.utils.habit.habitUtils;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
@@ -30,9 +32,6 @@ import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,12 +52,12 @@ public class Habit_Info_Activity extends AppCompatActivity {
     private ButtonView credit_in_btn;
     private GoodHabit thisHabit;
     private RunningHabit runningHabit;
-    private JSONObject user_config = new JSONObject();
     private Date start_day;
     private Date end_day;
     private Date remind_time;
     private Date start_day_temp;
     private String checked_days = "";
+    private UserConfig userConfig = new UserConfig();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +97,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         start_time_btn.end_text.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
                         start_day = date;
-                        try {
-                            user_config.put("start_time",date);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        userConfig.setStart_time(date);
                     }
                 })
                         .setSubmitColor(getColor(R.color.orange))
@@ -121,11 +116,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         end_time_btn.end_text.setText(new SimpleDateFormat("yyyy-MM-dd").format(date));
                         end_day = date;
-                        try {
-                            user_config.put("end_time",date);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        userConfig.setEnd_time(date);
                     }
                 })
                         .setSubmitColor(getColor(R.color.orange))
@@ -144,11 +135,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     public void onTimeSelect(Date date, View v) {//选中事件回调
                         remind_time_btn.end_text.setText(new SimpleDateFormat("a hh:mm").format(date));
                         remind_time = date;
-                        try {
-                            user_config.put("remind_time",new SimpleDateFormat("HH:mm").format(date));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        userConfig.setRemind_time(date);
                     }
                 })
                         .setType(new boolean[]{false, false, false, true, true, false})
@@ -217,33 +204,36 @@ public class Habit_Info_Activity extends AppCompatActivity {
                 MMKV mmkv = MMKV.defaultMMKV();
                 List<Integer> checked_ids = week_sel_btn.week_group.getCheckedChipIds();
                 checked_days = habitUtils.getWeekStr(checked_ids);
-                try {
-                    user_config.put("remind_days_str",checked_days);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                runningHabit.setUser_config(user_config.toString());
+                userConfig.setRemind_days_str(checked_days);
                 runningHabit.setTarget_days(habitUtils.getTargetDays(getApplicationContext(),start_day,end_day,checked_ids));
-                Log.i("myLog","进入检查");
+                Log.i("myLog","进入好习惯养成计划完整性");
                 if(chkRunningHabit()){
-                    Uri.Builder builder = new Uri.Builder();
-                    builder.scheme("http").encodedAuthority(getString(R.string.host_core))
-                            .appendPath("buyhabit")
-                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
-                            .appendQueryParameter("token", mmkv.decodeString("user_token",""))
-                            .appendQueryParameter("hid", runningHabit.getHid().toString())
-                            .appendQueryParameter("user_config", runningHabit.getUser_config())
-                            .appendQueryParameter("target_days", runningHabit.getTarget_days().toString())
-                            .appendQueryParameter("capital", runningHabit.getCapital().toString());
-                    String url = builder.build().toString();
-                    networkTask networkTask = new networkTask();
-                    new Thread(networkTask.setParam(buyHabitHandler,url,1)).start();
+
+                    //添加日程 获取eventId
                     long eventId = habitUtils.setHabitReminder(thisActivity, start_day, end_day, remind_time, thisHabit.getHabit_name(),
                             thisHabit.getHabit_content(), "好习惯养成系统", checked_days);
+                    habitReminderUtils.deleteEventById(thisActivity,eventId);
                     if(eventId != 0){
+                        userConfig.setEventId(eventId);
+                        runningHabit.setUser_config(userConfig);
                         miniToast.Toast(thisActivity,"日程添加成功");
+
+                        //提交好习惯养成计划
+                        Uri.Builder builder = new Uri.Builder();
+                        builder.scheme("http").encodedAuthority(getString(R.string.host_core))
+                                .appendPath("buyhabit")
+                                .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                                .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                                .appendQueryParameter("hid", runningHabit.getHid().toString())
+                                .appendQueryParameter("user_config", toJson.objToJsonStr(runningHabit.getUser_config()))
+                                .appendQueryParameter("target_days", runningHabit.getTarget_days().toString())
+                                .appendQueryParameter("capital", runningHabit.getCapital().toString());
+                        String url = builder.build().toString();
+                        networkTask networkTask = new networkTask();
+                        new Thread(networkTask.setParam(buyHabitHandler,url,1)).start();
+                    }else {
+                        miniToast.Toast(thisActivity,"日程添加失败");
                     }
-                    //TODO 保存eventId用于删除
                 }else {
                     miniToast.getDialog(thisActivity,"错误","习惯配置错误").show();
                 }
@@ -311,15 +301,12 @@ public class Habit_Info_Activity extends AppCompatActivity {
             Intent intent = new Intent(thisActivity,MainActivity.class);
             startActivity(intent);
         }
-        try {
-            user_config.put("start_time",start_day);
-            user_config.put("end_time",end_day);
-            user_config.put("remind_time",new SimpleDateFormat("HH:mm").format(start_day));
-            user_config.put("remind_days_str","MO,TU,WE,TH,FR,SA,SU");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        runningHabit.setUser_config(user_config.toString());
+        userConfig.setStart_time(start_day);
+        userConfig.setEnd_time(end_day);
+        userConfig.setRemind_time(start_day);
+        userConfig.setRemind_days_str("MO,TU,WE,TH,FR,SA,SU");
+        userConfig.setEventId((long) 0);
+        runningHabit.setUser_config(userConfig);
         runningHabit.setTarget_days(0);
         runningHabit.setCapital(50);
 

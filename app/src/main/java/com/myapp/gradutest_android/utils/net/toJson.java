@@ -44,4 +44,14 @@ public class toJson {
         }
         return objs;
     }
+
+    public static <T> String objToJsonStr(T object){
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        return gson.toJson(object);
+    }
+
+    public static <T> String objsToJsonStr(ArrayList<T> objects){
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
+        return gson.toJson(objects);
+    }
 }
