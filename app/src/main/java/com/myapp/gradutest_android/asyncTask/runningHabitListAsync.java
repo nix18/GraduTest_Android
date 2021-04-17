@@ -261,15 +261,37 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
         }
         MMKV mmkv_habits = MMKV.mmkvWithID("habits");
         String habits_square = mmkv_habits.decodeString("habits");
-        ArrayList<GoodHabit> tempHabits = toJson.jsonToObjs(GoodHabit.class,habits_square);
-        for (RunningHabit runningHabit:runningHabits){
+        if(habits_square != null) {
+            ArrayList<GoodHabit> tempHabits = toJson.jsonToObjs(GoodHabit.class,habits_square);
+            for (RunningHabit runningHabit : runningHabits) {
 
-            //组装HabitBundle列表，为了减少网络I/O，首先查询缓存
-            GoodHabit temp = habitUtils.selHabitByHidOrdered(tempHabits,runningHabit.getHid());
-            if(temp != null){
-                habitBundles.add(new HabitBundle(runningHabit,temp));
-                i++;
-            }else {
+                //组装HabitBundle列表，为了减少网络I/O，首先查询缓存
+                GoodHabit temp = habitUtils.selHabitByHidOrdered(tempHabits, runningHabit.getHid());
+                if (temp != null) {
+                    habitBundles.add(new HabitBundle(runningHabit, temp));
+                    i++;
+                } else {
+                    Uri.Builder builder = new Uri.Builder();
+                    builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                            .appendPath("selHabitByHid")
+                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid", 0)))
+                            .appendQueryParameter("token", mmkv.decodeString("user_token", ""))
+                            .appendQueryParameter("hid", runningHabit.getHid().toString());
+                    String url = builder.build().toString();
+                    networkTask networkTask1 = new networkTask();
+                    Thread t1 = new Thread(networkTask1.setParam(concatHabitBundleHandler, url, 1));
+                    try {
+                        t1.start();
+                        t1.join(); // 防止取不到对象
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }else {
+            for (RunningHabit runningHabit : runningHabits) {
+
+                //组装HabitBundle列表
                 Uri.Builder builder = new Uri.Builder();
                 builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
                         .appendPath("selHabitByHid")
