@@ -24,7 +24,6 @@ import com.bigkoo.pickerview.view.TimePickerView;
 import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.domain.RunningHabit;
 import com.myapp.gradutest_android.domain.UserConfig;
-import com.myapp.gradutest_android.utils.habit.habitReminderUtils;
 import com.myapp.gradutest_android.utils.habit.habitUtils;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
@@ -212,7 +211,6 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     //添加日程 获取eventId
                     long eventId = habitUtils.setHabitReminder(thisActivity, start_day, end_day, remind_time, thisHabit.getHabit_name(),
                             thisHabit.getHabit_content(), "好习惯养成系统", checked_days);
-                    habitReminderUtils.deleteEventById(thisActivity,eventId);
                     if(eventId != 0){
                         userConfig.setEventId(eventId);
                         String config = toJson.objToJsonStr(userConfig);

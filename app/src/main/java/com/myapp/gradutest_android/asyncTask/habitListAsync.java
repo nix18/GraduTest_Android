@@ -120,8 +120,6 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                 @Override
                 public void onItemClick(View view, int position) {
                     if(position < finalI){
-                        Toast.makeText(myActivity, "clicked " + position,
-                                Toast.LENGTH_SHORT).show();
                         TextView hid = view.findViewById(R.id.text_hid_fm_square);
                         intent.putExtra("hid", Integer.parseInt(hid.getText().toString()));
                         intent.putExtra("origin",originActivity);

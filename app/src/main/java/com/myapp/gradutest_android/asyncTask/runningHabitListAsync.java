@@ -2,12 +2,16 @@ package com.myapp.gradutest_android.asyncTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -15,7 +19,10 @@ import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.domain.HabitBundle;
+import com.myapp.gradutest_android.domain.MyMessage;
 import com.myapp.gradutest_android.domain.RunningHabit;
+import com.myapp.gradutest_android.domain.UserConfig;
+import com.myapp.gradutest_android.utils.habit.habitReminderUtils;
 import com.myapp.gradutest_android.utils.habit.habitUtils;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
@@ -107,6 +114,45 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
         }
     };
 
+    @SuppressLint("HandlerLeak")
+    Handler habitClockInHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","habitClockInHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            int code = -1;
+            try {
+                code = getJson.getStatusCode(val);
+            }catch (Exception e){
+                e.printStackTrace();
+                miniToast.Toast(myActivity,"获取习惯打卡状态失败");
+            }
+            MyMessage myMsg;
+            myMsg = toJson.jsonToObj(MyMessage.class,val);
+            if(code == 0){
+                miniToast.Toast(myActivity,myMsg.getMsg());
+            }else {
+                if(myMsg == null) {
+                    miniToast.Toast(myActivity, "习惯打卡失败");
+                }else {
+                    miniToast.Toast(myActivity, myMsg.getMsg());
+                }
+            }
+
+            //刷新页面
+            MMKV mmkv = MMKV.defaultMMKV();
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                    .appendPath("selMyRunningHabits")
+                    .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                    .appendQueryParameter("token", mmkv.decodeString("user_token",""));
+            String url = builder.build().toString();
+            new runningHabitListAsync(myActivity,mAdapter,url).execute();
+        }
+    };
+
     @Override
     protected void onPostExecute(String s) {
         if(habitBundles != null && habitBundles.size() != 0){
@@ -121,6 +167,59 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                 mAdapter.add(habitBundle, i);
                 i++;
             }
+
+            int finalI = i;
+            mAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(View view, int position) {
+                    if(position < finalI){
+                        TextView rhid = view.findViewById(R.id.text_rhid_main);
+                        MMKV mmkv = MMKV.defaultMMKV();
+                        Uri.Builder builder = new Uri.Builder();
+                        builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                .appendPath("habitclockin")
+                                .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                                .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                                .appendQueryParameter("rhid",rhid.getText().toString());
+                        String url = builder.build().toString();
+                        networkTask networkTask = new networkTask();
+                        new Thread(networkTask.setParam(habitClockInHandler,url,1)).start();
+                    }
+                }
+
+                @Override
+                public void onItemLongClick(View view, int position) {
+                    if(position < finalI){
+                        TextView rhid = view.findViewById(R.id.text_rhid_main);
+                        TextView user_config = view.findViewById(R.id.text_user_config_main);
+                        //将字符串变回UserConfig对象
+                        String config = user_config.getText().toString();
+                        config = config.substring(1,config.length()-1);
+                        config = config.replaceAll("\\\\","");
+                        UserConfig userConfig = toJson.jsonToObj(UserConfig.class,config);
+                        AlertDialog alertDialog = miniToast.getDialog(myActivity,"请选择操作","\n注意：放弃好习惯不返还积分\n");
+                        alertDialog.setButton("放弃好习惯", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                miniToast.Toast(myActivity,"你放弃了好习惯");
+                                MMKV mmkv = MMKV.defaultMMKV();
+                                Uri.Builder builder = new Uri.Builder();
+                                builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                        .appendPath("giveuphabit")
+                                        .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                                        .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                                        .appendQueryParameter("rhid",rhid.getText().toString());
+                                String url = builder.build().toString();
+                                networkTask networkTask = new networkTask();
+                                new Thread(networkTask.setParam(habitClockInHandler,url,1)).start();;
+                                habitReminderUtils.deleteEventById(myActivity,userConfig.getEventId());
+                            }
+                        });
+                       alertDialog.show();
+                    }
+                }
+            });
         }
         super.onPostExecute(s);
     }
