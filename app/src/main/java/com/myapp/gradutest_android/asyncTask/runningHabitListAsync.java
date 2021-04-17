@@ -192,6 +192,8 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                 public void onItemLongClick(View view, int position) {
                     if(position < finalI){
                         TextView rhid = view.findViewById(R.id.text_rhid_main);
+                        TextView habit_name = view.findViewById(R.id.habit_name_textview_main);
+                        TextView habit_content = view.findViewById(R.id.text_habit_content_main);
                         TextView user_config = view.findViewById(R.id.text_user_config_main);
                         //将字符串变回UserConfig对象
                         String config = user_config.getText().toString();
@@ -214,6 +216,20 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                                 networkTask networkTask = new networkTask();
                                 new Thread(networkTask.setParam(habitClockInHandler,url,1)).start();;
                                 habitReminderUtils.deleteEventById(myActivity,userConfig.getEventId());
+                            }
+                        });
+                        alertDialog.setButton2("重新添加日程", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                long eventId = habitUtils.setHabitReminder(myActivity, userConfig.getStart_time(), userConfig.getEnd_time(),
+                                        userConfig.getRemind_time(), habit_name.getText().toString(),
+                                        habit_content.getText().toString(), "好习惯养成系统", userConfig.getRemind_days_str());
+                                if(eventId != 0) {
+                                    userConfig.setEventId(eventId);
+                                    String config = toJson.objToJsonStr(userConfig);
+                                    // TODO 维护eventId，后端添加更新RunningHabits
+                                    miniToast.Toast(myActivity, "日程添加成功");
+                                }
                             }
                         });
                        alertDialog.show();

@@ -31,6 +31,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         private final TextView target_days;
         private final TextView rhid;
         private final TextView user_config;
+        private final TextView habit_content;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -39,6 +40,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             target_days = itemView.findViewById(R.id.target_days_textview_main);
             rhid  = itemView.findViewById(R.id.text_rhid_main);
             user_config = itemView.findViewById(R.id.text_user_config_main);
+            habit_content = itemView.findViewById(R.id.text_habit_content_main);
         }
 
         public TextView getHabit_name() {
@@ -59,6 +61,10 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         public TextView getUser_config() {
             return user_config;
+        }
+
+        public TextView getHabit_content() {
+            return habit_content;
         }
     }
 
@@ -95,6 +101,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             viewHolder.getTarget_days().setText(localDataSet.get(position).getRunningHabit().getTarget_days().toString());
             viewHolder.getRhid().setText(localDataSet.get(position).getRunningHabit().getRhid().toString());
             viewHolder.getUser_config().setText(localDataSet.get(position).getRunningHabit().getUser_config());
+            viewHolder.getHabit_content().setText(localDataSet.get(position).getGoodHabit().getHabit_content());
         }
         if (mOnItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {

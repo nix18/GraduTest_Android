@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.tencent.mmkv.MMKV;
 public class Log_In_Activity extends AppCompatActivity {
 
     private TextView sign_in;
+    private ImageView settings_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +67,17 @@ public class Log_In_Activity extends AppCompatActivity {
 
     protected void initView(){
         sign_in = findViewById(R.id.sign_in_btn_log_in);
+        settings_btn = findViewById(R.id.settings_log_in);
         sign_in.setOnClickListener(v -> {
             Intent intent=new Intent(Log_In_Activity.this,Sign_In_Activity.class);
             startActivity(intent);
+        });
+        settings_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Log_In_Activity.this,Settings_Activity.class);
+                startActivity(intent);
+            }
         });
     }
 
