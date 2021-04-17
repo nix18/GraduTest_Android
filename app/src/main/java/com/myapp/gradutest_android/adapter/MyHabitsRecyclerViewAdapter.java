@@ -23,8 +23,7 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
     private MyRecyclerViewAdapter.OnItemClickListener mOnItemClickListener;
 
     /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
+     * 链接你正在使用的xml
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView habit_name;
@@ -70,16 +69,15 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
     }
 
     /**
-     * Initialize the dataset of the Adapter.
-     *
-     * @param dataSet String[] containing the data to populate views to be used
-     * by RecyclerView.
+     * 初始化本地数据集
      */
     public MyHabitsRecyclerViewAdapter(ArrayList<GoodHabit> dataSet) {
         localDataSet = dataSet;
     }
 
-    // Create new views (invoked by the layout manager)
+    /**
+     * 创建View
+     */
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -90,13 +88,14 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
+    /**
+     * 替换View中内容
+     */
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
+        //处理ViewHolder中内容
         if(localDataSet.get(position).getHid()!=null) {
             viewHolder.getHabit_name().setText(localDataSet.get(position).getHabit_name());
             viewHolder.getHabit_heat().setText("热度："+localDataSet.get(position).getHabit_heat().toString());
@@ -138,7 +137,9 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
         this.mOnItemClickListener = listener;
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
+    /**
+     * 返回数据集大小
+     */
     @Override
     public int getItemCount() {
         return localDataSet.size();

@@ -9,7 +9,7 @@ public class RunningHabit {
     protected Integer rhid;
     protected Integer hid;
     protected Integer uid;
-    protected UserConfig user_config;
+    protected String user_config;
     protected Integer capital; //投入积分
     protected Integer bonus; //回报积分
     protected Integer persist_days;
@@ -19,7 +19,7 @@ public class RunningHabit {
     public RunningHabit() {
     }
 
-    public RunningHabit(Integer rhid, Integer hid, Integer uid, UserConfig user_config, Integer capital, Integer bonus, Integer persist_days, Integer target_days, Date last_qd_time) {
+    public RunningHabit(Integer rhid, Integer hid, Integer uid, String user_config, Integer capital, Integer bonus, Integer persist_days, Integer target_days, Date last_qd_time) {
         this.rhid = rhid;
         this.hid = hid;
         this.uid = uid;

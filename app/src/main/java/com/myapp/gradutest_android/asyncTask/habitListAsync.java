@@ -67,8 +67,6 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                         case 1:
                             habit_mmkv.encode("habits_my", json);
                             break;
-                        case 2:
-                            habit_mmkv.encode("habits_my_running", json);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

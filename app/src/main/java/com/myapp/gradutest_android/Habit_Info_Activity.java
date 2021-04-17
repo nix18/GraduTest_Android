@@ -215,7 +215,8 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     habitReminderUtils.deleteEventById(thisActivity,eventId);
                     if(eventId != 0){
                         userConfig.setEventId(eventId);
-                        runningHabit.setUser_config(userConfig);
+                        String config = toJson.objToJsonStr(userConfig);
+                        runningHabit.setUser_config(config);
                         miniToast.Toast(thisActivity,"日程添加成功");
 
                         //提交好习惯养成计划
@@ -270,9 +271,6 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     case 1:
                         json = habit_mmkv.decodeString("habits_my");
                         break;
-                    case 2:
-                        json = habit_mmkv.decodeString("habits_my_running");
-                        break;
                 }
 
                 ArrayList<GoodHabit> habits= toJson.jsonToObjs(GoodHabit.class,json);
@@ -306,7 +304,8 @@ public class Habit_Info_Activity extends AppCompatActivity {
         userConfig.setRemind_time(start_day);
         userConfig.setRemind_days_str("MO,TU,WE,TH,FR,SA,SU");
         userConfig.setEventId((long) 0);
-        runningHabit.setUser_config(userConfig);
+        String config = toJson.objToJsonStr(userConfig);
+        runningHabit.setUser_config(config);
         runningHabit.setTarget_days(0);
         runningHabit.setCapital(50);
 

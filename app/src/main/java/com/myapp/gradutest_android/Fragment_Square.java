@@ -60,7 +60,7 @@ public class Fragment_Square extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         thisActivity=getActivity();
-        data = new ArrayList<GoodHabit>();
+        data = new ArrayList<>();
         url = thisActivity.getString(R.string.host)+"/habitplaza";
     }
 
