@@ -41,4 +41,14 @@ public class statusBarUtils {
         activity.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         statusBarUtils.setWindowStatusBarColor(activity, R.color.white);
     }
+
+    public static int getScreenWidth(Activity activity){
+        WindowManager wm = activity.getWindowManager();
+        return wm.getDefaultDisplay().getWidth();
+    }
+
+    public static int getScreenHeight(Activity activity){
+        WindowManager wm = activity.getWindowManager();
+        return wm.getDefaultDisplay().getHeight();
+    }
 }

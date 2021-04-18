@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.myapp.gradutest_android.R;
+import com.myapp.gradutest_android.Share_Img_Activity;
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.domain.GoodHabit;
 import com.myapp.gradutest_android.domain.HabitBundle;
@@ -194,6 +196,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                         TextView habit_name = view.findViewById(R.id.habit_name_textview_main);
                         TextView habit_content = view.findViewById(R.id.text_habit_content_main);
                         TextView user_config = view.findViewById(R.id.text_user_config_main);
+                        TextView persist_days = view.findViewById(R.id.persist_days_textview_main);
                         //将字符串变回UserConfig对象
                         String config = user_config.getText().toString();
                         config = config.substring(1,config.length()-1);
@@ -239,6 +242,17 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                                     new Thread(networkTask.setParam(habitClockInHandler,url,1)).start();
                                     miniToast.Toast(myActivity, "日程添加成功");
                                 }
+                            }
+                        });
+                        alertDialog.setButton3("分享好习惯", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                MMKV mmkv = MMKV.defaultMMKV();
+                                Intent intent = new Intent(myActivity, Share_Img_Activity.class);
+                                intent.putExtra("user_name", mmkv.decodeString("user_name"));
+                                intent.putExtra("habit_name",habit_name.getText().toString());
+                                intent.putExtra("persist_days",persist_days.getText().toString());
+                                myActivity.startActivity(intent);
                             }
                         });
                        alertDialog.show();

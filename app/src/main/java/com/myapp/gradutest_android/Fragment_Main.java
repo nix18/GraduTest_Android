@@ -70,7 +70,7 @@ public class Fragment_Main extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment__main, container, false);
-        initData(view);
+        initData();
         initView(view);
         return view;
     }
@@ -89,7 +89,7 @@ public class Fragment_Main extends Fragment {
         new runningHabitListAsync(getActivity(),mAdapter,url).execute();
     }
 
-    private void initData(View view){
+    private void initData(){
 
         mLayoutManager =  new GridLayoutManager(getContext(),3);
         //打入空数据初始化，异步初始化数据
