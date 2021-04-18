@@ -165,16 +165,25 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                 public void onItemClick(View view, int position) {
                     if(position < finalI){
                         TextView rhid = view.findViewById(R.id.text_rhid_main);
-                        MMKV mmkv = MMKV.defaultMMKV();
-                        Uri.Builder builder = new Uri.Builder();
-                        builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
-                                .appendPath("habitclockin")
-                                .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
-                                .appendQueryParameter("token", mmkv.decodeString("user_token",""))
-                                .appendQueryParameter("rhid",rhid.getText().toString());
-                        String url = builder.build().toString();
-                        networkTask networkTask = new networkTask();
-                        new Thread(networkTask.setParam(habitClockInHandler,url,1)).start();
+                        TextView user_config = view.findViewById(R.id.text_user_config_main);
+                        String config = user_config.getText().toString();
+                        config = config.substring(1,config.length()-1);
+                        config = config.replaceAll("\\\\",""); //反转义
+                        UserConfig userConfig = toJson.jsonToObj(UserConfig.class,config);
+                        if(habitUtils.chkHabitClockIn(userConfig)) {
+                            MMKV mmkv = MMKV.defaultMMKV();
+                            Uri.Builder builder = new Uri.Builder();
+                            builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                    .appendPath("habitclockin")
+                                    .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid", 0)))
+                                    .appendQueryParameter("token", mmkv.decodeString("user_token", ""))
+                                    .appendQueryParameter("rhid", rhid.getText().toString());
+                            String url = builder.build().toString();
+                            networkTask networkTask = new networkTask();
+                            new Thread(networkTask.setParam(habitClockInHandler, url, 1)).start();
+                        }else {
+                            miniToast.Toast(myActivity,"不在用户设置的打卡时间内，无法打卡");
+                        }
                     }
                 }
 

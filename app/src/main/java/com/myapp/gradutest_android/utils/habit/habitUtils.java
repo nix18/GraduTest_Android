@@ -6,13 +6,16 @@ import android.util.Log;
 
 import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.domain.GoodHabit;
+import com.myapp.gradutest_android.domain.UserConfig;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class habitUtils {
     /**
@@ -155,5 +158,18 @@ public class habitUtils {
             e.printStackTrace();
         }
         return eventId;
+    }
+
+    public static boolean chkHabitClockIn(UserConfig userConfig){
+        Map<Integer, String> weekMap = new HashMap<>(7);
+        weekMap.put(1, "SU");
+        weekMap.put(2, "MO");
+        weekMap.put(3, "TU");
+        weekMap.put(4, "WE");
+        weekMap.put(5, "TH");
+        weekMap.put(6, "FR");
+        weekMap.put(7, "SA");
+        Calendar calendar = Calendar.getInstance();
+        return userConfig.getRemind_days_str().contains(weekMap.get(calendar.get(Calendar.DAY_OF_WEEK)));
     }
 }
