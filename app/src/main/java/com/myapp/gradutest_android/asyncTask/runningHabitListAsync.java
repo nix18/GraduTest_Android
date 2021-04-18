@@ -122,23 +122,12 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
             Log.i("myLog","habitClockInHandler执行");
             Bundle data = msg.getData();
             String val = data.getString("value");
-            int code = -1;
-            try {
-                code = getJson.getStatusCode(val);
-            }catch (Exception e){
-                e.printStackTrace();
-                miniToast.Toast(myActivity,"获取习惯打卡状态失败");
-            }
             MyMessage myMsg;
             myMsg = toJson.jsonToObj(MyMessage.class,val);
-            if(code == 0){
-                miniToast.Toast(myActivity,myMsg.getMsg());
+            if(myMsg == null) {
+                miniToast.Toast(myActivity, "操作失败");
             }else {
-                if(myMsg == null) {
-                    miniToast.Toast(myActivity, "习惯打卡失败");
-                }else {
-                    miniToast.Toast(myActivity, myMsg.getMsg());
-                }
+                miniToast.Toast(myActivity,myMsg.getMsg());
             }
 
             //刷新页面
@@ -155,14 +144,15 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
 
     @Override
     protected void onPostExecute(String s) {
-        if(habitBundles != null && habitBundles.size() != 0){
-            int i = 0;
-            int count = mAdapter.getItemCount();
-            if (count != 0) {
-                for (int j = 0; j < count; j++) {
-                    mAdapter.remove(0);
-                }
+        //初始清除列表
+        int i = 0;
+        int count = mAdapter.getItemCount();
+        if (count != 0) {
+            for (int j = 0; j < count; j++) {
+                mAdapter.remove(0);
             }
+        }
+        if(habitBundles != null && habitBundles.size() != 0){
             for (HabitBundle habitBundle : habitBundles) {
                 mAdapter.add(habitBundle, i);
                 i++;
@@ -198,7 +188,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                         //将字符串变回UserConfig对象
                         String config = user_config.getText().toString();
                         config = config.substring(1,config.length()-1);
-                        config = config.replaceAll("\\\\","");
+                        config = config.replaceAll("\\\\",""); //反转义
                         UserConfig userConfig = toJson.jsonToObj(UserConfig.class,config);
                         AlertDialog alertDialog = miniToast.getDialog(myActivity,"请选择操作","\n注意：放弃好习惯不返还积分\n");
                         alertDialog.setButton("放弃好习惯", new DialogInterface.OnClickListener() {
@@ -227,7 +217,17 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                                 if(eventId != 0) {
                                     userConfig.setEventId(eventId);
                                     String config = toJson.objToJsonStr(userConfig);
-                                    // TODO 维护eventId，后端添加更新RunningHabits
+                                    MMKV mmkv = MMKV.defaultMMKV();
+                                    Uri.Builder builder = new Uri.Builder();
+                                    builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                            .appendPath("updateRunningHabit")
+                                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                                            .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                                            .appendQueryParameter("rhid",rhid.getText().toString())
+                                            .appendQueryParameter("user_config","\""+config+"\"");
+                                    String url = builder.build().toString();
+                                    networkTask networkTask = new networkTask();
+                                    new Thread(networkTask.setParam(habitClockInHandler,url,1)).start();
                                     miniToast.Toast(myActivity, "日程添加成功");
                                 }
                             }
@@ -259,6 +259,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                 e.printStackTrace();
             }
         }
+
         MMKV mmkv_habits = MMKV.mmkvWithID("habits");
         String habits_square = mmkv_habits.decodeString("habits");
         if(habits_square != null) {
