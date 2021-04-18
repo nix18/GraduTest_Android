@@ -160,7 +160,14 @@ public class habitUtils {
         return eventId;
     }
 
+    //检查打卡时间是否在时间范围内
     public static boolean chkHabitClockIn(UserConfig userConfig){
+        Calendar end_day = Calendar.getInstance();
+        end_day.setTime(userConfig.getEnd_time());
+        Calendar now = Calendar.getInstance();
+        if(!now.before(end_day)){
+            return false;
+        }
         Map<Integer, String> weekMap = new HashMap<>(7);
         weekMap.put(1, "SU");
         weekMap.put(2, "MO");
@@ -169,7 +176,6 @@ public class habitUtils {
         weekMap.put(5, "TH");
         weekMap.put(6, "FR");
         weekMap.put(7, "SA");
-        Calendar calendar = Calendar.getInstance();
-        return userConfig.getRemind_days_str().contains(weekMap.get(calendar.get(Calendar.DAY_OF_WEEK)));
+        return userConfig.getRemind_days_str().contains(weekMap.get(now.get(Calendar.DAY_OF_WEEK)));
     }
 }
