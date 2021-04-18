@@ -13,9 +13,7 @@ import com.myapp.gradutest_android.domain.GoodHabit;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRecyclerViewAdapter.ViewHolder> implements MyRecyclerViewAdapter<GoodHabit> {
 
@@ -29,7 +27,6 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
         private final TextView habit_name;
         private final TextView habit_category;
         private final TextView habit_heat;
-        private final TextView habit_create_time;
         private final TextView habit_isvisible;
         private final TextView hid;
 
@@ -38,7 +35,6 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
             habit_name = view.findViewById(R.id.habit_name_textview_my_habits);
             habit_category = view.findViewById(R.id.habit_category_textview_my_habits);
             habit_heat = view.findViewById(R.id.habit_heat_textview_my_habits);
-            habit_create_time = view.findViewById(R.id.habit_create_time_textview_my_habits);
             habit_isvisible = view.findViewById(R.id.habit_isvisible_textview_my_habits);
             hid = view.findViewById(R.id.text_hid_fm_square);
         }
@@ -49,10 +45,6 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
 
         public TextView getHabit_category() {
             return habit_category;
-        }
-
-        public TextView getHabit_create_time() {
-            return habit_create_time;
         }
 
         public TextView getHabit_isvisible() {
@@ -100,8 +92,6 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
             viewHolder.getHabit_name().setText(localDataSet.get(position).getHabit_name());
             viewHolder.getHabit_heat().setText("热度："+localDataSet.get(position).getHabit_heat().toString());
             viewHolder.getHabit_category().setText("分类："+localDataSet.get(position).getHabit_category());
-            viewHolder.getHabit_create_time().setText("创建时间："+new SimpleDateFormat(
-                    "yyyy-MM-dd", Locale.CHINA).format(localDataSet.get(position).getHabit_create_time()));
             viewHolder.getHabit_isvisible().setText(localDataSet.get(position).getHabit_isvisible()?"通过审核":"等待审核");
             viewHolder.getHid().setText(localDataSet.get(position).getHid().toString());
         }

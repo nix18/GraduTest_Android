@@ -21,33 +21,22 @@
 
             <TextView
                 android:id="@+id/habit_name_textview_my_habits"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="sample" />
 
             <TextView
                 android:id="@+id/habit_category_textview_my_habits"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="sample" />
 
             <TextView
                 android:id="@+id/habit_heat_textview_my_habits"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="sample" />
-
-            <TextView
-                android:id="@+id/habit_create_time_textview_my_habits"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:gravity="center"
                 android:text="sample" />
 

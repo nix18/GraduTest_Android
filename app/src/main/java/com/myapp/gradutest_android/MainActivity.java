@@ -130,16 +130,20 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.habit_add:
                         if(!offLineMode.getOffLineMode()){
-                        Toast.makeText(MainActivity.this, "添加好习惯", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, Add_Habit_Activity.class);
                         startActivity(intent);
                     }
                         break;
                     case R.id.habit_by_me:
                         if(!offLineMode.getOffLineMode()){
-                        Toast.makeText(MainActivity.this, "我创建的好习惯", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, My_Habits_Activity.class);
                         startActivity(intent);
+                    }
+                        break;
+                    case R.id.habit_all:
+                        if(!offLineMode.getOffLineMode()){
+                            Intent intent = new Intent(MainActivity.this, All_Habits_Activity.class);
+                            startActivity(intent);
                     }
                         break;
                 }

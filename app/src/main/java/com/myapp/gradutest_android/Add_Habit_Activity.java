@@ -7,9 +7,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +28,8 @@ public class Add_Habit_Activity extends AppCompatActivity {
 
     private EditText habit_name;
     private EditText habit_content;
-    private EditText habit_category;
+    private Spinner habit_category;
+    private String habit_category_text;
     private Button submit_btn;
     private ImageView back_btn;
     private ImageView more_info_btn;
@@ -45,6 +49,24 @@ public class Add_Habit_Activity extends AppCompatActivity {
                 miniToast.getDialog(Add_Habit_Activity.this,"更多信息","请填写合法的好习惯内容").show();
             }
         });
+
+        //初始化下拉选择框
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.habits_category, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        habit_category.setAdapter(adapter);
+        habit_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                habit_category_text = getResources().getStringArray(R.array.habits_category)[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                habit_category_text = getResources().getStringArray(R.array.habits_category)[0];
+            }
+        });
+        habit_category.setSelection(0);
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +84,7 @@ public class Add_Habit_Activity extends AppCompatActivity {
                             .appendQueryParameter("token", mmkv.decodeString("user_token",""))
                             .appendQueryParameter("hname", String.valueOf(habit_name.getText()))
                             .appendQueryParameter("hcontent",String.valueOf(habit_content.getText()))
-                            .appendQueryParameter("hcategory",String.valueOf(habit_category.getText()));
+                            .appendQueryParameter("hcategory",String.valueOf(habit_category_text));
                     String url = builder.build().toString();
                     networkTask networkTask=new networkTask();
                     new Thread(networkTask.setParam(addHabitHandler,url,1)).start();

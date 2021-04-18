@@ -46,9 +46,19 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/my_habit_list_my_habits"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </LinearLayout>

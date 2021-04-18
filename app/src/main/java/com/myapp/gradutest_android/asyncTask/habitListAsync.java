@@ -71,6 +71,9 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                         case 1:
                             habit_mmkv.encode("habits_my", json);
                             break;
+                        case 2:
+                            habit_mmkv.encode("habits_all", json);
+                            break;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -115,7 +118,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
      * @param activity 传入的Activity
      * @param myRecyclerViewAdapter 传入的RecyclerViewAdapter
      * @param url 要访问的url
-     * @param origin 来源Activity 0：Fragment_Square 1：My_Habits_Activity
+     * @param origin 来源Activity 0：Fragment_Square 1：My_Habits_Activity 2：All_Habits_Activity
      */
     public habitListAsync(Activity activity, MyRecyclerViewAdapter myRecyclerViewAdapter, String url, Integer origin) {
         myActivity = activity;

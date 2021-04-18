@@ -51,7 +51,6 @@ public class My_Habits_Activity extends AppCompatActivity {
                 miniToast.getDialog(My_Habits_Activity.this,"更多信息","这里是用户创建的所有好习惯\n").show();
             }
         });
-        mRecyclerView.setNestedScrollingEnabled(true);
         //异步加载数据
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http").encodedAuthority(getString(R.string.host_core))

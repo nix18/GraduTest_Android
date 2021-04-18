@@ -269,6 +269,9 @@ public class Habit_Info_Activity extends AppCompatActivity {
                     case 1:
                         json = habit_mmkv.decodeString("habits_my");
                         break;
+                    case 2:
+                        json = habit_mmkv.decodeString("habits_all");
+                        break;
                 }
 
                 ArrayList<GoodHabit> habits= toJson.jsonToObjs(GoodHabit.class,json);
