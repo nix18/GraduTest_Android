@@ -2,7 +2,10 @@ package com.myapp.gradutest_android.asyncTask;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,7 +13,6 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -18,6 +20,8 @@ import com.myapp.gradutest_android.Habit_Info_Activity;
 import com.myapp.gradutest_android.R;
 import com.myapp.gradutest_android.adapter.MyRecyclerViewAdapter;
 import com.myapp.gradutest_android.domain.GoodHabit;
+import com.myapp.gradutest_android.domain.MyMessage;
+import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
@@ -78,6 +82,34 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
         }
     };
 
+    @SuppressLint("HandlerLeak")
+    Handler delHabitHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","delHabitHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            MyMessage myMsg;
+            myMsg = toJson.jsonToObj(MyMessage.class,val);
+            if(myMsg == null) {
+                miniToast.Toast(myActivity, "操作失败");
+            }else {
+                miniToast.Toast(myActivity,myMsg.getMsg());
+            }
+
+            //刷新页面
+            MMKV mmkv = MMKV.defaultMMKV();
+            Uri.Builder builder = new Uri.Builder();
+            builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                    .appendPath("selmyhabits")
+                    .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                    .appendQueryParameter("token", mmkv.decodeString("user_token",""));
+            String url = builder.build().toString();
+            new habitListAsync(myActivity,mAdapter,url,1).execute();
+        }
+    };
+
     /**
      *
      * @param activity 传入的Activity
@@ -120,7 +152,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                 @Override
                 public void onItemClick(View view, int position) {
                     if(position < finalI){
-                        TextView hid = view.findViewById(R.id.text_hid_fm_square);
+                        TextView hid = view.findViewById(R.id.text_hid_fm_square); //重用id
                         intent.putExtra("hid", Integer.parseInt(hid.getText().toString()));
                         intent.putExtra("origin",originActivity);
                         myActivity.startActivity(intent);
@@ -130,8 +162,27 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                 @Override
                 public void onItemLongClick(View view, int position) {
                     if(position < finalI){
-                        Toast.makeText(myActivity, "long clicked " + position,
-                                Toast.LENGTH_SHORT).show();
+                        if(originActivity == 1) {
+                            String hid = ((TextView) view.findViewById(R.id.text_hid_fm_square)).getText().toString();
+                            AlertDialog alertDialog = miniToast.getDialog(myActivity, "请选择操作", "");
+                            alertDialog.setButton("删除习惯", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    miniToast.Toast(myActivity, "删除" + hid);
+                                    MMKV mmkv = MMKV.defaultMMKV();
+                                    Uri.Builder builder = new Uri.Builder();
+                                    builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                            .appendPath("delhabit")
+                                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                                            .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                                            .appendQueryParameter("hid",hid);
+                                    String url = builder.build().toString();
+                                    networkTask networkTask = new networkTask();
+                                    new Thread(networkTask.setParam(delHabitHandler,url,1)).start();;
+                                }
+                            });
+                            alertDialog.show();
+                        }
                     }
                 }
             });
