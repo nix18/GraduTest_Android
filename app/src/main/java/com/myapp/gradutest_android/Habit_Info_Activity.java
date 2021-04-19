@@ -22,11 +22,12 @@ import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
 import com.myapp.gradutest_android.domain.GoodHabit;
+import com.myapp.gradutest_android.domain.MyMessage;
 import com.myapp.gradutest_android.domain.RunningHabit;
 import com.myapp.gradutest_android.domain.UserConfig;
+import com.myapp.gradutest_android.utils.habit.habitReminderUtils;
 import com.myapp.gradutest_android.utils.habit.habitUtils;
 import com.myapp.gradutest_android.utils.msg.miniToast;
-import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.toJson;
 import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
@@ -340,12 +341,17 @@ public class Habit_Info_Activity extends AppCompatActivity {
             Log.i("myLog", "buyHabitHandler执行");
             Bundle data = msg.getData();
             String val = data.getString("value");
-            int code = getJson.getStatusCode(val);
-            if (code == 0) {
-                miniToast.Toast(thisActivity,"购买好习惯成功");
+            MyMessage myMessage = toJson.jsonToObj(MyMessage.class,val);
+            if (myMessage.getCode() == 0) {
+                miniToast.Toast(Habit_Info_Activity.this,myMessage.getMsg());
                 finish();
             }else {
-                miniToast.getDialog(thisActivity,"错误", "服务器错误").show();
+                miniToast.getDialog(thisActivity,"错误", myMessage.getMsg()).show();
+                //好习惯购买失败，删除日程
+                if(userConfig != null && userConfig.getEventId() != 0) {
+                    habitReminderUtils.deleteEventById(Habit_Info_Activity.this, userConfig.getEventId());
+                    miniToast.Toast(Habit_Info_Activity.this,"习惯购买失败，删除日程");
+                }
             }
         }
     };

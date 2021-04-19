@@ -32,6 +32,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
         private final TextView rhid;
         private final TextView user_config;
         private final TextView habit_content;
+        private final TextView bonus;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -41,6 +42,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             rhid  = itemView.findViewById(R.id.text_rhid_main);
             user_config = itemView.findViewById(R.id.text_user_config_main);
             habit_content = itemView.findViewById(R.id.text_habit_content_main);
+            bonus = itemView.findViewById(R.id.bonus_textview_main);
         }
 
         public TextView getHabit_name() {
@@ -65,6 +67,10 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
 
         public TextView getHabit_content() {
             return habit_content;
+        }
+
+        public TextView getBonus() {
+            return bonus;
         }
     }
 
@@ -102,6 +108,7 @@ public class MainRecyclerViewAdapter extends RecyclerView.Adapter<MainRecyclerVi
             viewHolder.getRhid().setText(localDataSet.get(position).getRunningHabit().getRhid().toString());
             viewHolder.getUser_config().setText(localDataSet.get(position).getRunningHabit().getUser_config());
             viewHolder.getHabit_content().setText(localDataSet.get(position).getGoodHabit().getHabit_content());
+            viewHolder.getBonus().setText(localDataSet.get(position).getRunningHabit().getBonus().toString());
         }
         if (mOnItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
