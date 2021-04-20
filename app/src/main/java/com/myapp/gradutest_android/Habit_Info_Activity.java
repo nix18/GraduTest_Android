@@ -220,7 +220,7 @@ public class Habit_Info_Activity extends AppCompatActivity {
 
                         //提交好习惯养成计划
                         Uri.Builder builder = new Uri.Builder();
-                        builder.scheme("http").encodedAuthority(getString(R.string.host_core))
+                        builder.scheme("https").encodedAuthority(getString(R.string.host_core))
                                 .appendPath("buyhabit")
                                 .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                                 .appendQueryParameter("token", mmkv.decodeString("user_token",""))

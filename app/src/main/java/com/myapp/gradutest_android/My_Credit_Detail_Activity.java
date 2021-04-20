@@ -50,7 +50,7 @@ public class My_Credit_Detail_Activity extends AppCompatActivity {
         //异步加载数据
         MMKV mmkv = MMKV.defaultMMKV();
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http").encodedAuthority(getString(R.string.host_core))
+        builder.scheme("https").encodedAuthority(getString(R.string.host_core))
                 .appendPath("creditDetail")
                 .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                 .appendQueryParameter("token", mmkv.decodeString("user_token",""));

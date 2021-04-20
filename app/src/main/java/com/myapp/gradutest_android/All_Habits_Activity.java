@@ -58,7 +58,7 @@ public class All_Habits_Activity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
                 Uri.Builder builder = new Uri.Builder();
-                builder.scheme("http").encodedAuthority(getString(R.string.host_core))
+                builder.scheme("https").encodedAuthority(getString(R.string.host_core))
                         .appendPath("selhabits");
                 String checkedUrl;
                 switch (checkedId){

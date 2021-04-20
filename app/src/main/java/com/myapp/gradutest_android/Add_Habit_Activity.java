@@ -77,7 +77,7 @@ public class Add_Habit_Activity extends AppCompatActivity {
                 }else{
                     Uri.Builder builder = new Uri.Builder();
                     Log.i("myTag",mmkv.toString());
-                    builder.scheme("http")
+                    builder.scheme("https")
                             .encodedAuthority(Add_Habit_Activity.this.getString(R.string.host_core))
                             .appendPath("addhabit")
                             .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))

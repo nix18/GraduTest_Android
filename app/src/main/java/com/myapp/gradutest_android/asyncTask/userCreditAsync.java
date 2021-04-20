@@ -65,7 +65,7 @@ public class userCreditAsync extends AsyncTask<String,Integer,String> {
     protected String doInBackground(String... strings) {
         MMKV mmkv = MMKV.defaultMMKV();
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http").encodedAuthority(myActivity.getResources().getString(R.string.host_core))
+        builder.scheme("https").encodedAuthority(myActivity.getResources().getString(R.string.host_core))
                 .appendPath("getCredit")
                 .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                 .appendQueryParameter("token", mmkv.decodeString("user_token",""));

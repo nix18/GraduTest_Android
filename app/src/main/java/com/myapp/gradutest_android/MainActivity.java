@@ -18,7 +18,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.navigation.NavigationView;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         collapsingToolbarLayout.setCollapsedTitleTextColor(getResources().getColor(R.color.white));
         View headView = navigationView.getHeaderView(0);
         headImg = headView.findViewById(R.id.user_img_head_view);//不通过headView找不到
-        Glide.with(this).load(R.mipmap.ic_launcher_round).transform(new CircleCrop()).into(headImg);
+        Glide.with(this).load(R.drawable.ic_app_icon).transform(new CenterCrop()).into(headImg);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> {
             if(drawerLayout.isDrawerOpen(navigationView)){

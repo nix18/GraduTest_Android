@@ -104,7 +104,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
             //刷新页面
             MMKV mmkv = MMKV.defaultMMKV();
             Uri.Builder builder = new Uri.Builder();
-            builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+            builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                     .appendPath("selmyhabits")
                     .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                     .appendQueryParameter("token", mmkv.decodeString("user_token",""));
@@ -174,7 +174,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                                     miniToast.Toast(myActivity, "删除" + hid);
                                     MMKV mmkv = MMKV.defaultMMKV();
                                     Uri.Builder builder = new Uri.Builder();
-                                    builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                    builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                                             .appendPath("delhabit")
                                             .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                                             .appendQueryParameter("token", mmkv.decodeString("user_token",""))

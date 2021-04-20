@@ -135,7 +135,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
             //刷新页面
             MMKV mmkv = MMKV.defaultMMKV();
             Uri.Builder builder = new Uri.Builder();
-            builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+            builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                     .appendPath("selMyRunningHabits")
                     .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                     .appendQueryParameter("token", mmkv.decodeString("user_token",""));
@@ -175,7 +175,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                         if(habitUtils.chkHabitClockIn(userConfig)) {
                             MMKV mmkv = MMKV.defaultMMKV();
                             Uri.Builder builder = new Uri.Builder();
-                            builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                            builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                                     .appendPath("habitclockin")
                                     .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid", 0)))
                                     .appendQueryParameter("token", mmkv.decodeString("user_token", ""))
@@ -209,7 +209,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                                 miniToast.Toast(myActivity,"你放弃了好习惯");
                                 MMKV mmkv = MMKV.defaultMMKV();
                                 Uri.Builder builder = new Uri.Builder();
-                                builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                                         .appendPath("giveuphabit")
                                         .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                                         .appendQueryParameter("token", mmkv.decodeString("user_token",""))
@@ -231,7 +231,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                                     String config = toJson.objToJsonStr(userConfig);
                                     MMKV mmkv = MMKV.defaultMMKV();
                                     Uri.Builder builder = new Uri.Builder();
-                                    builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                                    builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                                             .appendPath("updateRunningHabit")
                                             .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
                                             .appendQueryParameter("token", mmkv.decodeString("user_token",""))
@@ -296,7 +296,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                     i++;
                 } else {
                     Uri.Builder builder = new Uri.Builder();
-                    builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                    builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                             .appendPath("selHabitByHid")
                             .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid", 0)))
                             .appendQueryParameter("token", mmkv.decodeString("user_token", ""))
@@ -317,7 +317,7 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
 
                 //组装HabitBundle列表
                 Uri.Builder builder = new Uri.Builder();
-                builder.scheme("http").encodedAuthority(myActivity.getString(R.string.host_core))
+                builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
                         .appendPath("selHabitByHid")
                         .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid", 0)))
                         .appendQueryParameter("token", mmkv.decodeString("user_token", ""))
