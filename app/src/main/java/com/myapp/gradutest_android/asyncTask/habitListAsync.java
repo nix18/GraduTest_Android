@@ -99,17 +99,18 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                 miniToast.Toast(myActivity, "操作失败");
             }else {
                 miniToast.Toast(myActivity,myMsg.getMsg());
+                if(myMsg.getCode() != -1){
+                    //刷新页面
+                    MMKV mmkv = MMKV.defaultMMKV();
+                    Uri.Builder builder = new Uri.Builder();
+                    builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
+                            .appendPath("selmyhabits")
+                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                            .appendQueryParameter("token", mmkv.decodeString("user_token",""));
+                    String url = builder.build().toString();
+                    new habitListAsync(myActivity,mAdapter,url,1).execute();
+                }
             }
-
-            //刷新页面
-            MMKV mmkv = MMKV.defaultMMKV();
-            Uri.Builder builder = new Uri.Builder();
-            builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
-                    .appendPath("selmyhabits")
-                    .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
-                    .appendQueryParameter("token", mmkv.decodeString("user_token",""));
-            String url = builder.build().toString();
-            new habitListAsync(myActivity,mAdapter,url,1).execute();
         }
     };
 
@@ -181,7 +182,7 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
                                             .appendQueryParameter("hid",hid);
                                     String url = builder.build().toString();
                                     networkTask networkTask = new networkTask();
-                                    new Thread(networkTask.setParam(delHabitHandler,url,1)).start();;
+                                    new Thread(networkTask.setParam(delHabitHandler,url,1)).start();
                                 }
                             });
                             alertDialog.show();

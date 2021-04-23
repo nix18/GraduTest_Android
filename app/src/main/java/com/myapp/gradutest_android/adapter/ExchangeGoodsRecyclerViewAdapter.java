@@ -4,66 +4,66 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.myapp.gradutest_android.R;
-import com.myapp.gradutest_android.domain.GoodHabit;
+import com.myapp.gradutest_android.domain.Goods;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRecyclerViewAdapter.ViewHolder> implements MyRecyclerViewAdapter<GoodHabit> {
-
-    private ArrayList<GoodHabit> localDataSet;
+public class ExchangeGoodsRecyclerViewAdapter extends RecyclerView.Adapter<ExchangeGoodsRecyclerViewAdapter.ViewHolder> implements MyRecyclerViewAdapter<Goods> {
+    private ArrayList<Goods> localDataSet;
     private MyRecyclerViewAdapter.OnItemClickListener mOnItemClickListener;
 
     /**
      * 链接你正在使用的xml
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView habit_name;
-        private final TextView habit_category;
-        private final TextView habit_heat;
-        private final TextView habit_isvisible;
-        private final TextView hid;
+        private final TextView goods_name;
+        private final ImageView goods_pic;
+        private final TextView goods_price;
+        private final TextView goods_stock;
+        private final TextView gid;
 
         public ViewHolder(View view) {
             super(view);
-            habit_name = view.findViewById(R.id.habit_name_textview_my_habits);
-            habit_category = view.findViewById(R.id.habit_category_textview_my_habits);
-            habit_heat = view.findViewById(R.id.habit_heat_textview_my_habits);
-            habit_isvisible = view.findViewById(R.id.habit_isvisible_textview_my_habits);
-            hid = view.findViewById(R.id.text_hid_fm_square);
+            gid = view.findViewById(R.id.text_gid_exchange_goods);
+            goods_name = view.findViewById(R.id.goods_name_exchange_goods);
+            goods_pic = view.findViewById(R.id.goods_pic_exchange_goods);
+            goods_price = view.findViewById(R.id.goods_price_exchange_goods);
+            goods_stock = view.findViewById(R.id.goods_stock_exchange_goods);
         }
 
-        public TextView getHabit_name() {
-            return habit_name;
+        public TextView getGoods_name() {
+            return goods_name;
         }
 
-        public TextView getHabit_category() {
-            return habit_category;
+        public ImageView getGoods_pic() {
+            return goods_pic;
         }
 
-        public TextView getHabit_isvisible() {
-            return habit_isvisible;
+        public TextView getGoods_price() {
+            return goods_price;
         }
 
-        public TextView getHabit_heat() {
-            return habit_heat;
+        public TextView getGoods_stock() {
+            return goods_stock;
         }
 
-        public TextView getHid(){
-            return hid;
+        public TextView getGid() {
+            return gid;
         }
     }
 
     /**
      * 初始化本地数据集
      */
-    public MyHabitsRecyclerViewAdapter(ArrayList<GoodHabit> dataSet) {
+    public ExchangeGoodsRecyclerViewAdapter(ArrayList<Goods> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -74,7 +74,7 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.textview_my_habits, viewGroup, false);
+                .inflate(R.layout.textview_exchange_goods, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -86,12 +86,12 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
     public void onBindViewHolder(ViewHolder viewHolder, final int position) {
 
         //处理ViewHolder中内容
-        if(localDataSet.get(position).getHid()!=null) {
-            viewHolder.getHabit_name().setText(localDataSet.get(position).getHabit_name());
-            viewHolder.getHabit_heat().setText("热度："+localDataSet.get(position).getHabit_heat().toString());
-            viewHolder.getHabit_category().setText("分类："+localDataSet.get(position).getHabit_category());
-            viewHolder.getHabit_isvisible().setText(localDataSet.get(position).getHabit_isvisible()?"通过审核":"等待审核");
-            viewHolder.getHid().setText(localDataSet.get(position).getHid().toString());
+        if(localDataSet.get(position).getGid()!=null) {
+            viewHolder.getGoods_name().setText(localDataSet.get(position).getGoods_name());
+            viewHolder.getGoods_price().setText(localDataSet.get(position).getGoods_price().toString());
+            viewHolder.getGoods_pic().setImageBitmap(localDataSet.get(position).getGoodsPic());
+            viewHolder.getGoods_stock().setText(localDataSet.get(position).getGoods_stock().toString());
+            viewHolder.getGid().setText(localDataSet.get(position).getGid().toString());
         }
         if (mOnItemClickListener != null) {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -110,8 +110,8 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
         }
     }
 
-    public void add(GoodHabit goodHabit, int position) {
-        localDataSet.add(position,goodHabit);
+    public void add(Goods goods, int position) {
+        localDataSet.add(position,goods);
         notifyItemInserted(position);
     }
 
@@ -134,4 +134,3 @@ public class MyHabitsRecyclerViewAdapter extends RecyclerView.Adapter<MyHabitsRe
     }
 
 }
-

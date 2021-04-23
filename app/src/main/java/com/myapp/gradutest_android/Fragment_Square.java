@@ -66,7 +66,6 @@ public class Fragment_Square extends Fragment {
 
 
     private void initData(View view){
-        /*mLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);*/
         mLayoutManager =  new GridLayoutManager(getContext(),3);
         //打入空数据初始化，异步初始化数据
         mAdapter = new SquareRecyclerViewAdapter(data);

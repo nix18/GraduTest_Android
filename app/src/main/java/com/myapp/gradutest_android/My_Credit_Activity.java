@@ -56,6 +56,13 @@ public class My_Credit_Activity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        credit_exchange_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(My_Credit_Activity.this,Exchange_Goods_Activity.class);
+                startActivity(intent);
+            }
+        });
         credit_lottery_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

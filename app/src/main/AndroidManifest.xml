@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Share_Img_Activity"></activity>
+        <activity android:name=".Exchange_Goods_Activity"></activity>
+        <activity android:name=".Share_Img_Activity" />
         <activity android:name=".All_Habits_Activity" />
         <activity android:name=".Credit_Lottery_Activity" />
         <activity android:name=".My_Credit_Detail_Activity" />
