@@ -3,12 +3,8 @@ package com.myapp.gradutest_android;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -16,16 +12,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.myapp.gradutest_android.listener.AppBarLayoutStateChangeListener;
+import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.getJson;
 import com.myapp.gradutest_android.utils.net.networkTask;
 import com.myapp.gradutest_android.utils.net.offLineMode;
 import com.tencent.mmkv.MMKV;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Objects;
 
@@ -55,6 +60,10 @@ public class Fragment_My extends Fragment {
     private Button log_out_btn;
 
     private Toolbar toolbar;
+
+    private TextView lv_text;
+
+    private TextView ex_text;
 
     public Fragment_My() {
         // Required empty public constructor
@@ -160,8 +169,41 @@ public class Fragment_My extends Fragment {
                 }
             }
         });
+        //加载等级数据
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https").encodedAuthority(getString(R.string.host_core))
+                .appendPath("getUserScore")
+                .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                .appendQueryParameter("token", mmkv.decodeString("user_token",""));
+        String url = builder.build().toString();
+        networkTask networkTask=new networkTask();
+        Thread t=new Thread(networkTask.setParam(setLevelHandler,url,1));
+        t.start();
     }
 
+    @SuppressLint("HandlerLeak")
+    Handler setLevelHandler = new Handler(){
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","exchangeGoodsHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            try {
+                JSONObject jsonObject = new JSONObject(val);
+                if(jsonObject.getInt("code") == 0) {
+                    int score = jsonObject.getInt("score");
+                    lv_text.setText(String.valueOf(score / 1000));
+                    ex_text.setText(String.valueOf(score % 1000)+"/1000");
+                }else {
+                    miniToast.Toast(thisActivity,jsonObject.getString("Msg"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void setBtnIcon(){
@@ -187,6 +229,8 @@ public class Fragment_My extends Fragment {
         my_data_analyze_btn.setCompoundDrawables(drawable_my_data_analyze,null,drawable_next,null);
         settings_btn.setCompoundDrawables(drawable_settings,null,drawable_next,null);
         log_out_btn.setCompoundDrawables(drawable_log_out,null,drawable_next,null);
+        lv_text = view.findViewById(R.id.lv_fm_my);
+        ex_text = view.findViewById(R.id.ex_fm_my);
     }
 
     @SuppressLint("HandlerLeak")
