@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -64,6 +65,8 @@ public class Fragment_My extends Fragment {
     private TextView lv_text;
 
     private TextView ex_text;
+
+    private ImageView more_info;
 
     public Fragment_My() {
         // Required empty public constructor
@@ -169,6 +172,19 @@ public class Fragment_My extends Fragment {
                 }
             }
         });
+
+        more_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                miniToast.getDialog(thisActivity,"经验获取方式","\n签到：+10经验\n" +
+                        "好习惯打卡：+20经验\n" +
+                        "抽奖1次：+5经验\n" +
+                        "购买好习惯：+50经验\n" +
+                        "放弃好习惯：-60经验\n\n"+
+                        "注：经验非即时刷新，每天23:30刷新\n").show();
+            }
+        });
+
         //加载等级数据
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https").encodedAuthority(getString(R.string.host_core))
@@ -231,6 +247,7 @@ public class Fragment_My extends Fragment {
         log_out_btn.setCompoundDrawables(drawable_log_out,null,drawable_next,null);
         lv_text = view.findViewById(R.id.lv_fm_my);
         ex_text = view.findViewById(R.id.ex_fm_my);
+        more_info = view.findViewById(R.id.more_info_fm_my);
     }
 
     @SuppressLint("HandlerLeak")
