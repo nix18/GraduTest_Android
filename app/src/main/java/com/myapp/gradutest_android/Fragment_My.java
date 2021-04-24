@@ -54,7 +54,7 @@ public class Fragment_My extends Fragment {
 
     private Button my_credit_btn;
 
-    private Button my_data_analyze_btn;
+    private Button my_data_analyse_btn;
 
     private Button settings_btn;
 
@@ -104,9 +104,17 @@ public class Fragment_My extends Fragment {
                 startActivity(intent);
             }
         });
+        my_data_analyse_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),Data_Analyse_Activity.class);
+                startActivity(intent);
+            }
+        });
         if(offLineMode.getOffLineMode()) {
             my_info_btn.setClickable(false);
             my_credit_btn.setClickable(false);
+            my_data_analyse_btn.setClickable(false);
         }
         settings_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,7 +233,7 @@ public class Fragment_My extends Fragment {
     public void setBtnIcon(){
         my_info_btn = view.findViewById(R.id.my_info_btn_fm_my);
         my_credit_btn = view.findViewById(R.id.my_credit_btn_fm_my);
-        my_data_analyze_btn = view.findViewById(R.id.my_data_analyze_btn_fm_my);
+        my_data_analyse_btn = view.findViewById(R.id.my_data_analyze_btn_fm_my);
         settings_btn = view.findViewById(R.id.settings_btn_fm_my);
         log_out_btn = view.findViewById(R.id.log_out_btn_fm_my);
         Drawable drawable_info = getResources().getDrawable(R.drawable.___29);
@@ -242,7 +250,7 @@ public class Fragment_My extends Fragment {
         drawable_next.setBounds(-60,0,20,80);
         my_info_btn.setCompoundDrawables(drawable_info,null,drawable_next,null);
         my_credit_btn.setCompoundDrawables(drawable_credit,null,drawable_next,null);
-        my_data_analyze_btn.setCompoundDrawables(drawable_my_data_analyze,null,drawable_next,null);
+        my_data_analyse_btn.setCompoundDrawables(drawable_my_data_analyze,null,drawable_next,null);
         settings_btn.setCompoundDrawables(drawable_settings,null,drawable_next,null);
         log_out_btn.setCompoundDrawables(drawable_log_out,null,drawable_next,null);
         lv_text = view.findViewById(R.id.lv_fm_my);
