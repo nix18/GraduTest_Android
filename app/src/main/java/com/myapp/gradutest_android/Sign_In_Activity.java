@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,6 +60,9 @@ public class Sign_In_Activity extends AppCompatActivity {
             if(user_name.getText().length() == 0){
                 user_name.requestFocus();
                 miniToast.Toast(this,"用户名不能为空");
+            }else if(user_name.getText().toString().contains("WX_")){
+                user_name.requestFocus();
+                miniToast.Toast(this,"用户名不合法");
             }
             else if(user_profile.getText().length() == 0){
                 user_profile.requestFocus();
@@ -93,12 +95,8 @@ public class Sign_In_Activity extends AppCompatActivity {
         String val = data.getString("value");
         MyMessage message = toJson.jsonToObj(MyMessage.class,val);
         Snackbar snackbar = Snackbar.make(getWindow().getDecorView(), message.getMsg(), Snackbar.LENGTH_LONG)
-                .setAction("确定", v -> {
-                    //
-                });
+                .setAction("返回登录", v -> finish());
         snackbar.show();
-        TextView output = findViewById(R.id.output_sign_in);
-        output.setText(message.toString());
         }
     };
 }
