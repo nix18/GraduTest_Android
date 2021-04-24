@@ -13,9 +13,13 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieEntry;
+import com.myapp.gradutest_android.adapter.LineChartAdapter;
 import com.myapp.gradutest_android.adapter.PieChartAdapter;
 import com.myapp.gradutest_android.utils.msg.miniToast;
 import com.myapp.gradutest_android.utils.net.networkTask;
@@ -25,16 +29,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Data_Analyse_Activity extends AppCompatActivity {
 
     private PieChart credit_chart;
+    private LineChart clock_in_chart;
     private List<Integer> colors = new ArrayList<>();
     private List<PieEntry> vals = new ArrayList<>();
+    private ArrayList<Entry> values = new ArrayList<>();
     private PieChartAdapter pieChartAdapter;
+    private LineChartAdapter lineChartAdapter;
     private ImageView back_btn;
     private ImageView more_info_btn;
+    private String[] xStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +69,26 @@ public class Data_Analyse_Activity extends AppCompatActivity {
         networkTask networkTask=new networkTask();
         Thread t=new Thread(networkTask.setParam(refreshCreditChartHandler,url,1));
         t.start();
+
+        //刷新打卡图表
+        Uri.Builder builder1 = new Uri.Builder();
+        builder1.scheme("https").encodedAuthority(getString(R.string.host_core))
+                .appendPath("getHabitClockInAnalyse")
+                .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                .appendQueryParameter("token", mmkv.decodeString("user_token",""));
+        String url1 = builder1.build().toString();
+        networkTask networkTask1=new networkTask();
+        Thread t1=new Thread(networkTask1.setParam(refreshClockInChartHandler,url1,1));
+        t1.start();
     }
 
     public void initView(){
         credit_chart = findViewById(R.id.credit_chart);
+        clock_in_chart = findViewById(R.id.clock_in_chart);
         back_btn = findViewById(R.id.img_back_data_analyse);
         more_info_btn = findViewById(R.id.img_more_info_data_analyse);
         initCreditChart();
+        initClockInChart();
     }
 
     public void initCreditChart() {
@@ -77,8 +99,8 @@ public class Data_Analyse_Activity extends AppCompatActivity {
         vals.add(new PieEntry(1.0f, "积分抽奖支出"));
 
         // 设置每份的颜色
-        colors.add(Color.parseColor("#6785f2"));
-        colors.add(Color.parseColor("#675cf2"));
+        colors.add(Color.parseColor("#6785F2"));
+        colors.add(Color.parseColor("#675CF2"));
         colors.add(Color.parseColor("#FF8247"));
         colors.add(Color.parseColor("#FF6A6A"));
         colors.add(Color.parseColor("#B22222"));
@@ -92,7 +114,7 @@ public class Data_Analyse_Activity extends AppCompatActivity {
         // 是否可以拖拽旋转(具体值具体写入)
         pieChartAdapter.initRotation(true, 0, 0f, false);
         // 是否有描述(具体值具体写入)
-        pieChartAdapter.initDescription(true, "过去一个月数据", 14, Color.BLACK, 300f, 100f);
+        pieChartAdapter.initDescription(true, "过去30天数据", 14, Color.BLACK, 300f, 100f);
         // 是否显示每个部分的文字描述(具体值具体写入)
         pieChartAdapter.initEntryLabel(true, Color.WHITE, 7);
         // 图表位置及背景(具体值具体写入)
@@ -104,6 +126,17 @@ public class Data_Analyse_Activity extends AppCompatActivity {
         pieChartAdapter.invalidate();
     }
 
+    public void initClockInChart(){
+        xStr = new String[]{"12/1", "12/2", "12/3"};
+        lineChartAdapter = new LineChartAdapter(clock_in_chart);
+        lineChartAdapter.setXAxis(true, true, 10f, Color.BLUE, XAxis.XAxisPosition.BOTTOM, 10f,3,xStr);
+
+
+        lineChartAdapter.setData();
+        lineChartAdapter.setInteraction(true,true, true, true, false,
+                false, false, true);
+        lineChartAdapter.invalidate();
+    }
 
     @SuppressLint("HandlerLeak")
     Handler refreshCreditChartHandler = new Handler(){
@@ -125,6 +158,46 @@ public class Data_Analyse_Activity extends AppCompatActivity {
                     pieChartAdapter.invalidate();
                 }else {
                     miniToast.Toast(Data_Analyse_Activity.this,jsonObject.getString("Msg"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    Handler refreshClockInChartHandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            Log.i("myLog","refreshCreditChartHandler执行");
+            Bundle data = msg.getData();
+            String val = data.getString("value");
+            try {
+                JSONObject jsonObject = new JSONObject(val);
+                if(jsonObject.getInt("code") == 0) {
+                    JSONObject json = jsonObject.getJSONObject("result");
+                    ArrayList<String> str = new ArrayList<>();
+                    values.clear();
+                    Iterator iterator = json.keys();
+                    int i = 1;
+                    //枚举Json，赋值图表数据
+                    while(iterator.hasNext()){
+                        String key = (String) iterator.next();
+                        Integer value = json.getInt(key);
+                        str.add(key);
+                        values.add(new Entry(i,value));
+                        i++;
+                    }
+                    xStr = (String[]) str.toArray(new String[0]);
+                    lineChartAdapter.addData(values, "每日打卡次数", 0f, Color.BLUE,8f,
+                            false, 5f, Color.GREEN,
+                            true, Color.YELLOW);
+                    lineChartAdapter.mLineChart.zoom(0, 1f, 0, 0);
+                    lineChartAdapter.mLineChart.zoom(8f, 1f, 0, 0);
+                    lineChartAdapter.setData();
+                    lineChartAdapter.setXAxis(true, true, 10f, Color.BLUE, XAxis.XAxisPosition.BOTTOM, 10f,xStr.length,xStr);
+                    lineChartAdapter.invalidate();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

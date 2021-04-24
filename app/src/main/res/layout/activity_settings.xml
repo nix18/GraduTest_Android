@@ -51,13 +51,6 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/clear_cache_btn_settings"
-            style="@style/button_white_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="清除缓存" />
-
-        <Button
             android:id="@+id/check_for_update_btn_settings"
             style="@style/button_white_style"
             android:layout_width="match_parent"

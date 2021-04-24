@@ -8,7 +8,7 @@ import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 
 import java.util.List;
@@ -178,12 +178,13 @@ public class PieChartAdapter {
      * @param lineColor 当值位置为外边线时，表示线的颜色。
      * */
     public void initPercent(boolean isValueShow, int valueSize, int valueColor, float part1, float part2, float per, int lineColor){
+        mPieChart.setUsePercentValues(false);
         //最终数据 PieData
         PieData pieData = new PieData(pieDataSet);
         pieData.setDrawValues(isValueShow);            //设置是否显示数据实体(百分比，true:以下属性才有意义)
         pieData.setValueTextColor(valueColor);  //设置所有DataSet内数据实体（百分比）的文本颜色
         pieData.setValueTextSize(valueSize);          //设置所有DataSet内数据实体（百分比）的文本字体大小
-        pieData.setValueFormatter(new PercentFormatter());//设置所有DataSet内数据实体（百分比）的文本字体格式
+        pieData.setValueFormatter(new DefaultValueFormatter(0));//设置所有DataSet内数据实体（百分比）的文本字体格式
 
         pieDataSet.setValueLinePart1Length(part1);// 当值位置为外边线时，表示线的前半段长度。
         pieDataSet.setValueLinePart2Length(part2);// 当值位置为外边线时，表示线的后半段长度。

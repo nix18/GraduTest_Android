@@ -13,7 +13,6 @@ public class Settings_Activity extends AppCompatActivity {
 
     private ImageView back_btn;
     private ImageView more_info_btn;
-    private Button clear_cache_btn;
     private Button check_for_update_btn;
     private Button about_btn;
 
@@ -31,7 +30,6 @@ public class Settings_Activity extends AppCompatActivity {
     protected void initView(){
         back_btn = findViewById(R.id.img_back_settings);
         more_info_btn = findViewById(R.id.img_more_info_settings);
-        clear_cache_btn = findViewById(R.id.clear_cache_btn_settings);
         check_for_update_btn = findViewById(R.id.check_for_update_btn_settings);
         about_btn = findViewById(R.id.about_btn_settings);
     }
