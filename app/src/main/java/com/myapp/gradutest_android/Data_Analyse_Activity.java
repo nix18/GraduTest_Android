@@ -150,11 +150,19 @@ public class Data_Analyse_Activity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(val);
                 if(jsonObject.getInt("code") == 0) {
                     vals.clear();
-                    vals.add(new PieEntry(jsonObject.getInt("data1"), "签到收入"));
-                    vals.add(new PieEntry(jsonObject.getInt("data2"), "好习惯打卡收入"));
-                    vals.add(new PieEntry(jsonObject.getInt("data3"), "好习惯购买支出"));
-                    vals.add(new PieEntry(jsonObject.getInt("data4"), "积分兑换支出"));
-                    vals.add(new PieEntry(jsonObject.getInt("data5"), "积分抽奖支出"));
+                    if(jsonObject.getInt("data1")!=0)
+                        vals.add(new PieEntry(jsonObject.getInt("data1"), "签到收入"));
+                    if(jsonObject.getInt("data2")!=0)
+                        vals.add(new PieEntry(jsonObject.getInt("data2"), "好习惯打卡收入"));
+                    if(jsonObject.getInt("data3")!=0)
+                        vals.add(new PieEntry(jsonObject.getInt("data3"), "好习惯购买支出"));
+                    if(jsonObject.getInt("data4")!=0)
+                        vals.add(new PieEntry(jsonObject.getInt("data4"), "积分兑换支出"));
+                    if(jsonObject.getInt("data5")!=0)
+                        vals.add(new PieEntry(jsonObject.getInt("data5"), "积分抽奖支出"));
+                    if(jsonObject.getInt("data1")==0&&jsonObject.getInt("data2")==0&&jsonObject.getInt("data3")==0&&
+                            jsonObject.getInt("data4")==0&&jsonObject.getInt("data5")==0)
+                        miniToast.Toast(Data_Analyse_Activity.this,"暂无数据，请稍候再来");
                     pieChartAdapter.invalidate();
                 }else {
                     miniToast.Toast(Data_Analyse_Activity.this,jsonObject.getString("Msg"));
