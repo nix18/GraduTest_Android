@@ -43,8 +43,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="420dp"
         android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,6 +80,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:autofillHints="请输入用户名"
+                        android:background="@drawable/edittext_bordered_common"
                         android:ems="10"
                         android:hint="请输入用户名"
                         android:inputType="textPersonName" />
@@ -86,6 +91,10 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,6 +118,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/edittext_bordered_common"
                         android:ems="10"
                         android:hint="请输入用户简介"
                         android:inputType="textPersonName"
@@ -120,6 +130,10 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -142,6 +156,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/edittext_bordered_common"
                         android:ems="10"
                         android:hint="请输入密码（8-20位）"
                         android:inputType="textPassword"
@@ -203,8 +218,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/sign_in_btn_sign_in"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
                         android:layout_weight="1"
                         android:background="@color/gray_400"
                         app:cardBackgroundColor="@color/deep_yellow"
@@ -228,18 +243,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="8"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/output_sign_in"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

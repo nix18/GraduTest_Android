@@ -72,7 +72,11 @@ public class Add_Habit_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 if(habit_name.getText().length()==0){
                     habit_name.requestFocus();
-                }else if(habit_content.getText().length()==0){
+                }else if(habit_name.getText().length() > 8){
+                    habit_name.requestFocus();
+                    miniToast.Toast(Add_Habit_Activity.this,"好习惯名过长");
+                }
+                else if(habit_content.getText().length()==0){
                     habit_content.requestFocus();
                 }else{
                     Uri.Builder builder = new Uri.Builder();

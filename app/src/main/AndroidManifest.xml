@@ -28,7 +28,6 @@
         <activity android:name=".My_Credit_Activity" />
         <activity android:name=".My_Info_Activity" />
         <activity android:name=".Add_Habit_Activity" />
-        <activity android:name=".Test_Toolbar_Activity" />
         <activity android:name=".Habit_Info_Activity" />
         <activity android:name=".Update_Info_Activity" />
         <activity android:name=".Screen_Error_Activity" />

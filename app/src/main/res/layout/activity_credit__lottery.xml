@@ -111,7 +111,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <Space
@@ -121,7 +120,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/lottery_one_btn_credit_lottery"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="70dp"
                     android:layout_weight="1"
                     android:clickable="true"
                     android:fadingEdge="horizontal"
@@ -189,7 +188,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/lottery_ten_btn_credit_lottery"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="70dp"
                     android:layout_weight="0.95"
                     android:clickable="true"
                     android:fadingEdge="horizontal"

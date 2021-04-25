@@ -24,7 +24,7 @@ public class Settings_Activity extends AppCompatActivity {
         initView();
         back_btn.setOnClickListener(v -> finish());
         check_for_update_btn.setOnClickListener(v -> miniToast.Toast(this,"当前已经是最新版本了"));
-        about_btn.setOnClickListener(v -> miniToast.Toast(this,"V 1.0.0"));
+        about_btn.setOnClickListener(v -> miniToast.Toast(this,getString(R.string.version)));
     }
 
     protected void initView(){

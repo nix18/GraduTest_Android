@@ -1,12 +1,14 @@
 package com.myapp.gradutest_android;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,6 +47,8 @@ public class Fragment_Main extends Fragment {
 
     private String url;
 
+    private CardView add_more;
+
     public Fragment_Main() {
     }
 
@@ -72,6 +76,13 @@ public class Fragment_Main extends Fragment {
         view = inflater.inflate(R.layout.fragment__main, container, false);
         initData();
         initView(view);
+        add_more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),All_Habits_Activity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
@@ -97,6 +108,7 @@ public class Fragment_Main extends Fragment {
     }
 
     private void initView(View view) {
+        add_more = view.findViewById(R.id.add_more_btn_fm_main);
         mRecyclerView = view.findViewById(R.id.running_habit_list_main);
         // 设置布局管理器
         mRecyclerView.setLayoutManager(mLayoutManager);
