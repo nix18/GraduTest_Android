@@ -197,23 +197,36 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
                         TextView habit_content = view.findViewById(R.id.text_habit_content_main);
                         TextView user_config = view.findViewById(R.id.text_user_config_main);
                         TextView persist_days = view.findViewById(R.id.persist_days_textview_main);
+                        TextView target_days = view.findViewById(R.id.target_days_textview_main);
                         //将字符串变回UserConfig对象
                         String config = user_config.getText().toString();
                         config = config.substring(1,config.length()-1);
                         config = config.replaceAll("\\\\",""); //反转义
                         UserConfig userConfig = toJson.jsonToObj(UserConfig.class,config);
                         AlertDialog alertDialog = miniToast.getDialog(myActivity,"请选择操作","\n注意：放弃好习惯不返还积分\n");
-                        alertDialog.setButton("放弃好习惯", new DialogInterface.OnClickListener() {
+                        boolean isFull = Integer.parseInt(persist_days.getText().toString())>=Integer.parseInt(target_days.getText().toString());
+                        alertDialog.setButton(isFull?"完成好习惯":"放弃好习惯", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                miniToast.Toast(myActivity,"你放弃了好习惯");
                                 MMKV mmkv = MMKV.defaultMMKV();
                                 Uri.Builder builder = new Uri.Builder();
-                                builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
-                                        .appendPath("giveuphabit")
-                                        .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
-                                        .appendQueryParameter("token", mmkv.decodeString("user_token",""))
-                                        .appendQueryParameter("rhid",rhid.getText().toString());
+                                if(!isFull) {
+                                    miniToast.Toast(myActivity, "你放弃了好习惯");
+                                    builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
+                                            .appendPath("giveuphabit")
+                                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                                            .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                                            .appendQueryParameter("rhid",rhid.getText().toString());
+                                }else {
+                                    miniToast.Toast(myActivity, "你完成了好习惯");
+                                    builder.scheme("https").encodedAuthority(myActivity.getString(R.string.host_core))
+                                            .appendPath("giveuphabit")
+                                            .appendQueryParameter("uid", String.valueOf(mmkv.decodeInt("uid",0)))
+                                            .appendQueryParameter("token", mmkv.decodeString("user_token",""))
+                                            .appendQueryParameter("rhid",rhid.getText().toString())
+                                            .appendQueryParameter("isfull", String.valueOf(isFull));
+                                }
+
                                 String url = builder.build().toString();
                                 networkTask networkTask = new networkTask();
                                 new Thread(networkTask.setParam(habitClockInHandler,url,1)).start();;
