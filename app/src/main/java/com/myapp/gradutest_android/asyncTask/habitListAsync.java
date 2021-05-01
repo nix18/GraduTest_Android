@@ -135,14 +135,14 @@ public class habitListAsync extends AsyncTask<String,Integer,String> {
 
     @Override
     protected void onPostExecute(String s) {
+        int count = mAdapter.getItemCount();
+        if (count != 0) {
+            for (int j = 0; j < count; j++) {
+                mAdapter.remove(0);
+            }
+        }
         if(habits != null && habits.size() != 0) {
             int i = 0;
-            int count = mAdapter.getItemCount();
-            if (count != 0) {
-                for (int j = 0; j < count; j++) {
-                    mAdapter.remove(0);
-                }
-            }
             for (GoodHabit habit : habits) {
                 mAdapter.add(habit, i);
                 i++;

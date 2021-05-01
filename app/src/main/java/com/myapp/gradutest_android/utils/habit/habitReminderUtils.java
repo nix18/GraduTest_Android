@@ -15,7 +15,6 @@ import com.myapp.gradutest_android.utils.msg.miniToast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -158,16 +157,6 @@ public class habitReminderUtils {
             calendarId = isHaveCalender();
         }
         event.put(CalendarContract.Events.CALENDAR_ID, calendarId);
-
-        // startMillis
-        Calendar beginTime = Calendar.getInstance();
-        beginTime.set(2021,8,15);
-        long startMillis = beginTime.getTimeInMillis();
-
-        // endMillis
-        Calendar endTime = Calendar.getInstance();
-        endTime.set(2021,8,15);
-        long endMillis = endTime.getTimeInMillis();
 
         // 添加event
         Uri insertEventUri = contentResolver.insert(eventUri,event);

@@ -13,6 +13,7 @@ import com.myapp.gradutest_android.adapter.CreditDetailRecyclerViewAdapter;
 import com.myapp.gradutest_android.asyncTask.creditDetailAsync;
 import com.myapp.gradutest_android.domain.CreditDetail;
 import com.myapp.gradutest_android.utils.msg.miniToast;
+import com.myapp.gradutest_android.utils.statusbar.statusBarUtils;
 import com.tencent.mmkv.MMKV;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class My_Credit_Detail_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        statusBarUtils.patchFullScreen(this);
         setContentView(R.layout.activity_my__credit__detail);
         data = new ArrayList<>();
         initData();
