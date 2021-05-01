@@ -5,7 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">这是一个空页面</string>
     <string name="error_msg">哎呀，程序出错了</string>
-    <string name="version">Ver 1.1</string>
+    <string name="version">Ver 1.2</string>
     <string-array name="habits_category">
         <item>其他</item>
         <item>学习</item>

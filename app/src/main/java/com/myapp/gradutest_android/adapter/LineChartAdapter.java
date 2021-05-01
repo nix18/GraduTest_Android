@@ -4,13 +4,12 @@ import android.graphics.Color;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartGestureListener;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -59,17 +58,13 @@ public class LineChartAdapter {
         xAxis.setValueFormatter(formatter);
         mLineChart.getDescription().setText("打卡统计表");
         mLineChart.getAxisLeft().setAxisMinimum(0);
-        mLineChart.getAxisLeft().setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return "" + (int) value;
-            }
-        });
+        mLineChart.getAxisLeft().setValueFormatter(new IndexAxisValueFormatter());
         mLineChart.getAxisRight().setEnabled(false);
     }
+
     /**
      * 设置与图表交互
-     * @param isTE 设置是否可以触摸  为fase时后面无效
+     * @param isTE 设置是否可以触摸  为false时后面无效
      * @param isDE 是否可以拖拽
      * @param isDX 是否可以缩放 仅x轴
      * @param isDY 是否可以缩放 仅y轴
@@ -78,6 +73,7 @@ public class LineChartAdapter {
      * @param isHPDE 能否拖拽高亮线(数据点与坐标的提示线)，默认是true
      * @param isDDLE 拖拽滚动时，手放开是否会持续滚动，默认是true（false是拖到哪是哪，true拖拽之后还会有缓冲）
      * */
+
     public void setInteraction(boolean isTE, boolean isDE, boolean isDX, boolean isDY, boolean isDXY,
                                boolean isDoubleMax, boolean isHPDE, boolean isDDLE){
         mLineChart.setTouchEnabled(isTE); // 设置是否可以触摸
