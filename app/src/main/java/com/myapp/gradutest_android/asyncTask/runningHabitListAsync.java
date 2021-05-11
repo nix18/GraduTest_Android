@@ -287,10 +287,17 @@ public class runningHabitListAsync extends AsyncTask<String,Integer,String> {
             e.printStackTrace();
         }
         MMKV mmkv = MMKV.defaultMMKV();
+        int count = 0;
         while (runningHabits == null){
             try {
+                if(count>100){
+                    Log.i("myLog","获取数据失败");
+                    runningHabits = new ArrayList<>();
+                    break;
+                }
                 Thread.sleep(5);
                 Log.i("myLog","等待数据");
+                count++;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

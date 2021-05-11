@@ -33,6 +33,7 @@ public class Fragment_Log_In extends Fragment {
     private View view;
     private CardView log_in;
     private TextView log_in_without_account;
+    private TextView forget_pwd;
     private EditText user_name;
     private EditText user_pwd;
     private RadioButton rule_checked_my;
@@ -62,6 +63,7 @@ public class Fragment_Log_In extends Fragment {
     public void initView(){
         log_in = view.findViewById(R.id.log_in_btn_fm_log_in);
         log_in_without_account = view.findViewById(R.id.log_in_without_account_btn);
+        forget_pwd = view.findViewById(R.id.forget_pwd_btn_fm_log_in);
         user_name=view.findViewById(R.id.user_name_input_fm_log_in);
         user_pwd=view.findViewById(R.id.user_pwd_input_fm_log_in);
         rule_checked_my=view.findViewById(R.id.rule_checked_fm_log_in);
@@ -93,6 +95,7 @@ public class Fragment_Log_In extends Fragment {
             Intent intent = new Intent(getActivity(),MainActivity.class);
             startActivity(intent);
         });
+        forget_pwd.setOnClickListener(v -> miniToast.Toast(getContext(),"请发送邮件至 admin@admin.com 修改密码"));
     }
 
     @SuppressLint("HandlerLeak")

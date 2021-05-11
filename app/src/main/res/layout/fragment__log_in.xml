@@ -176,6 +176,14 @@
                     android:layout_weight="9" />
 
                 <TextView
+                    android:id="@+id/forget_pwd_btn_fm_log_in"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:gravity="center_vertical|end"
+                    android:text="忘记密码?  " />
+
+                <TextView
                     android:id="@+id/log_in_without_account_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

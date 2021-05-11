@@ -28,7 +28,6 @@ public class habitReminderUtils {
     private ContentResolver contentResolver;
     private Context thisContext;
     private ContentValues event;
-    private Integer calendarId;
 
     public habitReminderUtils(Context context) {
         thisContext=context;
